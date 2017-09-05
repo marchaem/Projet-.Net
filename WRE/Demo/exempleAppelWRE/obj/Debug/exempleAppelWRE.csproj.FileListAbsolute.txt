@@ -1,0 +1,12 @@
+C:\Users\Mohamed\Desktop\C# .NET\exempleAppelNORM\obj\Debug\exempleAppelWRE.csprojResolveAssemblyReference.cache
+C:\Users\Mohamed\Desktop\C# .NET\exempleAppelNORM\bin\Debug\exempleAppelWRE.exe.config
+C:\Users\Mohamed\Desktop\C# .NET\exempleAppelNORM\bin\Debug\exempleAppelWRE.exe
+C:\Users\Mohamed\Desktop\C# .NET\exempleAppelNORM\bin\Debug\exempleAppelWRE.pdb
+C:\Users\Mohamed\Desktop\C# .NET\exempleAppelNORM\obj\Debug\exempleAppelWRE.exe
+C:\Users\Mohamed\Desktop\C# .NET\exempleAppelNORM\obj\Debug\exempleAppelWRE.pdb
+C:\Users\Mohamed\Desktop\C# .NET\exempleAppelWRE\bin\Debug\exempleAppelWRE.exe.config
+C:\Users\Mohamed\Desktop\C# .NET\exempleAppelWRE\obj\Debug\exempleAppelWRE.exe
+C:\Users\Mohamed\Desktop\C# .NET\exempleAppelWRE\obj\Debug\exempleAppelWRE.pdb
+C:\Users\Mohamed\Desktop\C# .NET\exempleAppelWRE\bin\Debug\exempleAppelWRE.exe
+C:\Users\Mohamed\Desktop\C# .NET\exempleAppelWRE\bin\Debug\exempleAppelWRE.pdb
+C:\Users\Mohamed\Desktop\C# .NET\exempleAppelWRE\obj\Debug\exempleAppelWRE.csprojResolveAssemblyReference.cache
