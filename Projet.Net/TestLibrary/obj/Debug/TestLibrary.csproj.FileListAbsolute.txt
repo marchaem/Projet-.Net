@@ -1,0 +1,7 @@
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\Debug\TestLibrary.dll
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\Debug\TestLibrary.pdb
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\Debug\fr\Microsoft.VisualStudio.QualityTools.UnitTestFramework.resources.dll
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\obj\Debug\TestLibrary.csprojResolveAssemblyReference.cache
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\obj\Debug\TestLibrary.dll
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\obj\Debug\TestLibrary.pdb
