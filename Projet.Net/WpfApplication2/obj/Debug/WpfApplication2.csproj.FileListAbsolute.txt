@@ -1,0 +1,2 @@
+c:\users\ensimag\documents\visual studio 2015\Projects\WpfApplication2\WpfApplication2\bin\Debug\WpfApplication2.exe.config
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\bin\Debug\WpfApplication2.exe.config
