@@ -1,0 +1,13 @@
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\bin\x64\Debug\WpfApplication2.exe.config
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\bin\x64\Debug\WpfApplication2.exe
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\bin\x64\Debug\WpfApplication2.pdb
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\obj\x64\Debug\MainWindow.g.cs
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\obj\x64\Debug\App.g.cs
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\obj\x64\Debug\WpfApplication2_MarkupCompile.cache
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\obj\x64\Debug\WpfApplication2_MarkupCompile.lref
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\obj\x64\Debug\MainWindow.baml
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\obj\x64\Debug\WpfApplication2.g.resources
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\obj\x64\Debug\WpfApplication2.Properties.Resources.resources
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\obj\x64\Debug\WpfApplication2.csproj.GenerateResource.Cache
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\obj\x64\Debug\WpfApplication2.exe
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\obj\x64\Debug\WpfApplication2.pdb
