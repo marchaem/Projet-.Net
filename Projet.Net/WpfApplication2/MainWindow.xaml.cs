@@ -31,7 +31,7 @@ namespace WpfApplication2
 
             DateTime debut = new DateTime(2009, 01, 01);
             DateTime maturite = new DateTime(2010, 10, 10);
-            double strike = 5.0;
+            double strike = 9.0;
 
             double tauxSansRisque = 0.01;
 
