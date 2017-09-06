@@ -22,6 +22,7 @@ namespace WpfApplication2.Options
         public double calculePrixVanille( System.DateTime date,int nbJourParAn, double spot,double volatility)
         {
             Pricer pricer = new Pricer();
+            var result = pricer.PriceCall(this.vanillaCall, date, nbJourParAn, spot+0.5, volatility);
             return pricer.PriceCall(this.vanillaCall, date, nbJourParAn, spot, volatility).Price;
         }
     }
