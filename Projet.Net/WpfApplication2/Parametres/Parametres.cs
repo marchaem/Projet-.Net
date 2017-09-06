@@ -21,7 +21,7 @@ namespace WpfApplication2.Parametres
         public enum typeDonnees { Historique, Simulees}
         private typeDonnees typedonnees;
 
-        public Parametres(typeOption type,double strike, DateTime dateDebut,List<Share> liste, DateTime maturite, DateTime debutSimulation, DateTime finSimulation, double pas, typeDonnees typeDonnees)
+        public Entrees(typeOption type,double strike, DateTime dateDebut,List<Share> liste, DateTime maturite, DateTime debutSimulation, DateTime finSimulation, double pas, typeDonnees typeDonnees)
         {
             this.typeoption = type;
             this.strike = strike;
