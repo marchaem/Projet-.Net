@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using WpfApplication2;
 
+
 namespace dataMining
 {
     class Program
