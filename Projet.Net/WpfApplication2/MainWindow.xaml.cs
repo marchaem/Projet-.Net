@@ -43,13 +43,13 @@ namespace WpfApplication2
             DateTime abc = new DateTime(2010, 1, 1);
             DateTime abc2 = new DateTime(2009, 1, 1);
             Share action1 = new Share("accor", "accordId");
-            VanillaCall vanille1 = new VanillaCall("lol", action1, abc, 10.0);
+            VanillaCall vanille1 = new VanillaCall("Accor", action1, abc, 10);
             IDataFeedProvider data = new SimulatedDataFeedProvider();
             hey = data.GetDataFeed(vanille1, abc2);
             Console.WriteLine(hey[0].Date);
             Console.WriteLine(hey[0].PriceList.ToString());
             decimal a = 10;
-            hey[50].PriceList.TryGetValue("accor", out a);
+            hey[50].PriceList.TryGetValue("accorId", out a);
             Console.WriteLine(a);
             Console.WriteLine("fin");
 
