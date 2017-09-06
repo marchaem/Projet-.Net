@@ -24,9 +24,14 @@ namespace WpfApplication2
     /// </summary>
     public partial class MainWindow : Window
     {
+        static DateTime debutEstimation = new DateTime(2009, 1, 1);
         public MainWindow()
         {
+            
             //getShareName();
+            DateTime date1 = new DateTime(1,1,5);
+            var a = dateTimeConverter(date1);
+            Console.WriteLine("la date vaux : "+a);
             /*Donnees a demander a l'utilisateur*/
 
             DateTime debut = new DateTime(2009, 01, 01);
@@ -46,7 +51,7 @@ namespace WpfApplication2
             Share action = new Share("accor", "accordId");
             Console.WriteLine("Action selectionnée " + action.Name);
 
-            DateTime debutEstimation = new DateTime(2009,1,1);
+            
             DateTime finEstimation = new DateTime(2010,1,1);
 
             /*Fin entree des donnees*/
@@ -77,23 +82,37 @@ namespace WpfApplication2
             //Console.WriteLine("Le delta au début vaut : " + resultdebut.Deltas[0]);
             //Console.WriteLine("Le prix du call au début : " + resultdebut.Price);
 
-            PorteFeuilleVanille porteFeuilleVanille = new PorteFeuilleVanille(action, resultdebut.Deltas[0], resultdebut.Price, (double) dataFeedCalc[0].PriceList[vanille.UnderlyingShare.Id]);
-            Console.WriteLine(porteFeuilleVanille.ToString());
+            //PorteFeuilleVanille porteFeuilleVanille = new PorteFeuilleVanille(action, resultdebut.Deltas[0], resultdebut.Price, (double) dataFeedCalc[0].PriceList[vanille.UnderlyingShare.Id]);
+            //Console.WriteLine(porteFeuilleVanille.ToString());
 
             //Actualisation de la valeur du portefeuille
 
-            double valeurActu = porteFeuilleVanille.getValeurActu(1, (double) dataFeedCalc[dataFeedCalc.Count - 1].PriceList[vanille.UnderlyingShare.Id], tauxSansRisque);
+            //double valeurActu = porteFeuilleVanille.getValeurActu(1, (double) dataFeedCalc[dataFeedCalc.Count - 1].PriceList[vanille.UnderlyingShare.Id], tauxSansRisque);
 
             // Calcul de la tracking error
 
-            double trackingError = valeurActu - payoff;
-            Console.WriteLine("Tracking Error = " + trackingError);
+            //double trackingError = valeurActu - payoff;
+            //Console.WriteLine("Tracking Error = " + trackingError);
             
 
 
 
             //InitializeComponent();
 
+        }
+        public int dateTimeConverter(DateTime date)
+        {
+            bool datahist = false;
+            if (datahist)
+            {
+                return 0;
+            }
+           
+            DateTime dateDebut = debutEstimation;
+            TimeSpan temps = date -  dateDebut ;
+            int a = Convert.ToInt32(temps.TotalDays);
+            return a;
+            
         }
 
         public void getDatahist()
@@ -150,6 +169,11 @@ namespace WpfApplication2
             dataFeedCalc[50].PriceList.TryGetValue("accordId", out a);
             Console.WriteLine(a);
             Console.WriteLine("fin");
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
