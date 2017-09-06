@@ -3,7 +3,6 @@ C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\bin\Debug\W
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\bin\Debug\WpfApplication2.pdb
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\bin\Debug\PricingLibrary.dll
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\bin\Debug\PricingLibrary.xml
-C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\obj\Debug\WpfApplication2.csprojResolveAssemblyReference.cache
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\obj\Debug\MainWindow.g.cs
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\obj\Debug\App.g.cs
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\WpfApplication2\obj\Debug\WpfApplication2_MarkupCompile.cache

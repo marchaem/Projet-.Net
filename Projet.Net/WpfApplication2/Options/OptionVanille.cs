@@ -10,8 +10,8 @@ namespace WpfApplication2.Options
 {
    public class OptionVanille
     {
-        private VanillaCall vanillaCall;
-        private double prix;
+        private VanillaCall vanillaCall { get; set; }
+        private double prix { get; set; }
 
         public OptionVanille(VanillaCall vanille)
         {
@@ -22,8 +22,15 @@ namespace WpfApplication2.Options
         public double calculePrixVanille( System.DateTime date,int nbJourParAn, double spot,double volatility)
         {
             Pricer pricer = new Pricer();
-            var result = pricer.PriceCall(this.vanillaCall, date, nbJourParAn, spot+0.5, volatility);
-            return pricer.PriceCall(this.vanillaCall, date, nbJourParAn, spot, volatility).Price;
+            var result = pricer.PriceCall(this.vanillaCall, date, nbJourParAn, spot, volatility);
+            return result.Price;
+        }
+
+        public double calculDeltaVanille(System.DateTime date, int nbJourParAn, double spot, double volatility)
+        {
+            Pricer pricer = new Pricer();
+            var result = pricer.PriceCall(this.vanillaCall, date, nbJourParAn, spot, volatility);
+            return result.Deltas[0];
         }
     }
 }
