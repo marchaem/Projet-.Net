@@ -1,6 +1,9 @@
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\TestLibrary.dll
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\TestLibrary.pdb
-C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
-C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\fr\Microsoft.VisualStudio.QualityTools.UnitTestFramework.resources.dll
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\obj\x64\Debug\TestLibrary.dll
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\obj\x64\Debug\TestLibrary.pdb
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\obj\x64\Debug\TestLibrary.csprojResolveAssemblyReference.cache
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\PricingLibrary.dll
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\WpfApplication2.exe
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\WpfApplication2.pdb
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\PricingLibrary.xml

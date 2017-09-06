@@ -1,5 +1,2 @@
-﻿################################################################################
-# Ce fichier .gitignore a été automatiquement créé par Microsoft(R) Visual Studio.
-################################################################################
-
-*.lref
+/Projet.Net/.vs/Projet.Net/v14/.suo
+/Projet.Net/WpfApplication2/obj
