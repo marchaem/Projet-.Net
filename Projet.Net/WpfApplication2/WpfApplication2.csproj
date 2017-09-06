@@ -103,7 +103,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mesure\ListeMesures.cs" />
+    <Compile Include="Mesure\Mesure.cs" />
     <Compile Include="Options\OptionVanille.cs" />
+    <Compile Include="Parametres\Parametres.cs" />
     <Compile Include="Portfolio\Portefeuille.cs" />
     <Compile Include="Portfolio\PorteFeuilleVanille.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

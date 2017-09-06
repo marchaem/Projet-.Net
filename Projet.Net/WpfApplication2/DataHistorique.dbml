@@ -5,6 +5,14 @@
       <Column Name="id" Type="System.String" DbType="NChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="value" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
+      <Association Name="ShareNames_HistoricalShareValues" Member="ShareNames" ThisKey="id" OtherKey="id" Type="ShareNames" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ShareNames" Member="ShareNames">
+    <Type Name="ShareNames">
+      <Column Name="id" Type="System.String" DbType="NChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Association Name="ShareNames_HistoricalShareValues" Member="HistoricalShareValues" ThisKey="id" OtherKey="id" Type="HistoricalShareValues" Cardinality="One" />
     </Type>
   </Table>
 </Database>

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
+using PricingLibrary.FinancialProducts;
+using PricingLibrary.Options;
+using PricingLibrary.Utilities.MarketDataFeed;
 
 namespace TestLibrary
 {
@@ -56,6 +59,18 @@ namespace TestLibrary
                 }
                 Console.Write("\n");
             }
+        }
+
+        public static void getDataSimul()
+        {
+            Console.WriteLine("debut de la generation de data");
+            var hey = new List<DataFeed>();
+            DateTime abc = new DateTime();
+            Share action = new Share("accor", "accordId");
+            VanillaCall vanille = new VanillaCall("lol", action, abc, 10.0);
+            IDataFeedProvider data = new SimulatedDataFeedProvider();
+            hey = data.GetDataFeed(vanille, abc);
+            hey.ForEach(Console.WriteLine);
         }
     }
 }
