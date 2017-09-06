@@ -67,6 +67,8 @@ namespace WpfApplication2
 
             Pricer pricer = new Pricer();
 
+            pricer.PriceCall(vanille, )
+
 
 
 
