@@ -42,7 +42,7 @@ namespace WpfApplication2
 
             bool simule = true;
 
-            /*On prend par exemple la premiere action de la liste*/
+            /*On rentre en dur la valeur de l'action pour l'instant*/
             Share action = new Share("accor", "accordId");
             Console.WriteLine("Action selectionnée " + action.Name);
 
