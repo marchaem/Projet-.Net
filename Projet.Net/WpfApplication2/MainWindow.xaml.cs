@@ -1,4 +1,5 @@
 ﻿using PricingLibrary.FinancialProducts;
+using PricingLibrary.Computations;
 using PricingLibrary.Utilities.MarketDataFeed;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-
 namespace WpfApplication2
 {
     /// <summary>
@@ -30,7 +30,8 @@ namespace WpfApplication2
 
             DateTime debut = new DateTime(2009, 01, 01);
             DateTime maturite = new DateTime(2010, 10, 10);
-            double strike = 0.0;
+            double strike = 5.0;
+
             bool simule = true;
 
             /*On prend par exemple la premiere action de la liste*/
@@ -55,14 +56,18 @@ namespace WpfApplication2
                 IDataFeedProvider data = new SimulatedDataFeedProvider();
                 dataFeedCalc = data.GetDataFeed(vanille, debut);
                 payoff = vanille.GetPayoff(dataFeedCalc[200].PriceList);
-                Console.WriteLine("La payoff de l'option vaut " + payoff);
+                Console.WriteLine("Le payoff de l'option " + vanille.Name + " vaut " + payoff);
+            }
+            else
+            {
+                // mettre ici le code correspondant au cas historique
             }
 
-
-
-            //vanille.GetPayoff();
-
             /*Calcul du portefeuille de couverture*/
+
+            Pricer pricer = new Pricer();
+
+
 
 
             //InitializeComponent();
