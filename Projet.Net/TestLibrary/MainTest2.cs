@@ -24,8 +24,6 @@ namespace TestLibrary
             OptionVanille optionVanille = new OptionVanille(vanille);
             double result = optionVanille.calculePrixVanille(debut, 365, 10.0, 0.1);
             Debug.WriteLine("le résultat vaut :" + result);
-
-
         }
     }
 }

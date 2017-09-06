@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PricingLibrary.FinancialProducts;
 
 namespace WpfApplication2
 {
@@ -22,15 +23,62 @@ namespace WpfApplication2
     {
         public MainWindow()
         {
-            //InitializeComponent();
             Console.WriteLine("Démarrer");
             Console.ReadLine();
+
+            /*Recuperation des donnes*/
 
             DataHistoriqueDataContext asdc = new DataHistoriqueDataContext();
 
             List<string> reqId = asdc.HistoricalShareValues.Select(el => el.id).Distinct().ToList();
             List<System.DateTime> reqDate = asdc.HistoricalShareValues.Select(el => el.date).Distinct().ToList();
             List<decimal> reqValue = asdc.HistoricalShareValues.Select(el => el.value).Distinct().ToList();
+
+            Console.WriteLine("Il y a  " + reqValue.Count + " valeurs");
+
+            /*Recuperation liste*/
+
+            List<Share> listeActions = new List<Share>();
+            foreach(string nom in reqId) {
+                listeActions.Add(new Share(nom, nom));
+                Console.WriteLine("Action = " + nom);
+            }
+
+            /*Donnees a demander a l'utilisateur*/
+
+            DateTime debut = new DateTime(2015, 01, 01);
+
+            DateTime maturite = new DateTime(2015, 10, 10);
+            double strike = 10.0;
+
+            bool simule = true;
+
+            /*On prend par exemple la premiere action de la liste*/
+            Share action = listeActions[0];
+            Console.WriteLine("Action selectionné " + action.Name);
+
+            DateTime debutEstimation;
+            DateTime finEstimation;
+
+            /*Fin entree des donnees*/
+
+            /*Creation de l'option*/
+
+            VanillaCall vanille = new VanillaCall("option", action, maturite, strike);
+
+
+            /*Recuperation des donnees pour calculer le payoff */
+
+
+
+            /*Calcul de la valeur du payoff*/
+
+            //vanille.GetPayoff();
+
+            /*Calcul du portefeuille de couverture*/
+
+
+            //InitializeComponent();
 
 
             for (int i = 0; i < reqId.Count; ++i)
