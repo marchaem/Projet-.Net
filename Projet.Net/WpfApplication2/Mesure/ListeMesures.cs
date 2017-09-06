@@ -12,7 +12,7 @@ namespace WpfApplication2.Mesure
 
         public ListeMesures(DataHistoriqueDataContext data)
         {
-            this.mesures = new List<Mesure>() { data.HistoricalShareValues.Select(el => el.id) };
+            //this.mesures = new List<Mesure>() { data.HistoricalShareValues.Select(el => el.id) };
 
         }
     }
