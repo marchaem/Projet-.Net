@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApplication2.Portfolio;
 
 namespace WpfApplication2
 {
@@ -25,12 +26,19 @@ namespace WpfApplication2
     {
         public MainWindow()
         {
-            getShareName();
+            //getShareName();
             /*Donnees a demander a l'utilisateur*/
 
             DateTime debut = new DateTime(2009, 01, 01);
             DateTime maturite = new DateTime(2010, 10, 10);
             double strike = 5.0;
+
+            double tauxSansRisque = 0.01;
+
+            Console.WriteLine("Simulation lancée avec : ");
+            Console.WriteLine("K = " + strike + "€");
+            Console.WriteLine("Echeance " + maturite.ToString());
+            Console.WriteLine("Date Courrante " + debut.ToString());
 
             bool simule = true;
 
@@ -51,24 +59,36 @@ namespace WpfApplication2
             var dataFeedCalc = new List<DataFeed>();
             double payoff;
 
-            if (simule)
-            {
-                IDataFeedProvider data = new SimulatedDataFeedProvider();
-                dataFeedCalc = data.GetDataFeed(vanille, debut);
-                payoff = vanille.GetPayoff(dataFeedCalc[200].PriceList);
-                Console.WriteLine("Le payoff de l'option " + vanille.Name + " vaut " + payoff);
-            }
-            else
-            {
-                // mettre ici le code correspondant au cas historique
-            }
+            IDataFeedProvider data = new SimulatedDataFeedProvider();
+            dataFeedCalc = data.GetDataFeed(vanille, debut);
+            payoff = vanille.GetPayoff(dataFeedCalc[dataFeedCalc.Count - 1].PriceList);
+            Console.WriteLine("Le payoff de l'option " + vanille.Name + " vaut " + payoff);
+            
 
             /*Calcul du portefeuille de couverture*/
 
             Pricer pricer = new Pricer();
+           
+            var result = pricer.PriceCall(vanille, maturite, 366, (double) dataFeedCalc[dataFeedCalc.Count-1].PriceList[vanille.UnderlyingShare.Id], 0.4);
+            //Console.WriteLine("Le delta à la fin vaut : " + result.Deltas[0]);
+           // Console.WriteLine("Le prix du call à l'écheance : " + result.Price);
 
-            pricer.PriceCall(vanille, )
+            var resultdebut = pricer.PriceCall(vanille, debut, 366, (double)dataFeedCalc[0].PriceList[vanille.UnderlyingShare.Id], 0.4);
+            //Console.WriteLine("Le delta au début vaut : " + resultdebut.Deltas[0]);
+            //Console.WriteLine("Le prix du call au début : " + resultdebut.Price);
 
+            PorteFeuilleVanille porteFeuilleVanille = new PorteFeuilleVanille(action, resultdebut.Deltas[0], resultdebut.Price, (double) dataFeedCalc[0].PriceList[vanille.UnderlyingShare.Id]);
+            Console.WriteLine(porteFeuilleVanille.ToString());
+
+            //Actualisation de la valeur du portefeuille
+
+            double valeurActu = porteFeuilleVanille.getValeurActu(1, (double) dataFeedCalc[dataFeedCalc.Count - 1].PriceList[vanille.UnderlyingShare.Id], tauxSansRisque);
+
+            // Calcul de la tracking error
+
+            double trackingError = valeurActu - payoff;
+            Console.WriteLine("Tracking Error = " + trackingError);
+            
 
 
 
