@@ -17,7 +17,7 @@ namespace TestLibrary
         [TestMethod]
         public void Main()
         {
-            DateTime abc = new DateTime();
+            DateTime abc = new DateTime(10,10,10);
             Share action = new Share("accor", "accordId");
             VanillaCall vanille = new VanillaCall("lol", action, abc, 10.0);
             OptionVanille optionVanille = new OptionVanille(vanille);
