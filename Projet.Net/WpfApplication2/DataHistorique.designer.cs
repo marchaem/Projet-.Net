@@ -33,6 +33,9 @@ namespace WpfApplication2
     partial void InsertHistoricalShareValues(HistoricalShareValues instance);
     partial void UpdateHistoricalShareValues(HistoricalShareValues instance);
     partial void DeleteHistoricalShareValues(HistoricalShareValues instance);
+    partial void InsertShareNames(ShareNames instance);
+    partial void UpdateShareNames(ShareNames instance);
+    partial void DeleteShareNames(ShareNames instance);
     #endregion
 		
 		public DataHistoriqueDataContext() : 
@@ -40,8 +43,9 @@ namespace WpfApplication2
 		{
 			OnCreated();
 		}
-		
-		public DataHistoriqueDataContext(string connection) : 
+        
+
+        public DataHistoriqueDataContext(string connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
@@ -72,6 +76,14 @@ namespace WpfApplication2
 				return this.GetTable<HistoricalShareValues>();
 			}
 		}
+		
+		public System.Data.Linq.Table<ShareNames> ShareNames
+		{
+			get
+			{
+				return this.GetTable<ShareNames>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.HistoricalShareValues")]
@@ -85,6 +97,8 @@ namespace WpfApplication2
 		private System.DateTime _date;
 		
 		private decimal _value;
+		
+		private EntityRef<ShareNames> _ShareNames;
 		
     #region Définitions de méthodes d'extensibilité
     partial void OnLoaded();
@@ -100,6 +114,7 @@ namespace WpfApplication2
 		
 		public HistoricalShareValues()
 		{
+			this._ShareNames = default(EntityRef<ShareNames>);
 			OnCreated();
 		}
 		
@@ -114,6 +129,10 @@ namespace WpfApplication2
 			{
 				if ((this._id != value))
 				{
+					if (this._ShareNames.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnidChanging(value);
 					this.SendPropertyChanging();
 					this._id = value;
@@ -159,6 +178,158 @@ namespace WpfApplication2
 					this._value = value;
 					this.SendPropertyChanged("value");
 					this.OnvalueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ShareNames_HistoricalShareValues", Storage="_ShareNames", ThisKey="id", OtherKey="id", IsForeignKey=true)]
+		public ShareNames ShareNames
+		{
+			get
+			{
+				return this._ShareNames.Entity;
+			}
+			set
+			{
+				ShareNames previousValue = this._ShareNames.Entity;
+				if (((previousValue != value) 
+							|| (this._ShareNames.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ShareNames.Entity = null;
+						previousValue.HistoricalShareValues = null;
+					}
+					this._ShareNames.Entity = value;
+					if ((value != null))
+					{
+						value.HistoricalShareValues = this;
+						this._id = value.id;
+					}
+					else
+					{
+						this._id = default(string);
+					}
+					this.SendPropertyChanged("ShareNames");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ShareNames")]
+	public partial class ShareNames : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _id;
+		
+		private string _name;
+		
+		private EntityRef<HistoricalShareValues> _HistoricalShareValues;
+		
+    #region Définitions de méthodes d'extensibilité
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(string value);
+    partial void OnidChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    #endregion
+		
+		public ShareNames()
+		{
+			this._HistoricalShareValues = default(EntityRef<HistoricalShareValues>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="NChar(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(150) NOT NULL", CanBeNull=false)]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ShareNames_HistoricalShareValues", Storage="_HistoricalShareValues", ThisKey="id", OtherKey="id", IsUnique=true, IsForeignKey=false)]
+		public HistoricalShareValues HistoricalShareValues
+		{
+			get
+			{
+				return this._HistoricalShareValues.Entity;
+			}
+			set
+			{
+				HistoricalShareValues previousValue = this._HistoricalShareValues.Entity;
+				if (((previousValue != value) 
+							|| (this._HistoricalShareValues.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._HistoricalShareValues.Entity = null;
+						previousValue.ShareNames = null;
+					}
+					this._HistoricalShareValues.Entity = value;
+					if ((value != null))
+					{
+						value.ShareNames = this;
+					}
+					this.SendPropertyChanged("HistoricalShareValues");
 				}
 			}
 		}
