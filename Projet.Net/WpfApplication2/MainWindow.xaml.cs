@@ -25,7 +25,7 @@ namespace WpfApplication2
     {
         public MainWindow()
         {
-
+            getShareName();
             /*Donnees a demander a l'utilisateur*/
 
             DateTime debut = new DateTime(2009, 01, 01);
@@ -104,6 +104,15 @@ namespace WpfApplication2
 
         }
 
+        public void getShareName()
+        {
+            DataHistoriqueDataContext asdc = new DataHistoriqueDataContext();
+            List<string> names = asdc.ShareNames.Select(el => el.name).ToList();
+            foreach (string name in names)
+            {
+                Console.WriteLine(name);
+            }
+        }
         public void getDataSimul()
         {
             Console.WriteLine("debut de la generation de data");
