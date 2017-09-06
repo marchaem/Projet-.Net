@@ -22,7 +22,24 @@ namespace WpfApplication2
     {
         public MainWindow()
         {
-            InitializeComponent();
+            //InitializeComponent();
+            Console.WriteLine("Démarrer");
+            Console.ReadLine();
+
+            DataHistoriqueDataContext asdc = new DataHistoriqueDataContext();
+
+            List<string> reqId = asdc.HistoricalShareValues.Select(el => el.id).Distinct().ToList();
+            List<System.DateTime> reqDate = asdc.HistoricalShareValues.Select(el => el.date).Distinct().ToList();
+            List<decimal> reqValue = asdc.HistoricalShareValues.Select(el => el.value).Distinct().ToList();
+
+
+            for (int i = 0; i < reqId.Count; ++i)
+            {
+                Console.WriteLine("ID: " + i + " " + reqId[i]);
+                Console.WriteLine("Date: " + reqDate[i]);
+                Console.WriteLine("Value: " + reqValue[i]);
+            }
+
         }
     }
 }
