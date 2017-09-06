@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using PricingLibrary.FinancialProducts;
-using WpfApplication2.Options;
+using PricingLibrary.Options;
 using PricingLibrary.Utilities.MarketDataFeed;
 
 namespace TestLibrary
@@ -64,12 +64,13 @@ namespace TestLibrary
         public static void getDataSimul()
         {
             Console.WriteLine("debut de la generation de data");
-            var hey = new List<PricingLibrary.Utilities.MarketDataFeed.DataFeed>;
+            var hey = new List<DataFeed>();
             DateTime abc = new DateTime();
             Share action = new Share("accor", "accordId");
             VanillaCall vanille = new VanillaCall("lol", action, abc, 10.0);
-            OptionVanille optionVanille = new OptionVanille(vanille);
-            hey = IDataFeedProvider.GetDataFeed(optionVanille, abc);
+            IDataFeedProvider data = new SimulatedDataFeedProvider();
+            hey = data.GetDataFeed(vanille, abc);
+            hey.ForEach(Console.WriteLine);
         }
     }
 }

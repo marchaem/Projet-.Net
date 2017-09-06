@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PricingLibrary.FinancialProducts;
+using PricingLibrary.Utilities.MarketDataFeed;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,6 +42,20 @@ namespace WpfApplication2
                 Console.WriteLine("Value: " + reqValue[i]);
             }
 
+            Console.WriteLine("debut de la generation de data");
+            var hey = new List<DataFeed>();
+            DateTime abc = new DateTime(2010, 1, 1);
+            DateTime abc2 = new DateTime(2009,1,1);
+            Share action = new Share("accor", "accordId");
+            VanillaCall vanille = new VanillaCall("lol", action, abc, 10.0);
+            IDataFeedProvider data = new SimulatedDataFeedProvider();
+            hey = data.GetDataFeed(vanille, abc2);
+            Console.WriteLine(hey[0].Date);
+            Console.WriteLine(hey[0].PriceList.ToString());
+            decimal a = 10;
+            hey[50].PriceList.TryGetValue("accor", out a);
+            Console.WriteLine(a);
+            Console.WriteLine("fin");
         }
     }
 }
