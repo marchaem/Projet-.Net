@@ -6,7 +6,43 @@
         xmlns:local="clr-namespace:WpfApplication2"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
+
     <Grid>
-        
+
+        <StackPanel Margin="14,19,323,226">
+            <TextBlock Text=" quelle est le strike:" HorizontalAlignment="Center" Width="149" Margin="21,0,10,0" />
+            <TextBox x:Name="strike"  />
+        </StackPanel>
+
+        <StackPanel Margin="255,19,78,226">
+            <TextBlock Text="quelle est la maturité" HorizontalAlignment="Center" Width="141" Margin="33,0,10,0" />
+            <TextBox x:Name="date"  />
+        </StackPanel>
+
+        <StackPanel Margin="14,110,323,133">
+            <TextBlock Text="choix de l action" HorizontalAlignment="Center" Width="160" Margin="10,0" Height="17" />
+            <CheckBox x:Name="termsOfServiceCheckBox" 
+          Content="ACCOR SA"/>
+        </StackPanel>
+
+        <StackPanel Margin="214,110,119,133">
+            <TextBlock Text="choix du type d'option " HorizontalAlignment="Center" Width="152" Margin="30,0,2,0" />
+            <ComboBox Text="Is not open">
+                <!--<ComboBoxItem Name="cbi1">donné historique</ComboBoxItem>-->
+                <ComboBoxItem Name="cbu2">vanila</ComboBoxItem>
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel Margin="14,218,323,28">
+            <TextBlock Text="choix du type de simulation " HorizontalAlignment="Center" Width="170" Margin="10,0,0,0" />
+            <ComboBox Text="Is not open">
+                <!--<ComboBoxItem Name="cbi1">donné historique</ComboBoxItem>-->
+                <ComboBoxItem Name="cbi2">donné simulé</ComboBoxItem>
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel Margin="298,254,39,42">
+            <Button Content="start" Click="Button_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

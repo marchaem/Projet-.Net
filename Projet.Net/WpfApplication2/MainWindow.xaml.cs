@@ -25,7 +25,8 @@ namespace WpfApplication2
     {
         public MainWindow()
         {
-            getShareName();
+            //getShareName();
+
             /*Donnees a demander a l'utilisateur*/
 
             DateTime debut = new DateTime(2009, 01, 01);
@@ -72,6 +73,18 @@ namespace WpfApplication2
 
             //InitializeComponent();
 
+        }
+        public int dateTimeConverter(DateTime date)
+        {
+            bool datahist = false;
+            if (datahist)
+            {
+                return 0;
+            }
+            DateTime dateDebut = new DateTime() ;
+            TimeSpan temps = date -  dateDebut ;
+            int a = Convert.ToInt32(temps.TotalDays);
+            return a;
         }
 
         public void getDatahist()
@@ -128,6 +141,11 @@ namespace WpfApplication2
             dataFeedCalc[50].PriceList.TryGetValue("accordId", out a);
             Console.WriteLine(a);
             Console.WriteLine("fin");
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
