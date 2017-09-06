@@ -36,12 +36,12 @@ namespace WpfApplication2.Portfolio
 
 
         }
-    }
-    public double getValeurActu(int nbPeriodes, double spot, double tauxSansRisque)
-    {
-        // spot = prix de l'action au bout de nbPeriodes
-        var res = 0.0;
-        res = thuneDansLeSansRisque * Math.Pow(1 + tauxSansRisque, nbPeriodes) + spot * nombreAction;
-        return res;
+        public double getValeurActu(int nbPeriodes, double spot, double tauxSansRisque)
+        {
+            // spot = prix de l'action au bout de nbPeriodes
+            var res = 0.0;
+            res = thuneDansLeSansRisque * Math.Pow(1 + tauxSansRisque, nbPeriodes) + spot * nombreAction;
+            return res;
+        }
     }
 }
