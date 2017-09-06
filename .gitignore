@@ -1,2 +1,17 @@
-/Projet.Net/.vs/Projet.Net/v14/.suo
-/Projet.Net/WpfApplication2/obj
+﻿################################################################################
+# Ce fichier .gitignore a été automatiquement créé par Microsoft(R) Visual Studio.
+################################################################################
+
+*.suo
+/Projet.Net/WpfApplication2/obj/x64/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
+/Projet.Net/WpfApplication2/obj/x64/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
+/Projet.Net/WpfApplication2/obj/x64/Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs
+/Projet.Net/WpfApplication2/obj/x64/Debug/TempPE/DataHistorique.designer.cs.dll
+/Projet.Net/WpfApplication2/obj/x64/Debug/TempPE/Properties.Resources.Designer.cs.dll
+/Projet.Net/WpfApplication2/obj/x64/Debug/WpfApplication2.csproj.FileListAbsolute.txt
+/Projet.Net/WpfApplication2/obj/x64/Debug/App.g.i.cs
+/Projet.Net/WpfApplication2/bin/x64/Debug/WpfApplication2.vshost.exe.manifest
+/Projet.Net/WpfApplication2/obj/x64/Debug/DesignTimeResolveAssemblyReferences.cache
+/Projet.Net/WpfApplication2/obj/x64/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+/Projet.Net/WpfApplication2/obj/x64/Debug/MainWindow.g.i.cs
+/Projet.Net/WpfApplication2/obj/x64/Debug/WpfApplication2_MarkupCompile.i.cache

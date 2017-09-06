@@ -2,8 +2,8 @@ C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\Debug\TestL
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\Debug\TestLibrary.pdb
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\obj\Debug\TestLibrary.dll
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\obj\Debug\TestLibrary.pdb
-C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\obj\Debug\TestLibrary.csprojResolveAssemblyReference.cache
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\Debug\PricingLibrary.dll
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\Debug\WpfApplication2.exe
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\Debug\WpfApplication2.pdb
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\Debug\PricingLibrary.xml
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\obj\Debug\TestLibrary.csprojResolveAssemblyReference.cache
