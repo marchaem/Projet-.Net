@@ -43,6 +43,7 @@ namespace WpfApplication2
             }
 
             Console.WriteLine("debut de la generation de data");
+
             var hey = new List<DataFeed>();
             DateTime abc = new DateTime(2010, 1, 1);
             DateTime abc2 = new DateTime(2009,1,1);
