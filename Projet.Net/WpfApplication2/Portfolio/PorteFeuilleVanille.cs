@@ -19,10 +19,11 @@ namespace WpfApplication2.Portfolio
         public PorteFeuilleVanille(OptionVanille option)
         {
             this.option = option;
-            this.proportions = new double[1000000,2];
+            this.proportions = new double[1000000,2]; // à améliorer
         }
         public void actualisationPortef(DateTime debutSimulation,DateTime date,double spot,double volatility,double r)
         {
+
             int a = fonctionkerboul(date);
             Console.WriteLine("a vaut " + a.ToString());
             if (a < 0)
@@ -31,12 +32,21 @@ namespace WpfApplication2.Portfolio
                 throw new Exception("mon a est négatif, merci kerboul");
             }
             double delta = option.calculDeltaVanille(date, 365, spot, volatility);
-            double thuneSansRisque = pricePortefeuille(debutSimulation,date, r, spot, volatility);
-            proportions[a, 0] = delta;
+            double thuneSansRisque = pricePortefeuille(debutSimulation,date, r, spot, volatility)-delta*spot;
+            proportions[a, 0] = delta*spot;
             proportions[a, 1] = thuneSansRisque;
             
         }
-        
+        public void actualisationPortefsimule(List<Dictionary<String,decimal>> simulated, double r,double volatility)
+        {
+            for (int i = 0; i < simulated.Count; i++)
+            {
+                
+            }
+            
+        }
+
+
         int fonctionkerboul(DateTime date)
         {
             return 1;
@@ -62,6 +72,8 @@ namespace WpfApplication2.Portfolio
 
         }
 
+
+
         public int dateTimeConverter(DateTime debutEstimation, DateTime date)
         {
             bool datahist = false;
@@ -76,6 +88,8 @@ namespace WpfApplication2.Portfolio
             return a;
 
         }
+
+
         /*
         public double getValeurActu(int nbPeriodes, double spot, double tauxSansRisque)
         {
