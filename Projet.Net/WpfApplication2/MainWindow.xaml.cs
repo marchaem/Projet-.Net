@@ -8,6 +8,7 @@ using System.Windows;
 using WpfApplication2.Portfolio;
 using WpfApplication2.Options;
 using WpfApplication2.Parametres;
+using WpfApplication2.Data;
 
 namespace WpfApplication2
 {
@@ -25,7 +26,7 @@ namespace WpfApplication2
             List<Share> liste = new List<Share>() { action };
             DateTime maturite = new DateTime(2001, 10, 10);
             Entrees donnes = new Entrees(0, 7.0, new DateTime(2000, 1, 1), liste, maturite, new DateTime(2000, 1, 1), new DateTime(2001, 1, 10), 1, 0);
-
+            DataHisto histo = new DataHisto();
            
 
             Console.WriteLine("Simulation lancée avec : ");
@@ -50,26 +51,24 @@ namespace WpfApplication2
 
 
 
-
+            List<DataFeed> data = histo.getData(donnes);
             //Actualisation de la valeur du portefeuille
-            var dataFeedCalc = new List<DataFeed>();
-            IDataFeedProvider data = new SimulatedDataFeedProvider();
-            dataFeedCalc = data.GetDataFeed(vanille, new DateTime(2000,1,1));
-            PorteFeuilleVanille porteFeuilleVanille = new PorteFeuilleVanille(option);
-            porteFeuilleVanille.actulisationPorteSimu(dataFeedCalc, donnes);   
+            
+           /* PorteFeuilleVanille porteFeuilleVanille = new PorteFeuilleVanille(option);
+            porteFeuilleVanille.actulisationPorteSimu(data, donnes);   
             int i = 0;
             DateTime date = donnes.debutSimulation;
             while (date <=  donnes.finSimulation)
             {
                 i  = porteFeuilleVanille.dateTimeConverter(donnes.debutSimulation, date);
-                Console.WriteLine("le call vaut : " + pricer.PriceCall(vanille, date, 365,(double) dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id], 0.4).Price);
+                Console.WriteLine("le call vaut : " + pricer.PriceCall(vanille, date, 365,(double) data[i].PriceList[vanille.UnderlyingShare.Id], 0.4).Price);
                 Console.WriteLine("i vaut :" + i);
-                Console.Write("le spot vaut : " + dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id]);
+                Console.Write("le spot vaut : " + data[i].PriceList[vanille.UnderlyingShare.Id]);
                 Console.WriteLine("le portefeuille vaut : ");
                 Console.WriteLine(porteFeuilleVanille.ToString1(donnes.debutSimulation,date));
                 Console.WriteLine("Tracking Error = " + porteFeuilleVanille.trackingErrors[i]  +" à la date " + date.ToString());
                 date=date.AddDays(donnes.pas);
-            }
+            }*/
            
 
             
