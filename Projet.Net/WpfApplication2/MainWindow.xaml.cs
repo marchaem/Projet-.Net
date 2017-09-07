@@ -82,17 +82,18 @@ namespace WpfApplication2
             DateTime[] date = new DateTime[] { new DateTime(2000,1,1), new DateTime(2000, 1, 2), new DateTime(2000, 1, 3), new DateTime(2000, 1, 4), new DateTime(2000, 1, 5) };
             double payoff = vanille.GetPayoff(dataFeedCalc[dataFeedCalc.Count - 1].PriceList);
 
-            int kerboul;
+            
             double trackingError;
             int i = 0;
             
             foreach (DateTime dates in date)
             {
-                kerboul = porteFeuilleVanille.dateTimeConverter(date[0], dates);
+                i  = porteFeuilleVanille.dateTimeConverter(date[0], dates);
                 porteFeuilleVanille.actualisationPortef(date[0], dates, (double) dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id],0.4,tauxSansRisque);
                 Console.Write("le spot vaut : " + dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id]);
                 payoff = pricer.PriceCall(vanille, dates, 365, (double)dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id], 0.4).Price;
                 trackingError = porteFeuilleVanille.pricePortefeuille(date[0], dates, tauxSansRisque, (double)dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id], 0.4) - payoff;
+                Console.WriteLine(porteFeuilleVanille.ToString1(date[0],dates));
                 Console.WriteLine("Tracking Error = " + trackingError +" à la date " + dates.ToString());
                 i++;
             }
