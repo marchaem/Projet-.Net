@@ -83,6 +83,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Portfolio\PorteFeuilleBasket.cs" />
+    <Compile Include="Simulation\Simulation.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -104,7 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Options\OptionVanille.cs" />
-    <Compile Include="Parametres\Parametres.cs" />
+    <Compile Include="Entree\Entrees.cs" />
     <Compile Include="Portfolio\Portefeuille.cs" />
     <Compile Include="Portfolio\PorteFeuilleVanille.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
