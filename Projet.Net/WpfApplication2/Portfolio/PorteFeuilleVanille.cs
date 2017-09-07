@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WpfApplication2.Options;
-using WpfApplication2.Parametres;
+using WpfApplication2.Entree;
 
 namespace WpfApplication2.Portfolio
 {
@@ -52,7 +52,7 @@ namespace WpfApplication2.Portfolio
             int i=0;
             foreach(DataFeed val in simulation)
             {
-                actualisationPortef(input.dateDebut, val.Date,(double) val.PriceList[input.listActions[0].Id], 0.4,RiskFreeRateProvider.GetRiskFreeRateAccruedValue(input.pas/365.0));
+                actualisationPortef(input.dateDebut, val.Date,(double) val.PriceList[input.listActions[0]], 0.4,RiskFreeRateProvider.GetRiskFreeRateAccruedValue(input.pas/365.0));
                 i++;
             }
         }

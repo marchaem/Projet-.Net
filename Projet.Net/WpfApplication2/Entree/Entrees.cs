@@ -5,23 +5,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfApplication2.Parametres
+namespace WpfApplication2.Entree
 {
     public class Entrees
     {
-        public enum typeOption { Vanille, Basket }
-        public typeOption typeoption;
+        public enum typeOption { Vanille, Basket } 
+        public typeOption typeoption { get; set;}
         public double strike { get; set; }
         public DateTime dateDebut { get; set; }
-        public List<Share> listActions { get; set; }
+        public List<String> listActions { get; set; }
         public DateTime maturite { get; set; }
         public DateTime debutSimulation { get; set; }
         public DateTime finSimulation { get; set; }
         public int pas { get; set; }
         public enum typeDonnees { Historique, Simulees}
-        public typeDonnees typedonnees;
+        public typeDonnees typedonnees {get; set;}
+        public string nomOption { get; set; }
+        public List<double> listePoids { get; set; }
 
-        public Entrees(typeOption type,double strike, DateTime dateDebut,List<Share> liste, DateTime maturite, DateTime debutSimulation, DateTime finSimulation, int pas, typeDonnees typeDonnees)
+        public Entrees(typeOption type, double strike, DateTime dateDebut,List<String> liste, DateTime maturite, DateTime debutSimulation, DateTime finSimulation, int pas, typeDonnees typeDonnees, string nomOption, List<double> poids)
         {
             this.typeoption = type;
             this.strike = strike;
@@ -32,8 +34,8 @@ namespace WpfApplication2.Parametres
             this.finSimulation = finSimulation;
             this.pas = pas;
             this.typedonnees = typeDonnees;
-           
-
+            this.nomOption = nomOption;
+            this.listePoids = poids;
         }
     }
 }
