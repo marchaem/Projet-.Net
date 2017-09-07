@@ -95,9 +95,8 @@ namespace WpfApplication2
               
                 Console.Write("le spot vaut : " + dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id]);
                 prixOption = pricer.PriceCall(vanille, date, 365, (double)dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id], 0.4).Price;
-                trackingError = porteFeuilleVanille.pricePortefeuille(donnes.debutSimulation, date, tauxSansRisque, (double)dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id], 0.4) - prixOption;
                 Console.WriteLine(porteFeuilleVanille.ToString1(donnes.debutSimulation,date));
-                Console.WriteLine("Tracking Error = " + trackingError +" à la date " + date.ToString());
+                Console.WriteLine("Tracking Error = " + porteFeuilleVanille.trackingErrors[i]  +" à la date " + date.ToString());
                 date=date.AddDays(donnes.pas);
             }
            
