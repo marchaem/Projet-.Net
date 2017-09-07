@@ -32,7 +32,7 @@ namespace WpfApplication2.Portfolio
             }
             double delta = option.calculDeltaVanille(date, 365, spot, volatility);
             double thuneSansRisque = pricePortefeuille(debutSimulation,date, r, spot, volatility)-delta*spot;
-            proportions[a, 0] = delta*spot;
+            proportions[a, 0] = delta;
             proportions[a, 1] = thuneSansRisque;
             
         }
