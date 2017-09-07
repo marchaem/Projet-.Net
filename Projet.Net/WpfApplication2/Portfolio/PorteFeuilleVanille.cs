@@ -23,8 +23,8 @@ namespace WpfApplication2.Portfolio
         }
         public void actualisationPortef(DateTime debutSimulation,DateTime date,double spot,double volatility,double r)
         {
-            int a = fonctionkerboul(date);
-            Console.WriteLine("a vaut " + a.ToString());
+            int a = dateTimeConverter(debutSimulation,date);
+            
             if (a < 0)
             {
                 
@@ -37,14 +37,12 @@ namespace WpfApplication2.Portfolio
             
         }
         
-        int fonctionkerboul(DateTime date)
-        {
-            return 1;
-        }
+        
         //j'ai enlevé prixSousJ car c'est la même chose que le spot
         public double pricePortefeuille(DateTime debutEstimation, DateTime date  ,double r,double spot, double volatility)
         {
             int a = dateTimeConverter(debutEstimation,date);
+            Console.WriteLine("a vaut " + a.ToString());
             if (a < 0)
             {
                 throw new Exception("la fonction Kerboul a renvoyé un index négatif, c'est un boyard ");

@@ -20,12 +20,12 @@ namespace WpfApplication2
         {
             
             //getShareName();
-            DateTime date1 = new DateTime(1,1,5);
-            var a = dateTimeConverter(date1);
-            Console.WriteLine("la date vaux : "+a);
+         //   DateTime date1 = new DateTime(1,1,5);
+          //  var a = dateTimeConverter(date1);
+        //    Console.WriteLine("la date vaux : "+a);
             /*Donnees a demander a l'utilisateur*/
 
-            DateTime debut = new DateTime(2009, 01, 01);
+          //  DateTime debut = new DateTime(2009, 01, 01);
             DateTime maturite = new DateTime(2010, 10, 10);
             double strike = 9.0;
 
@@ -34,7 +34,7 @@ namespace WpfApplication2
             Console.WriteLine("Simulation lancée avec : ");
             Console.WriteLine("K = " + strike + "€");
             Console.WriteLine("Echeance " + maturite.ToString());
-            Console.WriteLine("Date Courrante " + debut.ToString());
+          //  Console.WriteLine("Date Courrante " + debut.ToString());
 
             bool simule = true;
 
@@ -85,10 +85,13 @@ namespace WpfApplication2
             int kerboul;
             double trackingError;
             int i = 0;
+            
             foreach (DateTime dates in date)
             {
                 kerboul = porteFeuilleVanille.dateTimeConverter(date[0], dates);
                 porteFeuilleVanille.actualisationPortef(date[0], dates, (double) dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id],0.4,tauxSansRisque);
+                Console.Write("le spot vaut : " + dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id]);
+                payoff = pricer.PriceCall(vanille, dates, 365, (double)dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id], 0.4).Price;
                 trackingError = porteFeuilleVanille.pricePortefeuille(date[0], dates, tauxSansRisque, (double)dataFeedCalc[dataFeedCalc.Count - 1].PriceList[vanille.UnderlyingShare.Id], 0.4) - payoff;
                 Console.WriteLine("Tracking Error = " + trackingError +" à la date " + dates.ToString());
                 i++;
