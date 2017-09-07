@@ -16,38 +16,64 @@ namespace WpfApplication2.Portfolio
         // proportions est matrice qui à une date (ligne ) associe les proportions (colonnes)
         private double[,] proportions;
 
-        public PorteFeuilleVanille(OptionVanille option, double[,] proportions)
+        public PorteFeuilleVanille(OptionVanille option)
         {
             this.option = option;
-            this.proportions = proportions;
+            this.proportions = new double[1000000,2];
         }
-        public void actualisationPortef(DateTime date,double spot,double volatility,double r, double prixSousJ)
+        public void actualisationPortef(DateTime debutSimulation,DateTime date,double spot,double volatility,double r)
         {
             int a = fonctionkerboul(date);
+            Console.WriteLine("a vaut " + a.ToString());
+            if (a < 0)
+            {
+                
+                throw new Exception("mon a est négatif, merci kerboul");
+            }
             double delta = option.calculDeltaVanille(date, 365, spot, volatility);
-            double thuneSansRisque = pricePortefeuille(date, prixSousJ, r, spot, volatility);
+            double thuneSansRisque = pricePortefeuille(debutSimulation,date, r, spot, volatility);
             proportions[a, 0] = delta;
             proportions[a, 1] = thuneSansRisque;
+            
         }
         
         int fonctionkerboul(DateTime date)
         {
             return 1;
         }
-        public double pricePortefeuille(DateTime date , double prixSousJ ,double r,double spot, double volatility)
+        //j'ai enlevé prixSousJ car c'est la même chose que le spot
+        public double pricePortefeuille(DateTime debutEstimation, DateTime date  ,double r,double spot, double volatility)
         {
-            int a = fonctionkerboul(date);
+            int a = dateTimeConverter(debutEstimation,date);
             if (a < 0)
             {
                 throw new Exception("la fonction Kerboul a renvoyé un index négatif, c'est un boyard ");
             }
-            if (a == 0)
+            else if (a == 0)
             {
                 return option.calculePrixVanille(date, 365, spot, volatility);
             }
-            return proportions[a-1,0] * prixSousJ + proportions[a-1,1] * (1 + r); 
+            else
+            {
+                return proportions[a - 1, 0] * spot + proportions[a - 1, 1] * (1 + r);
+            }
 
 
+
+        }
+
+        public int dateTimeConverter(DateTime debutEstimation, DateTime date)
+        {
+            bool datahist = false;
+            if (datahist)
+            {
+                return 0;
+            }
+
+            DateTime dateDebut = debutEstimation;
+            TimeSpan temps = date - dateDebut;
+            int a = Convert.ToInt32(temps.TotalDays);
+            return a;
 
         }
         /*

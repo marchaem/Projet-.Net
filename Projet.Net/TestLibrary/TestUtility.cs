@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using PricingLibrary.FinancialProducts;
-using PricingLibrary.Options;
+
 using PricingLibrary.Utilities.MarketDataFeed;
 
 namespace TestLibrary

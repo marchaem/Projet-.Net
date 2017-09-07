@@ -11,7 +11,7 @@ namespace WpfApplication2.Options
    public class OptionVanille
     {
         private VanillaCall vanillaCall { get; set; }
-        private double prix { get; set; }
+        
 
         public OptionVanille(VanillaCall vanille)
         {
