@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using WpfApplication2.Simulation;
+using WpfApplication2.Simu;
 using WpfApplication2.Entree;
 using System.Runtime.InteropServices;
 using PricingLibrary.FinancialProducts;
@@ -18,7 +18,7 @@ namespace TestLibrary
         {
             List<String> sousjacents = new List<string>(){ "accor", "bnp" };
             Entrees entree = new Entrees(Entrees.typeOption.Basket
-                , 8, new DateTime(2009, 1, 1)
+                , 7, new DateTime(2009, 1, 1)
                 , sousjacents
                 , new DateTime(2012, 1, 1)
                 , new DateTime(2009, 1, 1)
@@ -30,6 +30,19 @@ namespace TestLibrary
             Simulation sim = new Simulation(entree);
             sim.Lancer();
 
+            /*List<String> sousjacent = new List<string>() { "accor" };
+            Entrees entree = new Entrees(Entrees.typeOption.Vanille
+                , 7, new DateTime(2009, 1, 1)
+                , sousjacent
+                , new DateTime(2012, 1, 1)
+                , new DateTime(2009, 1, 1)
+                , new DateTime(2012, 1, 1)
+                , 100
+                , Entrees.typeDonnees.Simulees
+                , "optionTest"
+                , new List<double>() {1});
+            Simulation sim = new Simulation(entree);
+            sim.Lancer();*/
         }
     }
 }

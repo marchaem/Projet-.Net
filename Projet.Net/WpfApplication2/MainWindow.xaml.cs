@@ -8,6 +8,7 @@ using System.Windows;
 using WpfApplication2.Portfolio;
 using WpfApplication2.Options;
 using WpfApplication2.Entree;
+using WpfApplication2.Simu;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -22,7 +23,7 @@ namespace WpfApplication2
         public MainWindow()
         {
             /*Donnees a demander a l'utilisateur*/
-            Share action = new Share("accor", "accordId");
+            /*Share action = new Share("accor", "accordId");
             Pricer pricer = new Pricer();
             List<Share> liste = new List<Share>() { action };
             DateTime maturite = new DateTime(2001, 10, 10);
@@ -36,25 +37,13 @@ namespace WpfApplication2
             Console.WriteLine("Echeance " + maturite.ToString());
           
             
-
-            /*On rentre en dur la valeur de l'action pour l'instant*/
-            
             Console.WriteLine("Action selectionnée " + action.Name);          
             DateTime finEstimation = new DateTime(2010,1,1);
-
-            /*Fin entree des donnees*/
-
-            /*Creation de l'option*/
 
             VanillaCall vanille = new VanillaCall("option", action, maturite, donnes.strike);
             OptionVanille option = new OptionVanille(vanille);
 
-            /*Calcul du portefeuille de couverture*/
 
-
-
-
-            //Actualisation de la valeur du portefeuille
             var dataFeedCalc = new List<DataFeed>();
             IDataFeedProvider data = new SimulatedDataFeedProvider();
             dataFeedCalc = data.GetDataFeed(vanille, new DateTime(2000,1,1));
@@ -72,16 +61,23 @@ namespace WpfApplication2
                 Console.WriteLine(porteFeuilleVanille.ToString1(donnes.debutSimulation,date));
                 Console.WriteLine("Tracking Error = " + porteFeuilleVanille.trackingErrors[i]  +" à la date " + date.ToString());
                 date=date.AddDays(donnes.pas);
-            }
-           
+            }*/
 
-            
-            
-            
+            List<String> sousjacents = new List<string>() { "accor", "bnp" };
+            Entrees entree = new Entrees(Entrees.typeOption.Basket
+                , 7, new DateTime(2009, 1, 1)
+                , sousjacents
+                , new DateTime(2012, 1, 1)
+                , new DateTime(2009, 1, 1)
+                , new DateTime(2012, 1, 1)
+                , 100
+                , Entrees.typeDonnees.Simulees
+                , "optionTest"
+                , new List<double>() { 0.7, 0.3 });
+            Simulation sim = new Simulation(entree);
+            sim.Lancer();
 
 
-
-            //InitializeComponent();
 
         }
         public int dateTimeConverter(DateTime date)
