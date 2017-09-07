@@ -4,18 +4,10 @@ using PricingLibrary.Utilities.MarketDataFeed;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WpfApplication2.Portfolio;
+using WpfApplication2.Options;
+using WpfApplication2.Parametres;
 
 namespace WpfApplication2
 {
@@ -29,21 +21,21 @@ namespace WpfApplication2
         {
             
             //getShareName();
-            DateTime date1 = new DateTime(1,1,5);
-            var a = dateTimeConverter(date1);
-            Console.WriteLine("la date vaux : "+a);
+         //   DateTime date1 = new DateTime(1,1,5);
+          //  var a = dateTimeConverter(date1);
+        //    Console.WriteLine("la date vaux : "+a);
             /*Donnees a demander a l'utilisateur*/
 
-            DateTime debut = new DateTime(2009, 01, 01);
+          //  DateTime debut = new DateTime(2009, 01, 01);
             DateTime maturite = new DateTime(2010, 10, 10);
-            double strike = 9.0;
+            double strike = 7.0;
 
             double tauxSansRisque = 0.01;
 
             Console.WriteLine("Simulation lancée avec : ");
             Console.WriteLine("K = " + strike + "€");
             Console.WriteLine("Echeance " + maturite.ToString());
-            Console.WriteLine("Date Courrante " + debut.ToString());
+          //  Console.WriteLine("Date Courrante " + debut.ToString());
 
             bool simule = true;
 
@@ -59,40 +51,58 @@ namespace WpfApplication2
             /*Creation de l'option*/
 
             VanillaCall vanille = new VanillaCall("option", action, maturite, strike);
+            OptionVanille option = new OptionVanille(vanille);
 
             /*Calcul de la valeur du payoff*/
             var dataFeedCalc = new List<DataFeed>();
-            double payoff;
+            
 
-            IDataFeedProvider data = new SimulatedDataFeedProvider();
-            dataFeedCalc = data.GetDataFeed(vanille, debut);
-            payoff = vanille.GetPayoff(dataFeedCalc[dataFeedCalc.Count - 1].PriceList);
-            Console.WriteLine("Le payoff de l'option " + vanille.Name + " vaut " + payoff);
+           
+            
             
 
             /*Calcul du portefeuille de couverture*/
 
             Pricer pricer = new Pricer();
-           
-            var result = pricer.PriceCall(vanille, maturite, 366, (double) dataFeedCalc[dataFeedCalc.Count-1].PriceList[vanille.UnderlyingShare.Id], 0.4);
-            //Console.WriteLine("Le delta à la fin vaut : " + result.Deltas[0]);
-           // Console.WriteLine("Le prix du call à l'écheance : " + result.Price);
 
-            var resultdebut = pricer.PriceCall(vanille, debut, 366, (double)dataFeedCalc[0].PriceList[vanille.UnderlyingShare.Id], 0.4);
-            //Console.WriteLine("Le delta au début vaut : " + resultdebut.Deltas[0]);
-            //Console.WriteLine("Le prix du call au début : " + resultdebut.Price);
+            /*  var result = pricer.PriceCall(vanille, maturite, 366, (double) dataFeedCalc[dataFeedCalc.Count-1].PriceList[vanille.UnderlyingShare.Id], 0.4);
+              Console.WriteLine("Le delta à la fin vaut : " + result.Deltas[0]);
+              Console.WriteLine("Le prix du call à l'écheance : " + result.Price);
 
-            //PorteFeuilleVanille porteFeuilleVanille = new PorteFeuilleVanille(action, resultdebut.Deltas[0], resultdebut.Price, (double) dataFeedCalc[0].PriceList[vanille.UnderlyingShare.Id]);
-            //Console.WriteLine(porteFeuilleVanille.ToString());
+              var resultdebut = pricer.PriceCall(vanille, debut, 366, (double)dataFeedCalc[0].PriceList[vanille.UnderlyingShare.Id], 0.4);
+              Console.WriteLine("Le delta au début vaut : " + resultdebut.Deltas[0]);
+              Console.WriteLine("Le prix du call au début : " + resultdebut.Price);
+              */
+            List<Share> liste = new List<Share>() { action };
+
+            Entrees donnes = new Entrees(0, 7.0, new DateTime(2000, 1, 1), liste, maturite,new DateTime(2000,1,1), new DateTime(2001, 10, 10), 1, 0);
 
             //Actualisation de la valeur du portefeuille
+            IDataFeedProvider data = new SimulatedDataFeedProvider();
+            dataFeedCalc = data.GetDataFeed(vanille, new DateTime(2000,1,1));
+            PorteFeuilleVanille porteFeuilleVanille = new PorteFeuilleVanille(option);
+            Console.WriteLine(porteFeuilleVanille.ToString());
+            //  DateTime[] date = new DateTime[] { new DateTime(2000,1,1), new DateTime(2000, 1, 2), new DateTime(2000, 1, 3), new DateTime(2000, 1, 4), new DateTime(2000, 1, 5) };
+            double prixOption = 0.0;
+            porteFeuilleVanille.actulisationPorteSimu(dataFeedCalc, donnes);
 
-            //double valeurActu = porteFeuilleVanille.getValeurActu(1, (double) dataFeedCalc[dataFeedCalc.Count - 1].PriceList[vanille.UnderlyingShare.Id], tauxSansRisque);
+            double trackingError;
+            int i = 0;
+            DateTime date = donnes.debutSimulation;
+            while (date <  donnes.finSimulation)
+            {
+                i  = porteFeuilleVanille.dateTimeConverter(donnes.debutSimulation, date);
+              
+                Console.Write("le spot vaut : " + dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id]);
+                prixOption = pricer.PriceCall(vanille, date, 365, (double)dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id], 0.4).Price;
+                Console.WriteLine(porteFeuilleVanille.ToString1(donnes.debutSimulation,date));
+                Console.WriteLine("Tracking Error = " + porteFeuilleVanille.trackingErrors[i]  +" à la date " + date.ToString());
+                date=date.AddDays(donnes.pas);
+            }
+           
 
             // Calcul de la tracking error
-
-            //double trackingError = valeurActu - payoff;
-            //Console.WriteLine("Tracking Error = " + trackingError);
+            
             
 
 
