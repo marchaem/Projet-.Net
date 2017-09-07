@@ -59,7 +59,7 @@ namespace WpfApplication2.Portfolio
         public double pricePortefeuille(DateTime debutEstimation, DateTime date  ,double r,double spot, double volatility)
         {
             int a = dateTimeConverter(debutEstimation,date);
-            Console.WriteLine("a vaut " + a.ToString());
+            
             if (a < 0)
             {
                 throw new Exception("la fonction Kerboul a renvoyé un index négatif, c'est un boyard ");
