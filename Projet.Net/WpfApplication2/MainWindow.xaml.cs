@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using WpfApplication2.Portfolio;
 using WpfApplication2.Options;
+using WpfApplication2.Parametres;
 
 namespace WpfApplication2
 {
@@ -27,7 +28,7 @@ namespace WpfApplication2
 
           //  DateTime debut = new DateTime(2009, 01, 01);
             DateTime maturite = new DateTime(2010, 10, 10);
-            double strike = 9.0;
+            double strike = 7.0;
 
             double tauxSansRisque = 0.01;
 
@@ -72,30 +73,32 @@ namespace WpfApplication2
               Console.WriteLine("Le delta au début vaut : " + resultdebut.Deltas[0]);
               Console.WriteLine("Le prix du call au début : " + resultdebut.Price);
               */
+            List<Share> liste = new List<Share>() { action };
 
+            Entrees donnes = new Entrees(0, 7.0, new DateTime(2000, 1, 1), liste, maturite,new DateTime(2000,1,1), new DateTime(2001, 10, 10), 1, 0);
 
             //Actualisation de la valeur du portefeuille
             IDataFeedProvider data = new SimulatedDataFeedProvider();
             dataFeedCalc = data.GetDataFeed(vanille, new DateTime(2000,1,1));
             PorteFeuilleVanille porteFeuilleVanille = new PorteFeuilleVanille(option);
             Console.WriteLine(porteFeuilleVanille.ToString());
-            DateTime[] date = new DateTime[] { new DateTime(2000,1,1), new DateTime(2000, 1, 2), new DateTime(2000, 1, 3), new DateTime(2000, 1, 4), new DateTime(2000, 1, 5) };
-            double payoff = vanille.GetPayoff(dataFeedCalc[dataFeedCalc.Count - 1].PriceList);
+            //  DateTime[] date = new DateTime[] { new DateTime(2000,1,1), new DateTime(2000, 1, 2), new DateTime(2000, 1, 3), new DateTime(2000, 1, 4), new DateTime(2000, 1, 5) };
+            double prixOption = 0.0;
+            porteFeuilleVanille.actulisationPorteSimu(dataFeedCalc, donnes);
 
-            
             double trackingError;
             int i = 0;
-            
-            foreach (DateTime dates in date)
+            DateTime date = donnes.debutSimulation;
+            while (date <  donnes.finSimulation)
             {
-                i  = porteFeuilleVanille.dateTimeConverter(date[0], dates);
-                porteFeuilleVanille.actualisationPortef(date[0], dates, (double) dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id],0.4,tauxSansRisque);
+                i  = porteFeuilleVanille.dateTimeConverter(donnes.debutSimulation, date);
+                
                 Console.Write("le spot vaut : " + dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id]);
-                payoff = pricer.PriceCall(vanille, dates, 365, (double)dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id], 0.4).Price;
-                trackingError = porteFeuilleVanille.pricePortefeuille(date[0], dates, tauxSansRisque, (double)dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id], 0.4) - payoff;
-                Console.WriteLine(porteFeuilleVanille.ToString1(date[0],dates));
-                Console.WriteLine("Tracking Error = " + trackingError +" à la date " + dates.ToString());
-                i++;
+                prixOption = pricer.PriceCall(vanille, date, 365, (double)dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id], 0.4).Price;
+                trackingError = porteFeuilleVanille.pricePortefeuille(donnes.debutSimulation, date, tauxSansRisque, (double)dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id], 0.4) - prixOption;
+                Console.WriteLine(porteFeuilleVanille.ToString1(donnes.debutSimulation,date));
+                Console.WriteLine("Tracking Error = " + trackingError +" à la date " + date.ToString());
+                date=date.AddDays(donnes.pas);
             }
            
 
