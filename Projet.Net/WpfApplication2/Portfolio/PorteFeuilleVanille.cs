@@ -14,6 +14,7 @@ namespace WpfApplication2.Portfolio
     {
         private OptionVanille option { get; set; }
 
+        public List<double> trackingErrors { get; }
 
         // proportions est matrice qui à une date (ligne ) associe les proportions (colonnes)
         private double[,] proportions;// composition portefeuille
@@ -22,6 +23,7 @@ namespace WpfApplication2.Portfolio
         {
             this.option = option;
             this.proportions = new double[1000000,2]; // à améliorer
+            this.trackingErrors = new List<double>();
         }
         public void actualisationPortef(DateTime debutSimulation,DateTime date,double spot,double volatility,double r)//actualisationSimulation
         {
@@ -36,7 +38,10 @@ namespace WpfApplication2.Portfolio
             double thuneSansRisque = pricePortefeuille(debutSimulation,date, r, spot, volatility)-delta*spot;
             proportions[a, 0] = delta;
             proportions[a, 1] = thuneSansRisque;
-            
+            trackingErrors[a] = pricePortefeuille(debutSimulation, date, r, spot, volatility) - option.calculePrixVanille(date, 365, spot, volatility);
+
+
+
         }
         
 
@@ -51,7 +56,6 @@ namespace WpfApplication2.Portfolio
             }
         }
         
-        //j'ai enlevé prixSousJ car c'est la même chose que le spot
         public double pricePortefeuille(DateTime debutEstimation, DateTime date  ,double r,double spot, double volatility)
         {
             int a = dateTimeConverter(debutEstimation,date);
@@ -95,6 +99,7 @@ namespace WpfApplication2.Portfolio
             string message = "la composition du portefeuille est : " + this.proportions[dateTimeConverter(dateDebut, date), 0] + " et " + this.proportions[dateTimeConverter(dateDebut, date), 1];
             return message;
         }
+
 
 
         /*
