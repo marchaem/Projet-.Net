@@ -105,8 +105,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mesure\ListeMesures.cs" />
-    <Compile Include="Mesure\Mesure.cs" />
     <Compile Include="Options\OptionVanille.cs" />
     <Compile Include="Entree\Entrees.cs" />
     <Compile Include="Portfolio\Portefeuille.cs" />
