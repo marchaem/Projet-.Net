@@ -16,21 +16,21 @@ namespace WpfApplication2.Portfolio
 
 
         // proportions est matrice qui à une date (ligne ) associe les proportions (colonnes)
-        private double[,] proportions;
+        private double[,] proportions;// composition portefeuille
 
         public PorteFeuilleVanille(OptionVanille option)
         {
             this.option = option;
             this.proportions = new double[1000000,2]; // à améliorer
         }
-        public void actualisationPortef(DateTime debutSimulation,DateTime date,double spot,double volatility,double r)
+        public void actualisationPortef(DateTime debutSimulation,DateTime date,double spot,double volatility,double r)//actualisationSimulation
         {
             int a = dateTimeConverter(debutSimulation,date);
             
             if (a < 0)
             {
                 
-                throw new Exception("mon a est négatif, merci kerboul");
+                throw new Exception("abruti rentre des bonnes dates");
             }
             double delta = option.calculDeltaVanille(date, 365, spot, volatility);
             double thuneSansRisque = pricePortefeuille(debutSimulation,date, r, spot, volatility)-delta*spot;
@@ -40,7 +40,7 @@ namespace WpfApplication2.Portfolio
         }
         
 
-        public void actulisationPorteSimu(List<DataFeed> simulation, Entrees input)
+        public void actulisationPorteSimu(List<DataFeed> simulation, Entrees input)// fillCompositionPortefeuille
         {
             int i=0;
            
