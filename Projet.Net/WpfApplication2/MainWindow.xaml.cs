@@ -4,18 +4,10 @@ using PricingLibrary.Utilities.MarketDataFeed;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WpfApplication2.Portfolio;
+using WpfApplication2.Options;
+using WpfApplication2.Parametres;
 
 namespace WpfApplication2
 {
@@ -24,77 +16,84 @@ namespace WpfApplication2
     /// </summary>
     public partial class MainWindow : Window
     {
+        static DateTime debutEstimation = new DateTime(2009, 1, 1);
         public MainWindow()
         {
-
-            //getShareName();
             /*Donnees a demander a l'utilisateur*/
+            Share action = new Share("accor", "accordId");
+            Pricer pricer = new Pricer();
+            List<Share> liste = new List<Share>() { action };
+            DateTime maturite = new DateTime(2001, 10, 10);
+            Entrees donnes = new Entrees(0, 7.0, new DateTime(2000, 1, 1), liste, maturite, new DateTime(2000, 1, 1), new DateTime(2001, 1, 10), 1, 0);
 
-            DateTime debut = new DateTime(2009, 01, 01);
-            DateTime maturite = new DateTime(2010, 10, 10);
-            double strike = 9.0;
-
-            double tauxSansRisque = 0.01;
+           
 
             Console.WriteLine("Simulation lancée avec : ");
             Console.WriteLine("K = " + strike + "€");
             Console.WriteLine("Echeance " + maturite.ToString());
-            Console.WriteLine("Date Courrante " + debut.ToString());
-
-            bool simule = true;
+          
+            
 
             /*On rentre en dur la valeur de l'action pour l'instant*/
-            Share action = new Share("accor", "accordId");
-            Console.WriteLine("Action selectionnée " + action.Name);
-
-            DateTime debutEstimation = new DateTime(2009,1,1);
+            
+            Console.WriteLine("Action selectionnée " + action.Name);          
             DateTime finEstimation = new DateTime(2010,1,1);
 
             /*Fin entree des donnees*/
 
             /*Creation de l'option*/
 
-            VanillaCall vanille = new VanillaCall("option", action, maturite, strike);
-
-            /*Calcul de la valeur du payoff*/
-            var dataFeedCalc = new List<DataFeed>();
-            double payoff;
-
-            IDataFeedProvider data = new SimulatedDataFeedProvider();
-            dataFeedCalc = data.GetDataFeed(vanille, debut);
-            payoff = vanille.GetPayoff(dataFeedCalc[dataFeedCalc.Count - 1].PriceList);
-            Console.WriteLine("Le payoff de l'option " + vanille.Name + " vaut " + payoff);
-            
+            VanillaCall vanille = new VanillaCall("option", action, maturite, donnes.strike);
+            OptionVanille option = new OptionVanille(vanille);
 
             /*Calcul du portefeuille de couverture*/
 
-            Pricer pricer = new Pricer();
-           
-            var result = pricer.PriceCall(vanille, maturite, 366, (double) dataFeedCalc[dataFeedCalc.Count-1].PriceList[vanille.UnderlyingShare.Id], 0.4);
-            //Console.WriteLine("Le delta à la fin vaut : " + result.Deltas[0]);
-           // Console.WriteLine("Le prix du call à l'écheance : " + result.Price);
 
-            var resultdebut = pricer.PriceCall(vanille, debut, 366, (double)dataFeedCalc[0].PriceList[vanille.UnderlyingShare.Id], 0.4);
-            //Console.WriteLine("Le delta au début vaut : " + resultdebut.Deltas[0]);
-            //Console.WriteLine("Le prix du call au début : " + resultdebut.Price);
 
-            //PorteFeuilleVanille porteFeuilleVanille = new PorteFeuilleVanille(action, resultdebut.Deltas[0], resultdebut.Price, (double) dataFeedCalc[0].PriceList[vanille.UnderlyingShare.Id]);
-            //Console.WriteLine(porteFeuilleVanille.ToString());
 
             //Actualisation de la valeur du portefeuille
+            var dataFeedCalc = new List<DataFeed>();
+            IDataFeedProvider data = new SimulatedDataFeedProvider();
+            dataFeedCalc = data.GetDataFeed(vanille, new DateTime(2000,1,1));
+            PorteFeuilleVanille porteFeuilleVanille = new PorteFeuilleVanille(option);
+            porteFeuilleVanille.actulisationPorteSimu(dataFeedCalc, donnes);   
+            int i = 0;
+            DateTime date = donnes.debutSimulation;
+            while (date <=  donnes.finSimulation)
+            {
+                i  = porteFeuilleVanille.dateTimeConverter(donnes.debutSimulation, date);
+                Console.WriteLine("le call vaut : " + pricer.PriceCall(vanille, date, 365,(double) dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id], 0.4).Price);
+                Console.WriteLine("i vaut :" + i);
+                Console.Write("le spot vaut : " + dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id]);
+                Console.WriteLine("le portefeuille vaut : ");
+                Console.WriteLine(porteFeuilleVanille.ToString1(donnes.debutSimulation,date));
+                Console.WriteLine("Tracking Error = " + porteFeuilleVanille.trackingErrors[i]  +" à la date " + date.ToString());
+                date=date.AddDays(donnes.pas);
+            }
+           
 
-            //double valeurActu = porteFeuilleVanille.getValeurActu(1, (double) dataFeedCalc[dataFeedCalc.Count - 1].PriceList[vanille.UnderlyingShare.Id], tauxSansRisque);
-
-            // Calcul de la tracking error
-
-            //double trackingError = valeurActu - payoff;
-            //Console.WriteLine("Tracking Error = " + trackingError);
+            
+            
             
 
 
 
             //InitializeComponent();
 
+        }
+        public int dateTimeConverter(DateTime date)
+        {
+            bool datahist = false;
+            if (datahist)
+            {
+                return 0;
+            }
+           
+            DateTime dateDebut = debutEstimation;
+            TimeSpan temps = date -  dateDebut ;
+            int a = Convert.ToInt32(temps.TotalDays);
+            return a;
+            
         }
 
         public void getDatahist()
@@ -151,6 +150,11 @@ namespace WpfApplication2
             dataFeedCalc[50].PriceList.TryGetValue("accordId", out a);
             Console.WriteLine(a);
             Console.WriteLine("fin");
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
