@@ -92,7 +92,7 @@ namespace WpfApplication2
             while (date <  donnes.finSimulation)
             {
                 i  = porteFeuilleVanille.dateTimeConverter(donnes.debutSimulation, date);
-                
+              
                 Console.Write("le spot vaut : " + dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id]);
                 prixOption = pricer.PriceCall(vanille, date, 365, (double)dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id], 0.4).Price;
                 trackingError = porteFeuilleVanille.pricePortefeuille(donnes.debutSimulation, date, tauxSansRisque, (double)dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id], 0.4) - prixOption;
