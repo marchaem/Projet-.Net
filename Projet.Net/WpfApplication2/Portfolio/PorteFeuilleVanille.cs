@@ -90,6 +90,12 @@ namespace WpfApplication2.Portfolio
 
         }
 
+        public  string ToString1(DateTime dateDebut, DateTime date)
+        {
+            string message = "la composition du portefeuille est : " + this.proportions[dateTimeConverter(dateDebut, date), 0] + " et " + this.proportions[dateTimeConverter(dateDebut, date), 1];
+            return message;
+        }
+
 
         /*
         public double getValeurActu(int nbPeriodes, double spot, double tauxSansRisque)
