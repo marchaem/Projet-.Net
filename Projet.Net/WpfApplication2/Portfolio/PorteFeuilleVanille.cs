@@ -1,10 +1,12 @@
 ﻿using PricingLibrary.FinancialProducts;
+using PricingLibrary.Utilities.MarketDataFeed;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WpfApplication2.Options;
+using WpfApplication2.Parametres;
 
 namespace WpfApplication2.Portfolio
 {
@@ -37,6 +39,17 @@ namespace WpfApplication2.Portfolio
             
         }
         
+
+        public void actulisationPorteSimu(List<DataFeed> simulation, Entrees input)
+        {
+            int i=0;
+           
+            foreach(DataFeed val in simulation)
+            {
+                actualisationPortef(input.dateDebut, val.Date,(double) val.PriceList[input.listActions[0].Id], 0.4, 0.01);
+                i++;
+            }
+        }
         
         //j'ai enlevé prixSousJ car c'est la même chose que le spot
         public double pricePortefeuille(DateTime debutEstimation, DateTime date  ,double r,double spot, double volatility)

@@ -11,17 +11,17 @@ namespace WpfApplication2.Parametres
     {
         public enum typeOption { Vanille, Basket }
         public typeOption typeoption;
-        private double strike { get; set; }
-        private DateTime dateDebut { get; set; }
-        private List<Share> listActions { get; set; }
-        private DateTime maturite { get; set; }
-        private DateTime debutSimulation { get; set; }
-        private DateTime finSimulation { get; set; }
-        private double pas { get; set; }
+        public double strike { get; set; }
+        public DateTime dateDebut { get; set; }
+        public List<Share> listActions { get; set; }
+        public DateTime maturite { get; set; }
+        public DateTime debutSimulation { get; set; }
+        public DateTime finSimulation { get; set; }
+        public int pas { get; set; }
         public enum typeDonnees { Historique, Simulees}
-        private typeDonnees typedonnees;
+        public typeDonnees typedonnees;
 
-        public Entrees(typeOption type,double strike, DateTime dateDebut,List<Share> liste, DateTime maturite, DateTime debutSimulation, DateTime finSimulation, double pas, typeDonnees typeDonnees)
+        public Entrees(typeOption type,double strike, DateTime dateDebut,List<Share> liste, DateTime maturite, DateTime debutSimulation, DateTime finSimulation, int pas, typeDonnees typeDonnees)
         {
             this.typeoption = type;
             this.strike = strike;
