@@ -9,15 +9,19 @@ using PricingLibrary.Computations;
 using PricingLibrary.Utilities.MarketDataFeed;
 using PricingLibrary.Utilities;
 
-namespace WpfApplication2.Simulation
+namespace WpfApplication2.Simu
 {
     public class Simulation
     {
         private Entrees param;
+        public List<double> valeurPf { get; set; }
+        public List<double> PrixOption { get; set; }
 
         public Simulation(Entrees param)
         {
             this.param = param;
+            this.valeurPf = new List<double>();
+            this.PrixOption = new List<double>();
         }
 
         public void Lancer()
@@ -40,7 +44,21 @@ namespace WpfApplication2.Simulation
 
         public void LancerVanille()
         {
+            /*Création de l'action sous jacente*/
+            Share SousJacent = new Share(param.listActions[0], param.listActions[0]);
+
+            /*Création de l'option*/
+            VanillaCall option = new VanillaCall(param.nomOption, SousJacent, param.maturite, param.strike);
+
+            List<DataFeed> dataFeedCalc = this.getDonneesSimulees(option);
+
+            /*Calcul du payoff*/
+            double payoff = option.GetPayoff(dataFeedCalc[dataFeedCalc.Count - 1].PriceList);
+            Console.WriteLine("Le payoff du VanillaCall vaut : " + payoff);
+       
             
+
+
         }
 
         public void LancerBasket()
@@ -81,15 +99,20 @@ namespace WpfApplication2.Simulation
             double[] deltas = pricer.PriceBasket(option, param.dateDebut, 365, spot, volatility, matrice).Deltas;
             Console.WriteLine("Prix initial de l'option = " + prix + "€\n");
 
+
             /*Calcul du premier portefeuille*/
             PorteFeuilleBasket premierpf = new PorteFeuilleBasket(prix,deltas, this.getSpotIndex(0,option, dataFeedCalc),option);
 
             Console.WriteLine(premierpf.ToString(this.getSpotIndex(0, option, dataFeedCalc)));
+
+            this.valeurPf.Add(premierpf.getPrixPortefeuille(this.getSpotIndex(0, option, dataFeedCalc)));
+            this.PrixOption.Add(prix);
+
             double track = premierpf.getPrixPortefeuille(this.getSpotIndex(0, option, dataFeedCalc)) - this.calculerPrixBasket(0, option, dataFeedCalc);
 
             /*Rebalancements*/
             int jourActuel = 0;
-            int frequence = param.pas; 
+            int frequence = param.pas; // A modifier ensuite avec les parametres de l'entrée ...
             List<PorteFeuilleBasket> historiquePf = new List<PorteFeuilleBasket>();
             historiquePf.Add(premierpf);
             while (jourActuel < dataFeedCalc.Count-frequence)
@@ -98,8 +121,8 @@ namespace WpfApplication2.Simulation
                 jourActuel += frequence;
                 Console.WriteLine("Jour = " + jourActuel);
                 PorteFeuilleBasket pfRebalancee = new PorteFeuilleBasket(this.getSpotIndex(jourActuel, option, dataFeedCalc)
-                    , this.calculerDeltas(jourActuel, option, dataFeedCalc).ToList()
-                    , this.calculerDeltas(jourActuel - frequence, option, dataFeedCalc).ToList()
+                    , this.calculerDeltasBasket(jourActuel, option, dataFeedCalc).ToList()
+                    , this.calculerDeltasBasket(jourActuel - frequence, option, dataFeedCalc).ToList()
                     , historiquePf[historiquePf.Count-1]
                     , tauxSansRisque 
                     , option); 
@@ -108,6 +131,9 @@ namespace WpfApplication2.Simulation
                 Console.WriteLine("Tracking Error Jour " + jourActuel + " = " + this.calculerTrackingErrorBasket(jourActuel,option,pfRebalancee, dataFeedCalc));
                 Console.WriteLine("Tracking Error Relatif Jour " + jourActuel + " = " + this.calculerTrackingErrorRelatifBasket(jourActuel, option, pfRebalancee, dataFeedCalc)+"%");
                 double TrackingError = pfRebalancee.getPrixPortefeuille(this.getSpotIndex(jourActuel, option, dataFeedCalc)) - this.calculerPrixBasket(jourActuel,option, dataFeedCalc);
+
+                this.PrixOption.Add(this.calculerPrixBasket(jourActuel,option,dataFeedCalc));
+                this.valeurPf.Add(pfRebalancee.getPrixPortefeuille(this.getSpotIndex(jourActuel,option,dataFeedCalc)));
             }
             // Calcul de la dernière date 
             int daySpan = (param.maturite - param.dateDebut).Days;
@@ -117,14 +143,17 @@ namespace WpfApplication2.Simulation
                 double tauxssrisque = RiskFreeRateProvider.GetRiskFreeRateAccruedValue(DayCount.ConvertToDouble(LastDay-jourActuel, 365));
                 Console.WriteLine("Jour = " + LastDay);
                 PorteFeuilleBasket pfRebalancee = new PorteFeuilleBasket(this.getSpotIndex(LastDay, option, dataFeedCalc)
-                    , this.calculerDeltas(LastDay, option, dataFeedCalc).ToList()
-                    , this.calculerDeltas(LastDay - frequence, option, dataFeedCalc).ToList()
+                    , this.calculerDeltasBasket(LastDay, option, dataFeedCalc).ToList()
+                    , this.calculerDeltasBasket(LastDay - frequence, option, dataFeedCalc).ToList()
                     , historiquePf[historiquePf.Count - 1]
                     , tauxssrisque // TAUX SANS RISQUE A MODIFIER
                     , option);
                 Console.WriteLine(pfRebalancee.ToString(this.getSpotIndex(LastDay, option, dataFeedCalc)));
                 Console.WriteLine("Tracking Error Jour " + LastDay + " = " + this.calculerTrackingErrorBasket(LastDay, option, pfRebalancee, dataFeedCalc));
                 Console.WriteLine("Tracking Error Relatif Jour " + LastDay + " = " + this.calculerTrackingErrorRelatifBasket(LastDay, option, pfRebalancee, dataFeedCalc) + "%");
+
+                this.PrixOption.Add(this.calculerPrixBasket(LastDay, option, dataFeedCalc));
+                this.valeurPf.Add(pfRebalancee.getPrixPortefeuille(this.getSpotIndex(LastDay, option, dataFeedCalc)));
             }
         }
 
@@ -144,7 +173,7 @@ namespace WpfApplication2.Simulation
             return newres;
         }
 
-        public double[] calculerDeltas(int i, BasketOption option, List<DataFeed> dataFeedCalc)
+        public double[] calculerDeltasBasket(int i, BasketOption option, List<DataFeed> dataFeedCalc)
         {
             Pricer pricer = new Pricer();
             double[] volatility = new double[] { 0.4, 0.4 };
@@ -179,6 +208,8 @@ namespace WpfApplication2.Simulation
             res = (this.calculerPrixBasket(jour, option, dataFeedCalc) - pf.getPrixPortefeuille(this.getSpotIndex(jour, option, dataFeedCalc))) / this.calculerPrixBasket(jour, option, dataFeedCalc);
             return res * 100.0;
         }
+
+
 
     }
 }
