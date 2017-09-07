@@ -38,7 +38,7 @@ namespace WpfApplication2.Portfolio
             double thuneSansRisque = pricePortefeuille(debutSimulation,date, r, spot, volatility)-delta*spot;
             proportions[a, 0] = delta;
             proportions[a, 1] = thuneSansRisque;
-            trackingErrors[a] = pricePortefeuille(debutSimulation, date, r, spot, volatility) - option.calculePrixVanille(date, 365, spot, volatility);
+            trackingErrors.Add ( pricePortefeuille(debutSimulation, date, r, spot, volatility) - option.calculePrixVanille(date, 365, spot, volatility));
 
 
 
