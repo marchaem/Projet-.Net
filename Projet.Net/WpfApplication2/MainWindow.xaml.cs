@@ -20,6 +20,8 @@ namespace WpfApplication2
     public partial class MainWindow : Window
     {
         static DateTime debutEstimation = new DateTime(2009, 1, 1);
+        private List<double> option;
+        private List<double> portefeuille;
         public MainWindow()
         {
             /*Donnees a demander a l'utilisateur*/
@@ -76,7 +78,8 @@ namespace WpfApplication2
                 , new List<double>() { 0.7, 0.3 });
             Simulation sim = new Simulation(entree);
             sim.Lancer();
-
+            option = sim.PrixOption;
+            portefeuille = sim.valeurPf;
 
 
         }
@@ -135,24 +138,55 @@ namespace WpfApplication2
             // Make some data sets.
             Brush[] brushes = { Brushes.Red, Brushes.Green, Brushes.Blue };
             Random rand = new Random();
-            for (int data_set = 0; data_set < 3; data_set++)
+
+            PointCollection points = new PointCollection();
+            var x2 = margin;
+            Console.WriteLine("il y a " + option.Count + "nombre d element dans la liste ");
+
+            foreach (double val in option)
             {
-                int last_y = rand.Next((int)ymin, (int)ymax);
-
-                PointCollection points = new PointCollection();
-                for (double x = xmin; x <= xmax; x += step)
-                {
-                    last_y = rand.Next(last_y - 10, last_y + 10);
-                    points.Add(new Point(x, last_y));
-                }
-
-                Polyline polyline = new Polyline();
-                polyline.StrokeThickness = 1;
-                polyline.Stroke = brushes[data_set];
-                polyline.Points = points;
-
-                canGraph.Children.Add(polyline);
+                points.Add(new Point(x2, ymax -val*20 ));
+                x2= x2 +  (int)(xmax / (int)option.Count);
             }
+            Polyline polyline = new Polyline();
+            polyline.StrokeThickness = 1;
+            polyline.Stroke = brushes[0];
+            polyline.Points = points;
+
+            canGraph.Children.Add(polyline);
+
+            PointCollection points2 = new PointCollection();
+            x2 = margin;
+            foreach (double val in portefeuille)
+            {
+                points2.Add(new Point(x2, ymax - val * 20));
+                x2 = x2 + (int)(xmax / (int)portefeuille.Count);
+            }
+            Polyline polyline2 = new Polyline();
+            polyline2.StrokeThickness = 1;
+            polyline2.Stroke = brushes[1];
+            polyline2.Points = points2;
+
+            canGraph.Children.Add(polyline2);
+
+            //for (int data_set = 0; data_set < 3; data_set++)
+            //{
+            //    int last_y = rand.Next((int)ymin, (int)ymax);
+
+            //    PointCollection points = new PointCollection();
+            //    for (double x = xmin; x <= xmax; x += step)
+            //    {
+            //        last_y = rand.Next(last_y - 10, last_y + 10);
+            //        points.Add(new Point(x, last_y));
+            //    }
+
+            //    Polyline polyline = new Polyline();
+            //    polyline.StrokeThickness = 1;
+            //    polyline.Stroke = brushes[data_set];
+            //    polyline.Points = points;
+
+            //    canGraph.Children.Add(polyline);
+            //}
         }
     }
 }
