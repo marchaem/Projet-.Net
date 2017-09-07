@@ -40,7 +40,7 @@ namespace WpfApplication2.Simulation
 
         public void LancerVanille()
         {
-            throw new Exception("not yet implemented");
+            
         }
 
         public void LancerBasket()

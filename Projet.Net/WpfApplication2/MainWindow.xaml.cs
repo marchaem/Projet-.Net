@@ -7,7 +7,7 @@ using System.Linq;
 using System.Windows;
 using WpfApplication2.Portfolio;
 using WpfApplication2.Options;
-using WpfApplication2.Parametres;
+using WpfApplication2.Entree;
 
 namespace WpfApplication2
 {
@@ -24,7 +24,8 @@ namespace WpfApplication2
             Pricer pricer = new Pricer();
             List<Share> liste = new List<Share>() { action };
             DateTime maturite = new DateTime(2001, 10, 10);
-            Entrees donnes = new Entrees(0, 7.0, new DateTime(2000, 1, 1), liste, maturite, new DateTime(2000, 1, 1), new DateTime(2001, 1, 10), 1, 0);
+            List< String > listeAction = new List<String> { "Accor"};
+            Entrees donnes = new Entrees(0, 7.0, new DateTime(2000, 1, 1), listeAction, maturite, new DateTime(2000, 1, 1), new DateTime(2001, 1, 10), 1, 0,"option", new List<double>() { 1.0 });
 
            
 
