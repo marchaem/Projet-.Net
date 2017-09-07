@@ -78,10 +78,7 @@
   </Choose>
   <ItemGroup>
     <Content Include="Library.h" />
-    <Compile Include="MainTest.cs" />
-    <Compile Include="MainTest2.cs" />
     <Compile Include="TestUtility.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

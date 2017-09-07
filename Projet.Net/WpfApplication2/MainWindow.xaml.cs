@@ -26,6 +26,7 @@ namespace WpfApplication2
     {
         public MainWindow()
         {
+
             //getShareName();
             /*Donnees a demander a l'utilisateur*/
 
@@ -77,17 +78,17 @@ namespace WpfApplication2
             //Console.WriteLine("Le delta au début vaut : " + resultdebut.Deltas[0]);
             //Console.WriteLine("Le prix du call au début : " + resultdebut.Price);
 
-            PorteFeuilleVanille porteFeuilleVanille = new PorteFeuilleVanille(action, resultdebut.Deltas[0], resultdebut.Price, (double) dataFeedCalc[0].PriceList[vanille.UnderlyingShare.Id]);
-            Console.WriteLine(porteFeuilleVanille.ToString());
+            //PorteFeuilleVanille porteFeuilleVanille = new PorteFeuilleVanille(action, resultdebut.Deltas[0], resultdebut.Price, (double) dataFeedCalc[0].PriceList[vanille.UnderlyingShare.Id]);
+            //Console.WriteLine(porteFeuilleVanille.ToString());
 
             //Actualisation de la valeur du portefeuille
 
-            double valeurActu = porteFeuilleVanille.getValeurActu(1, (double) dataFeedCalc[dataFeedCalc.Count - 1].PriceList[vanille.UnderlyingShare.Id], tauxSansRisque);
+            //double valeurActu = porteFeuilleVanille.getValeurActu(1, (double) dataFeedCalc[dataFeedCalc.Count - 1].PriceList[vanille.UnderlyingShare.Id], tauxSansRisque);
 
             // Calcul de la tracking error
 
-            double trackingError = valeurActu - payoff;
-            Console.WriteLine("Tracking Error = " + trackingError);
+            //double trackingError = valeurActu - payoff;
+            //Console.WriteLine("Tracking Error = " + trackingError);
             
 
 
