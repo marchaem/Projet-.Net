@@ -19,16 +19,12 @@ namespace WpfApplication2
         static DateTime debutEstimation = new DateTime(2009, 1, 1);
         public MainWindow()
         {
-            
-            //getShareName();
-         //   DateTime date1 = new DateTime(1,1,5);
-          //  var a = dateTimeConverter(date1);
-        //    Console.WriteLine("la date vaux : "+a);
             /*Donnees a demander a l'utilisateur*/
-
-          //  DateTime debut = new DateTime(2009, 01, 01);
+            Share action = new Share("accor", "accordId");
+            Pricer pricer = new Pricer();
+            List<Share> liste = new List<Share>() { action };
             DateTime maturite = new DateTime(2001, 10, 10);
-            double strike = 7.0;
+            Entrees donnes = new Entrees(0, 7.0, new DateTime(2000, 1, 1), liste, maturite, new DateTime(2000, 1, 1), new DateTime(2001, 1, 10), 1, 0);
 
            
 
@@ -39,53 +35,28 @@ namespace WpfApplication2
             
 
             /*On rentre en dur la valeur de l'action pour l'instant*/
-            Share action = new Share("accor", "accordId");
-            Console.WriteLine("Action selectionnée " + action.Name);
-
             
+            Console.WriteLine("Action selectionnée " + action.Name);          
             DateTime finEstimation = new DateTime(2010,1,1);
 
             /*Fin entree des donnees*/
 
             /*Creation de l'option*/
 
-            VanillaCall vanille = new VanillaCall("option", action, maturite, strike);
+            VanillaCall vanille = new VanillaCall("option", action, maturite, donnes.strike);
             OptionVanille option = new OptionVanille(vanille);
-
-            /*Calcul de la valeur du payoff*/
-            var dataFeedCalc = new List<DataFeed>();
-            
-
-           
-            
-            
 
             /*Calcul du portefeuille de couverture*/
 
-            Pricer pricer = new Pricer();
 
-            /*  var result = pricer.PriceCall(vanille, maturite, 366, (double) dataFeedCalc[dataFeedCalc.Count-1].PriceList[vanille.UnderlyingShare.Id], 0.4);
-              Console.WriteLine("Le delta à la fin vaut : " + result.Deltas[0]);
-              Console.WriteLine("Le prix du call à l'écheance : " + result.Price);
 
-              var resultdebut = pricer.PriceCall(vanille, debut, 366, (double)dataFeedCalc[0].PriceList[vanille.UnderlyingShare.Id], 0.4);
-              Console.WriteLine("Le delta au début vaut : " + resultdebut.Deltas[0]);
-              Console.WriteLine("Le prix du call au début : " + resultdebut.Price);
-              */
-            List<Share> liste = new List<Share>() { action };
-
-            Entrees donnes = new Entrees(0, 7.0, new DateTime(2000, 1, 1), liste, maturite,new DateTime(2000,1,1), new DateTime(2001, 1, 10), 1, 0);
 
             //Actualisation de la valeur du portefeuille
+            var dataFeedCalc = new List<DataFeed>();
             IDataFeedProvider data = new SimulatedDataFeedProvider();
             dataFeedCalc = data.GetDataFeed(vanille, new DateTime(2000,1,1));
             PorteFeuilleVanille porteFeuilleVanille = new PorteFeuilleVanille(option);
-            Console.WriteLine(porteFeuilleVanille.ToString());
-            //  DateTime[] date = new DateTime[] { new DateTime(2000,1,1), new DateTime(2000, 1, 2), new DateTime(2000, 1, 3), new DateTime(2000, 1, 4), new DateTime(2000, 1, 5) };
-            double prixOption = 0.0;
-            porteFeuilleVanille.actulisationPorteSimu(dataFeedCalc, donnes);
-
-            double trackingError;
+            porteFeuilleVanille.actulisationPorteSimu(dataFeedCalc, donnes);   
             int i = 0;
             DateTime date = donnes.debutSimulation;
             while (date <=  donnes.finSimulation)
@@ -101,7 +72,7 @@ namespace WpfApplication2
             }
            
 
-            // Calcul de la tracking error
+            
             
             
 
