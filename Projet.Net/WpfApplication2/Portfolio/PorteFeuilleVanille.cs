@@ -1,4 +1,5 @@
-﻿using PricingLibrary.FinancialProducts;
+﻿using PricingLibrary.Computations;
+using PricingLibrary.FinancialProducts;
 using PricingLibrary.Utilities.MarketDataFeed;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace WpfApplication2.Portfolio
             this.proportions = new double[1000000,2]; // à améliorer
             this.trackingErrors = new List<double>();
         }
-        public void actualisationPortef(DateTime debutSimulation,DateTime date,double spot,double volatility,double r)//actualisationSimulation
+        public void actualisationPortef(DateTime debutSimulation,DateTime date,double spot,double volatility,double couponCouru)//actualisationSimulation
         {
             int a = dateTimeConverter(debutSimulation,date);
             
@@ -35,10 +36,10 @@ namespace WpfApplication2.Portfolio
                 throw new Exception("abruti rentre des bonnes dates");
             }
             double delta = option.calculDeltaVanille(date, 365, spot, volatility);
-            double thuneSansRisque = pricePortefeuille(debutSimulation,date, r, spot, volatility)-delta*spot;
+            double thuneSansRisque = pricePortefeuille(debutSimulation,date, couponCouru, spot, volatility)-delta*spot;
             proportions[a, 0] = delta;
             proportions[a, 1] = thuneSansRisque;
-            trackingErrors.Add ( pricePortefeuille(debutSimulation, date, r, spot, volatility) - option.calculePrixVanille(date, 365, spot, volatility));
+            trackingErrors.Add ( pricePortefeuille(debutSimulation, date, couponCouru, spot, volatility) - option.calculePrixVanille(date, 365, spot, volatility));
 
 
 
@@ -47,16 +48,16 @@ namespace WpfApplication2.Portfolio
 
         public void actulisationPorteSimu(List<DataFeed> simulation, Entrees input)// fillCompositionPortefeuille
         {
+
             int i=0;
-           
             foreach(DataFeed val in simulation)
             {
-                actualisationPortef(input.dateDebut, val.Date,(double) val.PriceList[input.listActions[0].Id], 0.4, 0.01);
+                actualisationPortef(input.dateDebut, val.Date,(double) val.PriceList[input.listActions[0].Id], 0.4,RiskFreeRateProvider.GetRiskFreeRateAccruedValue(input.pas/365.0));
                 i++;
             }
         }
         
-        public double pricePortefeuille(DateTime debutEstimation, DateTime date  ,double r,double spot, double volatility)
+        public double pricePortefeuille(DateTime debutEstimation, DateTime date  ,double couponCouru,double spot, double volatility)
         {
             int a = dateTimeConverter(debutEstimation,date);
             
@@ -70,7 +71,7 @@ namespace WpfApplication2.Portfolio
             }
             else
             {
-                return proportions[a - 1, 0] * spot + proportions[a - 1, 1] * (1 + r);
+                return proportions[a - 1, 0] * spot + proportions[a - 1, 1] * couponCouru;
             }
 
 

@@ -27,17 +27,16 @@ namespace WpfApplication2
             /*Donnees a demander a l'utilisateur*/
 
           //  DateTime debut = new DateTime(2009, 01, 01);
-            DateTime maturite = new DateTime(2010, 10, 10);
+            DateTime maturite = new DateTime(2001, 10, 10);
             double strike = 7.0;
 
-            double tauxSansRisque = 0.01;
+           
 
             Console.WriteLine("Simulation lancée avec : ");
             Console.WriteLine("K = " + strike + "€");
             Console.WriteLine("Echeance " + maturite.ToString());
-          //  Console.WriteLine("Date Courrante " + debut.ToString());
-
-            bool simule = true;
+          
+            
 
             /*On rentre en dur la valeur de l'action pour l'instant*/
             Share action = new Share("accor", "accordId");
@@ -75,7 +74,7 @@ namespace WpfApplication2
               */
             List<Share> liste = new List<Share>() { action };
 
-            Entrees donnes = new Entrees(0, 7.0, new DateTime(2000, 1, 1), liste, maturite,new DateTime(2000,1,1), new DateTime(2001, 10, 10), 1, 0);
+            Entrees donnes = new Entrees(0, 7.0, new DateTime(2000, 1, 1), liste, maturite,new DateTime(2000,1,1), new DateTime(2001, 1, 10), 1, 0);
 
             //Actualisation de la valeur du portefeuille
             IDataFeedProvider data = new SimulatedDataFeedProvider();
@@ -89,12 +88,13 @@ namespace WpfApplication2
             double trackingError;
             int i = 0;
             DateTime date = donnes.debutSimulation;
-            while (date <  donnes.finSimulation)
+            while (date <=  donnes.finSimulation)
             {
                 i  = porteFeuilleVanille.dateTimeConverter(donnes.debutSimulation, date);
-              
+                Console.WriteLine("le call vaut : " + pricer.PriceCall(vanille, date, 365,(double) dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id], 0.4).Price);
+                Console.WriteLine("i vaut :" + i);
                 Console.Write("le spot vaut : " + dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id]);
-                prixOption = pricer.PriceCall(vanille, date, 365, (double)dataFeedCalc[i].PriceList[vanille.UnderlyingShare.Id], 0.4).Price;
+                Console.WriteLine("le portefeuille vaut : ");
                 Console.WriteLine(porteFeuilleVanille.ToString1(donnes.debutSimulation,date));
                 Console.WriteLine("Tracking Error = " + porteFeuilleVanille.trackingErrors[i]  +" à la date " + date.ToString());
                 date=date.AddDays(donnes.pas);
