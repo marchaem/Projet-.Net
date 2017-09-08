@@ -28,11 +28,10 @@ namespace TestLibrary
                 , "optionTest"
                 ,new List<double>() { 0.7, 0.3 });
             Simulation sim = new Simulation(entree);
-            sim.Lancer();
 
             /*List<String> sousjacent = new List<string>() { "accor" };
             Entrees entree = new Entrees(Entrees.typeOption.Vanille
-                , 7, new DateTime(2009, 1, 1)
+                , 9, new DateTime(2009, 1, 1)
                 , sousjacent
                 , new DateTime(2012, 1, 1)
                 , new DateTime(2009, 1, 1)
@@ -41,8 +40,8 @@ namespace TestLibrary
                 , Entrees.typeDonnees.Simulees
                 , "optionTest"
                 , new List<double>() {1});
-            Simulation sim = new Simulation(entree);
-            sim.Lancer();*/
+            Simulation sim = new Simulation(entree);*/
+            sim.LancerUnique();
         }
     }
 }

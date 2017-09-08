@@ -7,46 +7,20 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" Loaded="Window_Loaded">
 
-    <Grid>
-
-        <StackPanel Margin="10,10,327,235">
-            <TextBlock Text=" quelle est le strike:" HorizontalAlignment="Center" Width="149" Margin="21,0,10,0" />
-            <TextBox x:Name="strike"  />
-        </StackPanel>
-
-        <StackPanel Margin="255,19,78,226">
-            <TextBlock Text="quelle est la maturité" HorizontalAlignment="Center" Width="141" Margin="33,0,10,0" />
-            <TextBox x:Name="date"  />
-        </StackPanel>
-
-        <StackPanel Margin="10,85,327,158">
-            <TextBlock Text="choix de l action" HorizontalAlignment="Center" Width="160" Margin="10,0" Height="17" />
-            <CheckBox x:Name="termsOfServiceCheckBox" 
-          Content="ACCOR SA"/>
-        </StackPanel>
-           
-        <StackPanel Margin="10,223,323,20">
-            <TextBlock Text="choix du type d'option " HorizontalAlignment="Center" Width="152" Margin="30,0,2,0" />
-            <ComboBox Text="Is not open">
-                <!--<ComboBoxItem Name="cbi1">donné historique</ComboBoxItem>-->
-                <ComboBoxItem Name="cbu2">vanila</ComboBoxItem>
-            </ComboBox>
-        </StackPanel>
-
-        <StackPanel Margin="10,149,327,97">
-            <TextBlock Text="choix du type de simulation " HorizontalAlignment="Center" Width="170" Margin="10,0,0,0" />
-            <ComboBox Text="Is not open">
-                <!--<ComboBoxItem Name="cbi1">donné historique</ComboBoxItem>-->
-                <ComboBoxItem Name="cbi2">donné simulé</ComboBoxItem>
-            </ComboBox>
-        </StackPanel>
-
-        <StackPanel Margin="293,85,44,211">
-            <Button Content="start" Click="Button_Click"/>
-        </StackPanel>
-
-        <Canvas Name="canGraph" Background="White"
+    <Canvas Name="canGraph" Background="White"
       Width="300" Height="200"
-      VerticalAlignment="Center" HorizontalAlignment="Center" Margin="214,120,3,0"/>
-    </Grid>
+      VerticalAlignment="Center" HorizontalAlignment="Center" Margin="214,120,3,0">
+        <GridSplitter x:Name="gridSplitter" Height="100" Canvas.Left="204" Canvas.Top="51" Width="5"/>
+        <GroupBox x:Name="groupBox" Header="Parametres" Canvas.Left="-203" Canvas.Top="-73" Height="253" Width="176">
+            <Grid HorizontalAlignment="Left" Height="243" Margin="0,0,-2,-12" VerticalAlignment="Top" Width="166">
+                <Label x:Name="strike" Content="Strike" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="Maturite" Content="Maturite" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.022,-0.363"/>
+                <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="74,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="82" RenderTransformOrigin="0.028,0.246"/>
+                <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="23" Margin="74,44,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="82" RenderTransformOrigin="0.276,0.483"/>
+                <Label x:Name="label" Content="Debut" HorizontalAlignment="Left" Margin="12,72,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="textBox1_Copy" HorizontalAlignment="Left" Height="23" Margin="74,72,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="82" RenderTransformOrigin="0.276,0.483"/>
+            </Grid>
+        </GroupBox>
+    </Canvas>
+
 </Window>

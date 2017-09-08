@@ -65,6 +65,8 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -74,15 +76,20 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Options\Option.cs" />
+    <Compile Include="Options\OptionBasket.cs" />
+    <Compile Include="Options\OptionVanille.cs" />
     <Compile Include="Portfolio\PorteFeuilleBasket.cs" />
     <Compile Include="Simulation\Simulation.cs" />
     <Page Include="MainWindow.xaml">
@@ -108,7 +115,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Options\OptionVanille.cs" />
     <Compile Include="Entree\Entrees.cs" />
     <Compile Include="Portfolio\Portefeuille.cs" />
     <Compile Include="Portfolio\PorteFeuilleVanille.cs" />

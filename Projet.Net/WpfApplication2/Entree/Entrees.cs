@@ -18,7 +18,7 @@ namespace WpfApplication2.Entree
         public DateTime debutSimulation { get; set; }
         public DateTime finSimulation { get; set; }
         public int pas { get; set; }
-        public enum typeDonnees { Historique, Simulees}
+        public enum typeDonnees { Historique, Simulees }
         public typeDonnees typedonnees {get; set;}
         public string nomOption { get; set; }
         public List<double> listePoids { get; set; }
