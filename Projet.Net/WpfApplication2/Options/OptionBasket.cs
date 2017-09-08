@@ -28,8 +28,6 @@ namespace WpfApplication2.Options
         public override double CalculerPrix(int jour, List<DataFeed> donees, DateTime dateDebut, double[] spot, double[,] cov, double[] vol)
         {
             Pricer pricer = new Pricer();
-            //double[] volatility = new double[] { 0.4, 0.4 };
-            //double[,] matrice = new double[,] { { 0.4, 0.1 }, { 0.1, 0.4 } };
             DateTime dateAvancee = dateDebut;
             dateAvancee = dateAvancee.AddDays(jour);
             double prix = pricer.PriceBasket((BasketOption) this.option, dateAvancee, 365, spot, vol, cov).Price;
@@ -38,8 +36,7 @@ namespace WpfApplication2.Options
 
         public override int GetNbSousJacents()
         {
-            //  throw new NotImplementedException();
-            return 1;
+            return option.UnderlyingShareIds.Count();
         }
     }
 }

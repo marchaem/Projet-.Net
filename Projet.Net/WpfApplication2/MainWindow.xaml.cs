@@ -13,6 +13,14 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 
 using WpfApplication2.Data;
+using System.Windows.Input;
+using System.Collections.ObjectModel;
+using LiveCharts;
+using LiveCharts.Wpf;
+using System.Windows.Controls;
+using actionselection;
+using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Mvvm;
 
 namespace WpfApplication2
 {
@@ -22,52 +30,19 @@ namespace WpfApplication2
     public partial class MainWindow : Window
     {
         static DateTime debutEstimation = new DateTime(2009, 1, 1);
-        private List<double> option;
-        private List<double> portefeuille;
+        private ChartValues<double> option;
+        private ChartValues<double> portefeuille;
         private Entrees entree;
+        public string maturity { get; set; }
+
+        public ICommand ClickCommand { get; private set; }
+
+
+        
+
+
         public MainWindow()
         {
-            /*Donnees a demander a l'utilisateur*/
-            /*Share action = new Share("accor", "accordId");
-            Pricer pricer = new Pricer();
-            List<Share> liste = new List<Share>() { action };
-            DateTime maturite = new DateTime(2001, 10, 10);
-            Entrees donnes = new Entrees(0, 7.0, new DateTime(2000, 1, 1), liste, maturite, new DateTime(2000, 1, 1), new DateTime(2001, 1, 10), 1, 0);
-            DataHisto histo = new DataHisto();
-           
-
-            Console.WriteLine("Simulation lancée avec : ");
-            Console.WriteLine("K = " + strike + "€");
-            Console.WriteLine("Echeance " + maturite.ToString());
-          
-            
-            Console.WriteLine("Action selectionnée " + action.Name);          
-            DateTime finEstimation = new DateTime(2010,1,1);
-
-            VanillaCall vanille = new VanillaCall("option", action, maturite, donnes.strike);
-            OptionVanille option = new OptionVanille(vanille);
-
-
-
-
-            List<DataFeed> data = histo.getData(donnes);
-            //Actualisation de la valeur du portefeuille
-            
-           /* PorteFeuilleVanille porteFeuilleVanille = new PorteFeuilleVanille(option);
-            porteFeuilleVanille.actulisationPorteSimu(data, donnes);   
-            int i = 0;
-            DateTime date = donnes.debutSimulation;
-            while (date <=  donnes.finSimulation)
-            {
-                i  = porteFeuilleVanille.dateTimeConverter(donnes.debutSimulation, date);
-                Console.WriteLine("le call vaut : " + pricer.PriceCall(vanille, date, 365,(double) data[i].PriceList[vanille.UnderlyingShare.Id], 0.4).Price);
-                Console.WriteLine("i vaut :" + i);
-                Console.Write("le spot vaut : " + data[i].PriceList[vanille.UnderlyingShare.Id]);
-                Console.WriteLine("le portefeuille vaut : ");
-                Console.WriteLine(porteFeuilleVanille.ToString1(donnes.debutSimulation,date));
-                Console.WriteLine("Tracking Error = " + porteFeuilleVanille.trackingErrors[i]  +" à la date " + date.ToString());
-                date=date.AddDays(donnes.pas);
-            }*/
 
             Share share1 = new Share("EDF FP", "EDF FP");
             Share share2 = new Share("BNP FP", "BNP FP");
@@ -81,10 +56,9 @@ namespace WpfApplication2
             entree = new Entrees(Entrees.typeOption.Basket
                 , 5, new DateTime(2009, 1, 1)
                 , sousjacents
-                , new DateTime(2013, 1, 10)
-                , new DateTime(2013, 1, 10)
-                , new DateTime(2013, 1, 20)
-                , 1
+                , new DateTime(2010, 1, 1)
+                , new DateTime(2009, 1, 1)
+                , 100
                 , Entrees.typeDonnees.Simulees
                 , "optionTest"
                 , new List<double>() { 0.7, 0.3 });
@@ -112,7 +86,6 @@ namespace WpfApplication2
             portefeuille = sim.valeurPf;*/
 
 
-        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -120,108 +93,81 @@ namespace WpfApplication2
             sim.Lancer();
             option = sim.PrixOption;
             portefeuille = sim.valeurPf;
-            //Window_Loaded();
+            RoutedEventArgs temp = new RoutedEventArgs();
+            object temp2 = new object();
+            //Window_Loaded(temp2, temp);
+            Console.WriteLine("la maturity est de"+ maturity);
+            PointShapeLineExample();
 
         }
-        // Draw a simple graph.
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        public void PointShapeLineExample()
         {
-            const double margin = 10;
-            double xmin = margin;
-            double xmax = canGraph.Width - margin;
-            double ymin = margin;
-            double ymax = canGraph.Height - margin;
-            const double step = 10;
-
-            // Make the X axis.
-            GeometryGroup xaxis_geom = new GeometryGroup();
-            xaxis_geom.Children.Add(new LineGeometry(
-                new Point(0, ymax), new Point(canGraph.Width, ymax)));
-            for (double x = xmin + step;
-                x <= canGraph.Width - step; x += step)
+            InitializeComponent();
+            SeriesCollection = new SeriesCollection
             {
-                xaxis_geom.Children.Add(new LineGeometry(
-                    new Point(x, ymax - margin / 2),
-                    new Point(x, ymax + margin / 2)));
-            }
+                new LineSeries
+                {
+                    Title = "option",
+                    Values = option
+                },
+                new LineSeries
+                {
+                    Title = "portefeuille",
+                    Values = portefeuille,
+                    PointGeometry = null
+                },
+            };
 
-            Path xaxis_path = new Path();
-            xaxis_path.StrokeThickness = 1;
-            xaxis_path.Stroke = Brushes.Black;
-            xaxis_path.Data = xaxis_geom;
+            var Values = new ChartValues<double> { 6, 7, 3, 4, 6 };
+            Values.Add(10);
+            Console.WriteLine(Values[5] + " c est ca les valeurs");
 
-            canGraph.Children.Add(xaxis_path);
+            Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May" };
+            YFormatter = value => value.ToString("C");
 
-            // Make the Y ayis.
-            GeometryGroup yaxis_geom = new GeometryGroup();
-            yaxis_geom.Children.Add(new LineGeometry(
-                new Point(xmin, 0), new Point(xmin, canGraph.Height)));
-            for (double y = step; y <= canGraph.Height - step; y += step)
+            
+
+            DataContext = this;
+        }
+
+        public SeriesCollection SeriesCollection { get; set; }
+        public string[] Labels { get; set; }
+        public Func<double, string> YFormatter { get; set; }
+
+        
+    }
+
+    internal class MainWindowViewModel : BindableBase
+    {
+        public ObservableCollection<actionSelection> actionList { get; private set; }
+
+        public ICommand ClickCommand { get; private set; }
+
+        public MainWindowViewModel()
+        {
+            actionList = new ObservableCollection<actionSelection>()
             {
-                yaxis_geom.Children.Add(new LineGeometry(
-                    new Point(xmin - margin / 2, y),
-                    new Point(xmin + margin / 2, y)));
-            }
+                new actionSelection() {Name = "Axa", IsSelected = false},
+                new actionSelection() {Name = "Accor", IsSelected = false},
+                new actionSelection() {Name = "Bnp", IsSelected = false},
+                new actionSelection() {Name = "Vivendi", IsSelected = false},
+                new actionSelection() {Name = "Dexia", IsSelected = false},
+                new actionSelection() {Name = "Carrefour", IsSelected = false}
+            };
 
-            Path yaxis_path = new Path();
-            yaxis_path.StrokeThickness = 1;
-            yaxis_path.Stroke = Brushes.Black;
-            yaxis_path.Data = yaxis_geom;
+            ClickCommand = new DelegateCommand(ExtractComponents);
 
-            canGraph.Children.Add(yaxis_path);
+        }
 
-            // Make some data sets.
-            Brush[] brushes = { Brushes.Red, Brushes.Green, Brushes.Blue };
-            Random rand = new Random();
-
-            PointCollection points = new PointCollection();
-            var x2 = margin;
-            Console.WriteLine("il y a " + option.Count + "nombre d element dans la liste ");
-
-            foreach (double val in option)
+        private void ExtractComponents()
+        {
+            foreach (var comp in actionList)
             {
-                points.Add(new Point(x2, ymax -val*20 ));
-                x2= x2 +  (int)(xmax / (int)option.Count);
+                if (comp.IsSelected)
+                {
+                    Console.WriteLine(comp.Name);
+                }
             }
-            Polyline polyline = new Polyline();
-            polyline.StrokeThickness = 1;
-            polyline.Stroke = brushes[0];
-            polyline.Points = points;
-
-            canGraph.Children.Add(polyline);
-
-            PointCollection points2 = new PointCollection();
-            x2 = margin;
-            foreach (double val in portefeuille)
-            {
-                points2.Add(new Point(x2, ymax - val * 20));
-                x2 = x2 + (int)(xmax / (int)portefeuille.Count);
-            }
-            Polyline polyline2 = new Polyline();
-            polyline2.StrokeThickness = 1;
-            polyline2.Stroke = brushes[1];
-            polyline2.Points = points2;
-
-            canGraph.Children.Add(polyline2);
-
-            //for (int data_set = 0; data_set < 3; data_set++)
-            //{
-            //    int last_y = rand.Next((int)ymin, (int)ymax);
-
-            //    PointCollection points = new PointCollection();
-            //    for (double x = xmin; x <= xmax; x += step)
-            //    {
-            //        last_y = rand.Next(last_y - 10, last_y + 10);
-            //        points.Add(new Point(x, last_y));
-            //    }
-
-            //    Polyline polyline = new Polyline();
-            //    polyline.StrokeThickness = 1;
-            //    polyline.Stroke = brushes[data_set];
-            //    polyline.Points = points;
-
-            //    canGraph.Children.Add(polyline);
-            //}
         }
     }
 }

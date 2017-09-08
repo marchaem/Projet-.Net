@@ -36,7 +36,6 @@ namespace WpfApplication2.Options
 
         public override int GetNbSousJacents()
         {
-            // throw new NotImplementedException();
             return 1;
         }
     }
