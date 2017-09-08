@@ -33,5 +33,11 @@ namespace WpfApplication2.Options
             double prix = pricer.PriceCall( (VanillaCall) this.option, dateAvancee, 365, spot[0], vol[0]).Price;
             return prix;
         }
+
+        public override int GetNbSousJacents()
+        {
+            // throw new NotImplementedException();
+            return 1;
+        }
     }
 }

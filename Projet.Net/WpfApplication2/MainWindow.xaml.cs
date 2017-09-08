@@ -69,30 +69,42 @@ namespace WpfApplication2
                 date=date.AddDays(donnes.pas);
             }*/
 
-            List<String> sousjacents = new List<string>() { "EDF FP" };
+            Share share1 = new Share("EDF FP", "EDF FP");
+            Share share2 = new Share("BNP FP", "BNP FP");
+            List<String> sousjacents = new List<string>() { "EDF FP","BNP FP" };
+            Share[] listBasket = new Share[] { share1, share2 };
             List<DataFeed> list = new List<DataFeed>();
-            Share share = new Share("EDF FR", "EDF FP");
-            VanillaCall vanille = new VanillaCall("vanille",share, new DateTime(2013, 1, 10),5);
-            OptionVanille option = new OptionVanille(vanille);
-            entree = new Entrees(Entrees.typeOption.Vanille
+            
+            BasketOption bask = new BasketOption("basket", listBasket, new double[] { 0.5, 0.5 }, new DateTime(2013, 1, 10), 5.0);
+            OptionBasket basket = new OptionBasket(bask);
+        //    OptionVanille option = new OptionVanille(vanille);
+            entree = new Entrees(Entrees.typeOption.Basket
                 , 5, new DateTime(2009, 1, 1)
                 , sousjacents
                 , new DateTime(2013, 1, 10)
-                , new DateTime(2013, 1, 2)
                 , new DateTime(2013, 1, 10)
+                , new DateTime(2013, 1, 20)
                 , 1
                 , Entrees.typeDonnees.Simulees
                 , "optionTest"
                 , new List<double>() { 0.7, 0.3 });
-            DataSimu dataSimu = new DataSimu(option);
+            DataHisto dataHisto = new DataHisto();
+            dataHisto.getData(entree);
+            
+            list = dataHisto.getData(entree);
+            double[,] valuesHisto = dataHisto.getAssetValues(entree);
+            DataHisto.dispMatrix(valuesHisto);
+            DataSimu dataSimu = new DataSimu(basket);
             dataSimu.getData(entree);
-            DataHisto histo = new DataHisto();
-            list = histo.getData(entree);
-            double[,] mat=dataSimu.getAssetreturns(entree);
-            double[,] matrixAsset = DataHisto.computeCov(mat);
-            Console.WriteLine("la vol vaut " + Math.Sqrt(matrixAsset[0,0]));
+            double[,] valuesSimu = dataSimu.getAssetValues(entree);
+            DataHisto.dispMatrix(valuesSimu);
+            double[,] mat=dataSimu.getAssetReturns(valuesSimu);
+            DataHisto.dispMatrix(mat);
+            double[,] matrixAsset = DataSimu.computeCov(mat);
+            DataHisto.dispMatrix(matrixAsset);
+           //   Console.WriteLine("la vol vaut " + Math.Sqrt(matrixAsset[0,0]));*/
 
-            Console.WriteLine(matrixAsset.ToString());
+           //   Console.WriteLine(matrixAsset.ToString());*/
 
             /*Simulation sim = new Simulation(entree);
             sim.Lancer();

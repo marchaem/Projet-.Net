@@ -87,6 +87,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\Compute Tools.cs" />
     <Compile Include="Options\Option.cs" />
     <Compile Include="Options\OptionBasket.cs" />
     <Compile Include="Options\OptionVanille.cs" />

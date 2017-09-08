@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PricingLibrary.Utilities;
 using PricingLibrary.Utilities.MarketDataFeed;
-using WpfApplication2.Entree;
-using PricingLibrary.Utilities;
-using PricingLibrary.FinancialProducts;
+using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
-
+using WpfApplication2.Entree;
 namespace WpfApplication2.Data
 {
-    public class DataSimu : AbstractData
+    static class Compute_Tools
     {
-
-  
         [DllImport("wre-ensimag-c-4.1.dll", EntryPoint = "WREmodelingCov", CallingConvention = CallingConvention.Cdecl)]
+
         public static extern int WREmodelingCov(
             ref int returnsSize,
             ref int nbSec,
@@ -24,6 +18,7 @@ namespace WpfApplication2.Data
             ref int info
         );
         [DllImport("wre-ensimag-c-4.1.dll", EntryPoint = "WREmodelingLogReturns", CallingConvention = CallingConvention.Cdecl)]
+
         public static extern int WREmodelingLogReturns(
         ref int nbValues,
         ref int nbAssets,
@@ -33,24 +28,10 @@ namespace WpfApplication2.Data
         ref int info
             );
 
-        public DataSimu(Options.Option share)
+        static public double[,] getAssetValues(Entrees input)
         {
-            this.option = share;
-        }
-        public override List<DataFeed> getData(Entrees input)
-        {
-            var dataFeedCalc = new List<DataFeed>();
-            IDataFeedProvider data = new SimulatedDataFeedProvider();
-            dataFeedCalc = data.GetDataFeed(option.option,input.debutSimulation);
-            return dataFeedCalc;
-        }
-
-
-
-        public double[,] getAssetValues(Entrees input)
-        {
-
-            List<DataFeed> data = this.getData(input);
+            DataHisto histo = new DataHisto();
+            List<DataFeed> data = histo.getData(input);
             int nbAction = input.listActions.Count;
             Console.WriteLine("il y a " + nbAction.ToString() + " Actions dans input.listActions");
 
@@ -95,7 +76,7 @@ namespace WpfApplication2.Data
             return covMatrix;
         }
 
-        public double[,] getAssetReturns(double[,] returns)
+        public static double[,] getAssetReturns(double[,] returns)
         {
             int dataSize = returns.GetLength(0);
             int nbValues = returns.GetLength(1);
@@ -115,3 +96,5 @@ namespace WpfApplication2.Data
         }
     }
 }
+    
+

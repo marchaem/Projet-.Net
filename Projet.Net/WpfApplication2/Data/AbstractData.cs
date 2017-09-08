@@ -11,7 +11,7 @@ namespace WpfApplication2.Data
 {
     public abstract class AbstractData
     {
-        public Option option;
+        public Options.Option option;
         abstract public List<DataFeed> getData(Entrees input);
     }
 }

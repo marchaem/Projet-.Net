@@ -35,5 +35,11 @@ namespace WpfApplication2.Options
             double prix = pricer.PriceBasket((BasketOption) this.option, dateAvancee, 365, spot, vol, cov).Price;
             return prix;
         }
+
+        public override int GetNbSousJacents()
+        {
+            //  throw new NotImplementedException();
+            return 1;
+        }
     }
 }
