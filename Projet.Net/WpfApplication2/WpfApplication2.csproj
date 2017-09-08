@@ -90,7 +90,6 @@
     <Compile Include="Options\Option.cs" />
     <Compile Include="Options\OptionBasket.cs" />
     <Compile Include="Options\OptionVanille.cs" />
-    <Compile Include="Portfolio\PorteFeuilleBasket.cs" />
     <Compile Include="Simulation\Simulation.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -117,7 +116,6 @@
   <ItemGroup>
     <Compile Include="Entree\Entrees.cs" />
     <Compile Include="Portfolio\Portefeuille.cs" />
-    <Compile Include="Portfolio\PorteFeuilleVanille.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -22,13 +22,12 @@ namespace WpfApplication2.Portfolio
             this.tauxSansRisque = valeurActu;
             for (int i=0; i<deltas.Length; i++)
             {
-                tauxSansRisque -= deltas[i] * spot[i];
+                this.tauxSansRisque -= deltas[i] * spot[i];
             }
         }
 
         public Portefeuille(double prixOption, double[] deltas, double[] spot, Options.Option option)
         {
-            // Constructeur de rebalancement
             this.option = option;
             this.nbActions = new List<double>(deltas);
             double montantAction = 0;

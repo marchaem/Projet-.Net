@@ -69,9 +69,9 @@ namespace WpfApplication2
                 date=date.AddDays(donnes.pas);
             }*/
 
-            List<String> sousjacents = new List<string>() { "accor", "bnp" };
-            entree = new Entrees(Entrees.typeOption.Basket
-                , 5, new DateTime(2009, 1, 1)
+            List<String> sousjacents = new List<string>() { "accor"};
+            entree = new Entrees(Entrees.typeOption.Vanille
+                , 9, new DateTime(2009, 1, 1)
                 , sousjacents
                 , new DateTime(2012, 1, 1)
                 , new DateTime(2009, 1, 1)
@@ -79,7 +79,7 @@ namespace WpfApplication2
                 , 50
                 , Entrees.typeDonnees.Simulees
                 , "optionTest"
-                , new List<double>() { 0.7, 0.3 });
+                , new List<double>() {1});
 
             Simulation sim = new Simulation(entree);
             sim.Lancer();

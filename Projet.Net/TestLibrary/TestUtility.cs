@@ -18,12 +18,12 @@ namespace TestLibrary
         {
             List<String> sousjacents = new List<string>(){ "accor", "bnp" };
             Entrees entree = new Entrees(Entrees.typeOption.Basket
-                , 7, new DateTime(2009, 1, 1)
+                , 5, new DateTime(2009, 1, 1)
                 , sousjacents
                 , new DateTime(2012, 1, 1)
                 , new DateTime(2009, 1, 1)
                 , new DateTime(2012, 1, 1)
-                , 100
+                , 200
                 , Entrees.typeDonnees.Simulees
                 , "optionTest"
                 ,new List<double>() { 0.7, 0.3 });
@@ -41,7 +41,7 @@ namespace TestLibrary
                 , "optionTest"
                 , new List<double>() {1});
             Simulation sim = new Simulation(entree);*/
-            sim.LancerUnique();
+            sim.Lancer();
         }
     }
 }
