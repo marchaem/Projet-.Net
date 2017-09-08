@@ -6,10 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using WpfApplication2.Portfolio;
+using WpfApplication2.Options;
 using WpfApplication2.Entree;
 using WpfApplication2.Simu;
 using System.Windows.Media;
 using System.Windows.Shapes;
+
 using WpfApplication2.Data;
 
 namespace WpfApplication2
@@ -22,46 +24,78 @@ namespace WpfApplication2
         static DateTime debutEstimation = new DateTime(2009, 1, 1);
         private List<double> option;
         private List<double> portefeuille;
+        private Entrees entree;
         public MainWindow()
         {
-            /*List<String> sousjacents = new List<string>() { "accor", "bnp" };
-            Entrees entree = new Entrees(Entrees.typeOption.Basket
-                , 7, new DateTime(2009, 1, 1)
+            /*Donnees a demander a l'utilisateur*/
+            /*Share action = new Share("accor", "accordId");
+            Pricer pricer = new Pricer();
+            List<Share> liste = new List<Share>() { action };
+            DateTime maturite = new DateTime(2001, 10, 10);
+            Entrees donnes = new Entrees(0, 7.0, new DateTime(2000, 1, 1), liste, maturite, new DateTime(2000, 1, 1), new DateTime(2001, 1, 10), 1, 0);
+            DataHisto histo = new DataHisto();
+           
+
+            Console.WriteLine("Simulation lancée avec : ");
+            Console.WriteLine("K = " + strike + "€");
+            Console.WriteLine("Echeance " + maturite.ToString());
+          
+            
+            Console.WriteLine("Action selectionnée " + action.Name);          
+            DateTime finEstimation = new DateTime(2010,1,1);
+
+            VanillaCall vanille = new VanillaCall("option", action, maturite, donnes.strike);
+            OptionVanille option = new OptionVanille(vanille);
+
+
+
+
+            List<DataFeed> data = histo.getData(donnes);
+            //Actualisation de la valeur du portefeuille
+            
+           /* PorteFeuilleVanille porteFeuilleVanille = new PorteFeuilleVanille(option);
+            porteFeuilleVanille.actulisationPorteSimu(data, donnes);   
+            int i = 0;
+            DateTime date = donnes.debutSimulation;
+            while (date <=  donnes.finSimulation)
+            {
+                i  = porteFeuilleVanille.dateTimeConverter(donnes.debutSimulation, date);
+                Console.WriteLine("le call vaut : " + pricer.PriceCall(vanille, date, 365,(double) data[i].PriceList[vanille.UnderlyingShare.Id], 0.4).Price);
+                Console.WriteLine("i vaut :" + i);
+                Console.Write("le spot vaut : " + data[i].PriceList[vanille.UnderlyingShare.Id]);
+                Console.WriteLine("le portefeuille vaut : ");
+                Console.WriteLine(porteFeuilleVanille.ToString1(donnes.debutSimulation,date));
+                Console.WriteLine("Tracking Error = " + porteFeuilleVanille.trackingErrors[i]  +" à la date " + date.ToString());
+                date=date.AddDays(donnes.pas);
+            }*/
+
+            List<String> sousjacents = new List<string>() { "accor", "bnp" };
+            entree = new Entrees(Entrees.typeOption.Basket
+                , 5, new DateTime(2009, 1, 1)
                 , sousjacents
                 , new DateTime(2012, 1, 1)
                 , new DateTime(2009, 1, 1)
                 , new DateTime(2012, 1, 1)
-                , 100
+                , 50
                 , Entrees.typeDonnees.Simulees
                 , "optionTest"
                 , new List<double>() { 0.7, 0.3 });
+
             Simulation sim = new Simulation(entree);
             sim.Lancer();
             option = sim.PrixOption;
-            portefeuille = sim.valeurPf;*/
-
-
-            List<String> sousjacent = new List<string>() { "accor", "bnp"  };
-            Entrees entree = new Entrees(Entrees.typeOption.Basket
-                , 9, new DateTime(2009, 1, 1)
-                , sousjacent
-                , new DateTime(2012, 1, 1)
-                , new DateTime(2009, 1, 1)
-                , new DateTime(2012, 1, 1)
-                , 10
-                , Entrees.typeDonnees.Simulees
-                , "optionTest"
-                , new List<double>() { 0.7, 0.3 });
-            Simulation sim = new Simulation(entree);
-            //sim.Lancer();
-            sim.LancerUnique();
-            option = sim.PrixOption;
             portefeuille = sim.valeurPf;
+
 
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            Simulation sim = new Simulation(entree);
+            sim.Lancer();
+            option = sim.PrixOption;
+            portefeuille = sim.valeurPf;
+            //Window_Loaded();
 
         }
         // Draw a simple graph.
