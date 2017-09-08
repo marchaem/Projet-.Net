@@ -4,49 +4,63 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApplication2"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" Loaded="Window_Loaded">
+        Title="MainWindow" Height="350" Width="525" >
 
     <Grid>
+        <ListBox ItemsSource="{Binding ComponentInfoList}" Margin="10,56,0,0" HorizontalAlignment="Left" Width="171" Height="103" VerticalAlignment="Top">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <CheckBox Content="{Binding Name}"
+                  IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
 
         <StackPanel Margin="10,10,327,235">
-            <TextBlock Text=" quelle est le strike:" HorizontalAlignment="Center" Width="149" Margin="21,0,10,0" />
-            <TextBox x:Name="strike"  />
+            <TextBlock Text=" quelle est le strike:" HorizontalAlignment="Left" Width="149" Margin="21,0,0,0" />
+            <TextBox x:Name="strike" HorizontalAlignment="Left" Width="180"  />
         </StackPanel>
 
-        <StackPanel Margin="255,19,78,226">
-            <TextBlock Text="quelle est la maturité" HorizontalAlignment="Center" Width="141" Margin="33,0,10,0" />
-            <TextBox x:Name="date"  />
+        <StackPanel Margin="255,19,0,226" HorizontalAlignment="Left" Width="184">
+            <TextBlock Text="quelle est la maturité" HorizontalAlignment="Left" Width="141" Margin="33,0,0,0" />
+            <TextBox x:Name="date"  Text="{Binding Path=maturity}"/>
         </StackPanel>
 
-        <StackPanel Margin="10,85,327,158">
-            <TextBlock Text="choix de l action" HorizontalAlignment="Center" Width="160" Margin="10,0" Height="17" />
-            <CheckBox x:Name="termsOfServiceCheckBox" 
-          Content="ACCOR SA"/>
-        </StackPanel>
-           
-        <StackPanel Margin="10,223,323,20">
-            <TextBlock Text="choix du type d'option " HorizontalAlignment="Center" Width="152" Margin="30,0,2,0" />
-            <ComboBox Text="Is not open">
+
+
+        <StackPanel Margin="10,233,318,10">
+            <TextBlock Text="choix du type d'option " HorizontalAlignment="Left" Width="152" Margin="32,0,0,0" />
+            <ComboBox Text="Is not open" HorizontalAlignment="Left" Width="169" Margin="10,0,0,0">
                 <!--<ComboBoxItem Name="cbi1">donné historique</ComboBoxItem>-->
                 <ComboBoxItem Name="cbu2">vanila</ComboBoxItem>
             </ComboBox>
         </StackPanel>
 
-        <StackPanel Margin="10,149,327,97">
-            <TextBlock Text="choix du type de simulation " HorizontalAlignment="Center" Width="170" Margin="10,0,0,0" />
-            <ComboBox Text="Is not open">
+        <StackPanel Margin="10,159,318,87">
+            <TextBlock Text="choix du type de simulation " HorizontalAlignment="Left" Width="170" Margin="14,0,0,0" />
+            <ComboBox Text="Is not open" Margin="10,0,0,0" HorizontalAlignment="Left" Width="169">
                 <!--<ComboBoxItem Name="cbi1">donné historique</ComboBoxItem>-->
                 <ComboBoxItem Name="cbi2">donné simulé</ComboBoxItem>
             </ComboBox>
         </StackPanel>
 
-        <StackPanel Margin="293,85,44,211">
-            <Button Content="start" Click="Button_Click"/>
+        <StackPanel Margin="293,85,0,211" HorizontalAlignment="Left" Width="180">
+            <Button Content="start" Click="Button_Click" Margin="10,0,0,0" HorizontalAlignment="Left" Width="160"/>
         </StackPanel>
 
-        <Canvas Name="canGraph" Background="White"
+        <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Right" Margin="204,114,10,10" >
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Sales" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
+            </lvc:CartesianChart.AxisY>
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Month" Labels="{Binding Labels}"></lvc:Axis>
+            </lvc:CartesianChart.AxisX>
+        </lvc:CartesianChart>
+        <!--<Canvas Name="canGraph" Background="White"
       Width="300" Height="200"
-      VerticalAlignment="Center" HorizontalAlignment="Center" Margin="214,120,3,0"/>
+      VerticalAlignment="Center" HorizontalAlignment="Center" Margin="214,120,3,0"/>-->
     </Grid>
 </Window>

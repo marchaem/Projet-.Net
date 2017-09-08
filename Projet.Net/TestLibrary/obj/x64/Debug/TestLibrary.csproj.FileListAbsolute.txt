@@ -7,3 +7,13 @@ C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\P
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\WpfApplication2.exe
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\WpfApplication2.pdb
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\PricingLibrary.xml
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\LiveCharts.dll
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\LiveCharts.Wpf.dll
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\LiveCharts.pdb
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\LiveCharts.xml
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\LiveCharts.Wpf.pdb
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\LiveCharts.Wpf.xml
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\Microsoft.Practices.Prism.Mvvm.dll
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\Microsoft.Practices.Prism.SharedInterfaces.dll
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\Microsoft.Practices.Prism.Mvvm.xml
+C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\Microsoft.Practices.Prism.SharedInterfaces.xml

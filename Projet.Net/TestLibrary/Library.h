@@ -588,7 +588,7 @@ OUTPUTS
 		diagnostic argument
 	
 RETURN PARAMETER
-	integer, error code
+	integer, error codeF
 	= 0, successful exit,
 	!= 0, see error codes list
 */

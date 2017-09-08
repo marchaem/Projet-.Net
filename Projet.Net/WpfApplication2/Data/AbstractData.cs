@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WpfApplication2.Parametres;
+using WpfApplication2.Entree;
 
 namespace WpfApplication2.Data
 {
     public abstract class AbstractData
     {
-        public Option option;
+        public Options.Option option;
         abstract public List<DataFeed> getData(Entrees input);
     }
 }
