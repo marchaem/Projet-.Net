@@ -99,6 +99,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataHistorique.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Data\AbstractData.cs" />
+    <Compile Include="Data\DataHisto.cs" />
+    <Compile Include="Data\DataSimu.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
