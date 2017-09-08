@@ -8,20 +8,21 @@ using PricingLibrary.FinancialProducts;
 using PricingLibrary.Computations;
 using PricingLibrary.Utilities.MarketDataFeed;
 using PricingLibrary.Utilities;
+using LiveCharts;
 
 namespace WpfApplication2.Simu
 {
     public class Simulation
     {
         private Entrees param;
-        public List<double> valeurPf { get; set; }
-        public List<double> PrixOption { get; set; }
+        public ChartValues<double> valeurPf { get; set; }
+        public ChartValues<double> PrixOption { get; set; }
 
         public Simulation(Entrees param)
         {
             this.param = param;
-            this.valeurPf = new List<double>();
-            this.PrixOption = new List<double>();
+            this.valeurPf = new ChartValues<double> { };
+            this.PrixOption = new ChartValues<double> { };
         }
 
         public void Lancer()
