@@ -52,11 +52,12 @@ namespace WpfApplication2.Portfolio
             int i=0;
             foreach(DataFeed val in simulation)
             {
-                actualisationPortef(input.dateDebut, val.Date,(double) val.PriceList[input.listActions[0].Id], 0.4,RiskFreeRateProvider.GetRiskFreeRateAccruedValue(input.pas/365.0));
+                actualisationPortef(input.debutSimulation, val.Date,(double) val.PriceList[input.listActions[0].Id], 0.4,RiskFreeRateProvider.GetRiskFreeRateAccruedValue(input.pas/365.0));
                 i++;
             }
         }
         
+
         public double pricePortefeuille(DateTime debutEstimation, DateTime date  ,double couponCouru,double spot, double volatility)
         {
             int a = dateTimeConverter(debutEstimation,date);
