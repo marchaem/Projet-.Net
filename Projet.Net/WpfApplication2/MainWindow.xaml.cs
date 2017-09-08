@@ -28,6 +28,7 @@ namespace WpfApplication2
         static DateTime debutEstimation = new DateTime(2009, 1, 1);
         private ChartValues<double> option;
         private ChartValues<double> portefeuille;
+        private ChartValues<double> action;
         private Entrees entree;
         public string maturity { get; set; }
 
@@ -85,27 +86,29 @@ namespace WpfApplication2
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            List<String> sousjacents = new List<string>() { "accor", "bnp" };
-            Entrees entree = new Entrees(Entrees.typeOption.Basket
-                , 5, new DateTime(2009, 1, 1)
+            List<String> sousjacents = new List<string>() {"accor"};
+            Entrees entree = new Entrees(Entrees.typeOption.Vanille
+                , 9, new DateTime(2009, 1, 1)
                 , sousjacents
                 , new DateTime(2010, 1, 1)
                 , new DateTime(2009, 1, 1)
-                , 10
+                , 25
                 , Entrees.typeDonnees.Simulees
                 , "optionTest"
-                , new List<double>() { 0.7, 0.3 });
+                , new List<double>() {1});
             Simulation sim = new Simulation(entree);
             sim.Lancer();
             option = sim.PrixOption;
             portefeuille = sim.valeurPf;
+            action = sim.PrixAction;
+            
             RoutedEventArgs temp = new RoutedEventArgs();
             object temp2 = new object();
             //Window_Loaded(temp2, temp);
             Console.WriteLine("la maturity est de"+ maturity);
             PointShapeLineExample();
-
         }
+
         public void PointShapeLineExample()
         {
             InitializeComponent();
@@ -122,6 +125,11 @@ namespace WpfApplication2
                     Values = portefeuille,
                     PointGeometry = null
                 },
+                /*new LineSeries
+                {
+                    Title = "sous-jacent",
+                    Values = action,
+                }*/
             };
 
             var Values = new ChartValues<double> { 6, 7, 3, 4, 6 };

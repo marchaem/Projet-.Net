@@ -19,6 +19,7 @@ namespace WpfApplication2.Simu
         private Entrees param;
         public ChartValues<double> valeurPf { get; set; }
         public ChartValues<double> PrixOption { get; set; }
+        public ChartValues<double> PrixAction { get; set; }
         public List<Portefeuille> historiquePf { get; set; }
         public int jourActuel {get; set;}
         public Options.Option option { get; set; }
@@ -28,6 +29,7 @@ namespace WpfApplication2.Simu
             this.param = param;
             this.valeurPf = new ChartValues<double> { };
             this.PrixOption = new ChartValues<double> { };
+            this.PrixAction = new ChartValues<double> { };
             this.historiquePf = new List<Portefeuille>();
             this.option = this.CreerOption(this.param);
         }
@@ -103,7 +105,7 @@ namespace WpfApplication2.Simu
             double[] vol = this.FakeEstimatorVol(option);
             double prix = option.CalculerPrix(0, donnees, param.dateDebut, this.getSpotIndex(0, donnees), cov, vol);
             double[] deltas = option.CalculerDeltas(0, param.dateDebut, vol, cov, this.getSpotIndex(0, donnees));
-            Portefeuille premierpf = new Portefeuille(prix, deltas, this.getSpotIndex(0, donnees), option);
+            Portefeuille premierpf = new Portefeuille(prix, deltas, this.getSpotIndex(0, donnees), option,0);
             historiquePf.Add(premierpf);
             return premierpf;
         }
@@ -118,7 +120,8 @@ namespace WpfApplication2.Simu
                 , option.CalculerDeltas(this.jourActuel, param.dateDebut, vol, cov, spot)
                 , historiquePf[historiquePf.Count - 1]
                 , tauxSansRisque
-                , option);
+                , option
+                , this.jourActuel);
             historiquePf.Add(pfRebalancee);
             return pfRebalancee;
         }
@@ -156,8 +159,9 @@ namespace WpfApplication2.Simu
 
         public void ArchiveValeur(List<DataFeed> donnees, Options.Option option)
         {
-            this.valeurPf.Add(historiquePf[historiquePf.Count - 1].getPrixPortefeuille(this.getSpotIndex(jourActuel, donnees)));
+            this.valeurPf.Add(historiquePf[historiquePf.Count - 1].getPrixPortefeuille(this.getSpotIndex(jourActuel, donnees),this.jourActuel));
             this.PrixOption.Add(option.CalculerPrix(this.jourActuel, donnees, param.dateDebut, this.getSpotIndex(jourActuel, donnees), this.FakeEstimatorCov(option), this.FakeEstimatorVol(option)));
+            this.PrixAction.Add(this.getSpotIndex(this.jourActuel,donnees)[0]);
         }
 
     }
