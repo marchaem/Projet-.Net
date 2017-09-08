@@ -123,7 +123,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Class1.cs" />
+    <Compile Include="actionSelection.cs" />
     <Compile Include="Options\Option.cs" />
     <Compile Include="Options\OptionBasket.cs" />
     <Compile Include="Options\OptionVanille.cs" />

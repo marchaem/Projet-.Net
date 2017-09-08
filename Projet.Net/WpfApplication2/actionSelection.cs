@@ -1,8 +1,8 @@
 ﻿using Microsoft.Practices.Prism.Mvvm;
 
-namespace actionselect
+namespace actionselection
 {
-    public class actionSelect : BindableBase
+    public class actionSelection : BindableBase
     {
         public string Name { get; set; }
         public bool IsSelected { get; set; }

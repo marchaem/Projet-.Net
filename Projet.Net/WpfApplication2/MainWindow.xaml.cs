@@ -18,6 +18,9 @@ using System.Collections.ObjectModel;
 using LiveCharts;
 using LiveCharts.Wpf;
 using System.Windows.Controls;
+using actionselection;
+using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Mvvm;
 
 namespace WpfApplication2
 {
@@ -35,12 +38,12 @@ namespace WpfApplication2
         public ICommand ClickCommand { get; private set; }
 
 
-        //public ObservableCollection<actionSelect> actionList { get; private set; }
+        
 
 
         public MainWindow()
         {
-            
+
             List<String> sousjacents = new List<string>() { "accor", "bnp" };
             entree = new Entrees(Entrees.typeOption.Basket
                 , 5, new DateTime(2009, 1, 1)
@@ -52,31 +55,11 @@ namespace WpfApplication2
                 , Entrees.typeDonnees.Simulees
                 , "optionTest"
                 , new List<double>() { 0.7, 0.3 });
-
-
-            //actionList = new ObservableCollection<actionSelect>()
-            //{
-            //    new actionSelect() {Name = "Axa", IsSelected = false},
-            //    new actionSelect() {Name = "Accor", IsSelected = false},
-            //    new actionSelect() {Name = "Bnp", IsSelected = false},
-            //    new actionSelect() {Name = "Vivendi", IsSelected = false},
-            //    new actionSelect() {Name = "Dexia", IsSelected = false},
-            //    new actionSelect() {Name = "Carrefour", IsSelected = false}
-            //};
-
-            //ClickCommand = new DelegateCommand(ExtractComponents);
-        
-    }
-        //private void ExtractComponents()
-        //{
-        //    foreach (var comp in ComponentInfoList)
-        //    {
-        //        if (comp.IsSelected)
-        //        {
-        //            Console.WriteLine(comp.Name);
-        //        }
-        //    }
-        //}
+            InitializeComponent();
+            this.DataContext = new MainWindowViewModel();
+        }
+            
+    
 
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -129,4 +112,37 @@ namespace WpfApplication2
         
     }
 
+    internal class MainWindowViewModel : BindableBase
+    {
+        public ObservableCollection<actionSelection> actionList { get; private set; }
+
+        public ICommand ClickCommand { get; private set; }
+
+        public MainWindowViewModel()
+        {
+            actionList = new ObservableCollection<actionSelection>()
+            {
+                new actionSelection() {Name = "Axa", IsSelected = false},
+                new actionSelection() {Name = "Accor", IsSelected = false},
+                new actionSelection() {Name = "Bnp", IsSelected = false},
+                new actionSelection() {Name = "Vivendi", IsSelected = false},
+                new actionSelection() {Name = "Dexia", IsSelected = false},
+                new actionSelection() {Name = "Carrefour", IsSelected = false}
+            };
+
+            ClickCommand = new DelegateCommand(ExtractComponents);
+
+        }
+
+        private void ExtractComponents()
+        {
+            foreach (var comp in actionList)
+            {
+                if (comp.IsSelected)
+                {
+                    Console.WriteLine(comp.Name);
+                }
+            }
+        }
+    }
 }
