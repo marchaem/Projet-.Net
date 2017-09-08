@@ -56,15 +56,7 @@ namespace WpfApplication2.Data
             return covMatrix;
         }
 
-        public double[] tabVolatilite(double[,] covMatrix)
-        {
-            double[] tab = new double[covMatrix.GetLength(0)];
-            for(int i=0;i < covMatrix.GetLength(0); i++)
-            {
-                tab[i] = covMatrix[i, i];
-            }
-            return tab;
-        }
+       
 
         
         

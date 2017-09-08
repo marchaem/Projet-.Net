@@ -94,6 +94,31 @@ namespace WpfApplication2.Data
             }
             return assetReturns;
         }
+
+        public static double[] tabVolatilite(double[,] covMatrix)
+        {
+            double[] tab = new double[covMatrix.GetLength(0)];
+            for (int i = 0; i < covMatrix.GetLength(0); i++)
+            {
+                tab[i] = covMatrix[i, i];
+            }
+            return tab;
+        }
+
+        public static void dispMatrix(double[,] myCovMatrix)
+        {
+            int n = myCovMatrix.GetLength(0);
+
+            Console.WriteLine("Covariance matrix:");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write(myCovMatrix[i, j] + "\t");
+                }
+                Console.Write("\n");
+            }
+        }
     }
 }
     
