@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using PricingLibrary.Utilities.MarketDataFeed;
 using WpfApplication2.Entree;
+using PricingLibrary.Utilities;
+using PricingLibrary.FinancialProducts;
 
 namespace WpfApplication2.Data
 {
@@ -40,6 +42,35 @@ namespace WpfApplication2.Data
             }
             Console.WriteLine("il y a " + i + "date");
             return DataFieldCal;
+        }
+        public double[,] computeCov(int nbvalue, int nbassets, double[,] assetreturns)
+        {
+            return null;
+        }
+        public double[,] getAssetreturns(Entrees input)
+        {
+            
+            List<DataFeed> data = this.getData(input);
+            int nbAction = input.listActions.Count;
+            int nbdate = DayCount.CountBusinessDays(input.debutSimulation,input.finSimulation)/input.pas  ; 
+            int reste = ((input.finSimulation - input.debutSimulation).Days) % input.pas;
+            int result = (reste == 0) ? 0 : 1;
+            nbdate += result;
+            double[,] Assetreturns = new double[,] { };
+            int indexDebut = data.FindIndex(el => el.Date == input.debutSimulation);
+            int indexFin = data.FindIndex(el => el.Date == input.finSimulation);
+            for (int j=0; j < nbAction;j++ )
+            {
+                for(int i =0; i <  nbdate-1; i = i + input.pas)
+                {
+                    Assetreturns[i, j] = (double) data[indexDebut + i * input.pas].PriceList[input.listActions[j]];
+                }
+                Assetreturns[nbdate-1,j]= (double)data[indexFin].PriceList[input.listActions[j]];
+            }
+            return Assetreturns;
+
+
+
         }
     }
 }

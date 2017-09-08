@@ -1,5 +1,6 @@
-﻿using PricingLibrary.FinancialProducts;
-using PricingLibrary.Computations;
+﻿using PricingLibrary.Computations;
+using PricingLibrary.FinancialProducts;
+using PricingLibrary.Utilities.MarketDataFeed;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,29 +9,29 @@ using System.Threading.Tasks;
 
 namespace WpfApplication2.Options
 {
-   public class OptionVanille
+    class OptionVanille : Option
     {
-        private VanillaCall vanillaCall { get; set; }
-        
-
-        public OptionVanille(VanillaCall vanille)
+        public OptionVanille(PricingLibrary.FinancialProducts.Option option) : base(option)
         {
-            this.vanillaCall = vanille;
         }
 
-
-        public double calculePrixVanille( System.DateTime date,int nbJourParAn, double spot,double volatility)
+        public override double[] CalculerDeltas(int jour, DateTime dateDebut, double[] vol, double[,] cov, double[] spot)
         {
             Pricer pricer = new Pricer();
-            var result = pricer.PriceCall(this.vanillaCall, date, nbJourParAn, spot, volatility);
-            return result.Price;
+            DateTime dateAvancee = dateDebut;
+            dateAvancee = dateAvancee.AddDays(jour);
+            double[] deltas = pricer.PriceCall((VanillaCall)this.option, dateAvancee, 365, spot[0], vol[0]).Deltas;
+            return deltas;
         }
 
-        public double calculDeltaVanille(System.DateTime date, int nbJourParAn, double spot, double volatility)
+        public override double CalculerPrix(int jour, List<DataFeed> donees, DateTime dateDebut, double[] spot, double[,] cov, double[] vol)
         {
             Pricer pricer = new Pricer();
-            var result = pricer.PriceCall(this.vanillaCall, date, nbJourParAn, spot, volatility);
-            return result.Deltas[0];
+            //double volatility = 0.4; 
+            DateTime dateAvancee = dateDebut;
+            dateAvancee = dateAvancee.AddDays(jour);
+            double prix = pricer.PriceCall( (VanillaCall) this.option, dateAvancee, 365, spot[0], vol[0]).Price;
+            return prix;
         }
     }
 }

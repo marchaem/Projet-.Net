@@ -8,7 +8,7 @@ using WpfApplication2.Portfolio;
 
 namespace WpfApplication2
 {
-    public class PorteFeuilleBasket : Portefeuille
+    public class PorteFeuilleBasket 
     {
         BasketOption optionBasket;
         List<double> PartActions;
