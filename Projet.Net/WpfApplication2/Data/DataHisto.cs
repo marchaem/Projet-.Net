@@ -20,7 +20,7 @@ namespace WpfApplication2.Data
             List<DataFeed> DataFieldCal = new List<DataFeed>();
             DataHistoriqueDataContext asdc = new DataHistoriqueDataContext();
             List<string> reqId = asdc.HistoricalShareValues.Select(el => el.id).ToList();
-            List<System.DateTime> reqDate = asdc.HistoricalShareValues.Select(el => el.date).Distinct().Where(el=>el.Date >= input.debutSimulation).Where(el => el.Date <= input.finSimulation ).ToList();
+            List<System.DateTime> reqDate = asdc.HistoricalShareValues.Select(el => el.date).Distinct().Where(el=>el.Date >= input.debutSimulation).Where(el => el.Date <= input.maturite ).ToList();
             reqDate.Sort();
             List<decimal> reqValue = asdc.HistoricalShareValues.Select(el => el.value).ToList();
             int i = 0;

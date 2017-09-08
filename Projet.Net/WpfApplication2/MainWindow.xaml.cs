@@ -17,9 +17,6 @@ using System.Collections.ObjectModel;
 using LiveCharts;
 using LiveCharts.Wpf;
 using System.Windows.Controls;
-using actionselection;
-using Microsoft.Practices.Prism.Commands;
-using Microsoft.Practices.Prism.Mvvm;
 
 namespace WpfApplication2
 {
@@ -43,7 +40,7 @@ namespace WpfApplication2
         public MainWindow()
         {
 
-            Share share1 = new Share("EDF FP", "EDF FP");
+            /*Share share1 = new Share("EDF FP", "EDF FP");
             Share share2 = new Share("BNP FP", "BNP FP");
             List<String> sousjacents = new List<string>() { "EDF FP", "BNP FP" };
             Share[] listBasket = new Share[] { share1, share2 };
@@ -51,8 +48,8 @@ namespace WpfApplication2
 
             BasketOption bask = new BasketOption("basket", listBasket, new double[] { 0.5, 0.5 }, new DateTime(2013, 1, 10), 5.0);
             OptionBasket basket = new OptionBasket(bask);
-            //    OptionVanille option = new OptionVanille(vanille);
-            entree = new Entrees(Entrees.typeOption.Basket
+            //    OptionVanille option = new OptionVanille(vanille);*/
+            /*entree = new Entrees(Entrees.typeOption.Basket
                 , 5, new DateTime(2009, 1, 1)
                 , sousjacents
                 , new DateTime(2010, 1, 1)
@@ -74,7 +71,7 @@ namespace WpfApplication2
             double[,] mat = dataSimu.getAssetReturns(valuesSimu);
             Compute_Tools.dispMatrix(mat);
             double[,] matrixAsset = DataSimu.computeCov(mat);
-            Compute_Tools.dispMatrix(matrixAsset);
+            Compute_Tools.dispMatrix(matrixAsset);*/
             //   Console.WriteLine("la vol vaut " + Math.Sqrt(matrixAsset[0,0]));*/
 
             //   Console.WriteLine(matrixAsset.ToString());*/
@@ -88,6 +85,16 @@ namespace WpfApplication2
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            List<String> sousjacents = new List<string>() { "accor", "bnp" };
+            Entrees entree = new Entrees(Entrees.typeOption.Basket
+                , 5, new DateTime(2009, 1, 1)
+                , sousjacents
+                , new DateTime(2010, 1, 1)
+                , new DateTime(2009, 1, 1)
+                , 10
+                , Entrees.typeDonnees.Simulees
+                , "optionTest"
+                , new List<double>() { 0.7, 0.3 });
             Simulation sim = new Simulation(entree);
             sim.Lancer();
             option = sim.PrixOption;
@@ -136,7 +143,7 @@ namespace WpfApplication2
         
     }
 
-    internal class MainWindowViewModel : BindableBase
+    /*internal class MainWindowViewModel : BindableBase
     {
         public ObservableCollection<actionSelection> actionList { get; private set; }
 
@@ -156,9 +163,9 @@ namespace WpfApplication2
 
             ClickCommand = new DelegateCommand(ExtractComponents);
 
-        }
+        }*/
 
-        private void ExtractComponents()
+        /*private void ExtractComponents()
         {
             foreach (var comp in actionList)
             {
@@ -167,6 +174,5 @@ namespace WpfApplication2
                     Console.WriteLine(comp.Name);
                 }
             }
-        }
+        }*/
     }
-}
