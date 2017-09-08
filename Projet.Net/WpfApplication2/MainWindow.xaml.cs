@@ -24,6 +24,7 @@ namespace WpfApplication2
         static DateTime debutEstimation = new DateTime(2009, 1, 1);
         private List<double> option;
         private List<double> portefeuille;
+        private Entrees entree;
         public MainWindow()
         {
             /*Donnees a demander a l'utilisateur*/
@@ -69,16 +70,17 @@ namespace WpfApplication2
             }*/
 
             List<String> sousjacents = new List<string>() { "accor", "bnp" };
-            Entrees entree = new Entrees(Entrees.typeOption.Basket
-                , 7, new DateTime(2009, 1, 1)
+            entree = new Entrees(Entrees.typeOption.Basket
+                , 5, new DateTime(2009, 1, 1)
                 , sousjacents
                 , new DateTime(2012, 1, 1)
                 , new DateTime(2009, 1, 1)
                 , new DateTime(2012, 1, 1)
-                , 100
+                , 50
                 , Entrees.typeDonnees.Simulees
                 , "optionTest"
                 , new List<double>() { 0.7, 0.3 });
+
             Simulation sim = new Simulation(entree);
             sim.Lancer();
             option = sim.PrixOption;
@@ -89,6 +91,11 @@ namespace WpfApplication2
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            Simulation sim = new Simulation(entree);
+            sim.Lancer();
+            option = sim.PrixOption;
+            portefeuille = sim.valeurPf;
+            //Window_Loaded();
 
         }
         // Draw a simple graph.
