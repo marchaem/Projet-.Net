@@ -11,7 +11,7 @@ using WpfApplication2.Entree;
 using WpfApplication2.Simu;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using WpfApplication2.Parametres;
+
 using WpfApplication2.Data;
 
 namespace WpfApplication2
