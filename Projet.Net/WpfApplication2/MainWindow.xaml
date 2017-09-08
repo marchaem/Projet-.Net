@@ -9,7 +9,7 @@
         Title="MainWindow" Height="350" Width="525" >
 
     <Grid>
-        <ListBox ItemsSource="{Binding ComponentInfoList}" Margin="10,56,336,161">
+        <ListBox ItemsSource="{Binding ComponentInfoList}" Margin="10,56,0,0" HorizontalAlignment="Left" Width="171" Height="103" VerticalAlignment="Top">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <CheckBox Content="{Binding Name}"
