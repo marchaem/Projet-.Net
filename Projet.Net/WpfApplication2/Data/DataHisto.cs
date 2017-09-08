@@ -52,13 +52,13 @@ namespace WpfApplication2.Data
             
             List<DataFeed> data = this.getData(input);
             int nbAction = input.listActions.Count;
-            int nbdate = DayCount.CountBusinessDays(input.debutSimulation,input.finSimulation)/input.pas  ; 
-            int reste = ((input.finSimulation - input.debutSimulation).Days) % input.pas;
+            int nbdate = DayCount.CountBusinessDays(input.debutSimulation,input.maturite)/input.pas  ; 
+            int reste = ((input.maturite - input.debutSimulation).Days) % input.pas;
             int result = (reste == 0) ? 0 : 1;
             nbdate += result;
             double[,] Assetreturns = new double[,] { };
             int indexDebut = data.FindIndex(el => el.Date == input.debutSimulation);
-            int indexFin = data.FindIndex(el => el.Date == input.finSimulation);
+            int indexFin = data.FindIndex(el => el.Date == input.maturite);
             for (int j=0; j < nbAction;j++ )
             {
                 for(int i =0; i <  nbdate-1; i = i + input.pas)

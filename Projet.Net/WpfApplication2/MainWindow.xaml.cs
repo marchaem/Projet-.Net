@@ -41,17 +41,16 @@ namespace WpfApplication2
         public MainWindow()
         {
             
-            List<String> sousjacents = new List<string>() { "accor", "bnp" };
-            entree = new Entrees(Entrees.typeOption.Basket
-                , 5, new DateTime(2009, 1, 1)
+            List<String> sousjacents = new List<string>() { "accor" };
+            entree = new Entrees(Entrees.typeOption.Vanille
+                , 7, new DateTime(2009, 1, 1)
                 , sousjacents
-                , new DateTime(2012, 1, 1)
+                , new DateTime(2010, 1, 1)
                 , new DateTime(2009, 1, 1)
-                , new DateTime(2012, 1, 1)
-                , 50
+                , 100
                 , Entrees.typeDonnees.Simulees
                 , "optionTest"
-                , new List<double>() { 0.7, 0.3 });
+                , new List<double>() {0.1 });
 
 
             //actionList = new ObservableCollection<actionSelect>()

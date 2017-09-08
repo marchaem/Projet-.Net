@@ -18,12 +18,11 @@ namespace TestLibrary
         {
             List<String> sousjacents = new List<string>(){ "accor", "bnp" };
             Entrees entree = new Entrees(Entrees.typeOption.Basket
-                , 5, new DateTime(2009, 1, 1)
+                , 9, new DateTime(2009, 1, 1)
                 , sousjacents
-                , new DateTime(2012, 1, 1)
+                , new DateTime(2010, 1, 1)
                 , new DateTime(2009, 1, 1)
-                , new DateTime(2012, 1, 1)
-                , 200
+                , 10
                 , Entrees.typeDonnees.Simulees
                 , "optionTest"
                 ,new List<double>() { 0.7, 0.3 });
