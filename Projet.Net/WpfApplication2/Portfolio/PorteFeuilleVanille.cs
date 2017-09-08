@@ -6,111 +6,66 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WpfApplication2.Options;
 using WpfApplication2.Entree;
 
 namespace WpfApplication2.Portfolio
 {
-    public class PorteFeuilleVanille : Portefeuille
+    public class PorteFeuilleVanille 
     {
-        private OptionVanille option { get; set; }
+        private VanillaCall option { get; set; }
 
-        public List<double> trackingErrors { get; }
+        double partAction;
 
-        // proportions est matrice qui à une date (ligne ) associe les proportions (colonnes)
-        private double[,] proportions;// composition portefeuille
+        double partSansRisque; 
 
-        public PorteFeuilleVanille(OptionVanille option)
+        public PorteFeuilleVanille(double spot, double delta, PorteFeuilleVanille pfPrec, double r, VanillaCall option)
         {
+            this.partAction = delta;
             this.option = option;
-            this.proportions = new double[1000000,2]; // à améliorer
-            this.trackingErrors = new List<double>();
-        }
-        public void actualisationPortef(DateTime debutSimulation,DateTime date,double spot,double volatility,double couponCouru)//actualisationSimulation
-        {
-            int a = dateTimeConverter(debutSimulation,date);
-            
-            if (a < 0)
-            {
-                
-                throw new Exception("abruti rentre des bonnes dates");
-            }
-            double delta = option.calculDeltaVanille(date, 365, spot, volatility);
-            double thuneSansRisque = pricePortefeuille(debutSimulation,date, couponCouru, spot, volatility)-delta*spot;
-            proportions[a, 0] = delta;
-            proportions[a, 1] = thuneSansRisque;
-            trackingErrors.Add ( pricePortefeuille(debutSimulation, date, couponCouru, spot, volatility) - option.calculePrixVanille(date, 365, spot, volatility));
-
-
-
-        }
-        
-
-        public void actulisationPorteSimu(List<DataFeed> simulation, Entrees input)// fillCompositionPortefeuille
-        {
-
-            int i=0;
-            foreach(DataFeed val in simulation)
-            {
-                actualisationPortef(input.dateDebut, val.Date,(double) val.PriceList[input.listActions[0]], 0.4,RiskFreeRateProvider.GetRiskFreeRateAccruedValue(input.pas/365.0));
-                i++;
-            }
-        }
-        
-        public double pricePortefeuille(DateTime debutEstimation, DateTime date  ,double couponCouru,double spot, double volatility)
-        {
-            int a = dateTimeConverter(debutEstimation,date);
-            
-            if (a < 0)
-            {
-                throw new Exception("la fonction Kerboul a renvoyé un index négatif, c'est un boyard ");
-            }
-            else if (a == 0)
-            {
-                return option.calculePrixVanille(date, 365, spot, volatility);
-            }
-            else
-            {
-                return proportions[a - 1, 0] * spot + proportions[a - 1, 1] * couponCouru;
-            }
-
-
-
+            double valeurActu = pfPrec.actu(spot, r, pfPrec);
+            this.partSansRisque = valeurActu;
+            partSansRisque -= delta * spot;
         }
 
-
-
-        public int dateTimeConverter(DateTime debutEstimation, DateTime date)
+        public PorteFeuilleVanille(double prixOption, double delta, double spot, VanillaCall option)
         {
-            bool datahist = false;
-            if (datahist)
-            {
-                return 0;
-            }
-
-            DateTime dateDebut = debutEstimation;
-            TimeSpan temps = date - dateDebut;
-            int a = Convert.ToInt32(temps.TotalDays);
-            return a;
-
+            // Constructeur qui créer le premier portefeuille à l'instant 0
+            this.option = option;
+            this.partAction = delta;
+            this.partSansRisque = prixOption - delta * spot;
         }
 
-        public  string ToString1(DateTime dateDebut, DateTime date)
+        public double getPrixPortefeuille(double spot)
         {
-            string message = "la composition du portefeuille est : " + this.proportions[dateTimeConverter(dateDebut, date), 0] + " et " + this.proportions[dateTimeConverter(dateDebut, date), 1];
-            return message;
+            // Recupere la valeur du portefeuille à l'instant actuel
+            var result = 0.0;
+            result = partAction * spot + partSansRisque;
+            return result;
         }
 
-
-
-        /*
-        public double getValeurActu(int nbPeriodes, double spot, double tauxSansRisque)
+        public double actu(double spot, double r, PorteFeuilleVanille pfPrec)
         {
-            // spot = prix de l'action au bout de nbPeriodes
-            var res = 0.0;
-            res = thuneDansLeSansRisque * Math.Pow(1 + tauxSansRisque, nbPeriodes) + spot * nombreAction;
+            // Actualise la valeur du portefeuille au temps n jusqu'au temps n+1
+            // r = taux sans risque
+            double anciensDelta = pfPrec.partAction;
+            var valeur = 0.0;
+            valeur += anciensDelta * spot;
+
+            valeur += pfPrec.partSansRisque * r;
+
+            return valeur;
+        }
+
+        public string ToString(double spot)
+        {
+            var res = "";
+            res += "##########PORTEFEUILLE##########\n";
+            res += "Part des actions \n";
+            res += partAction + " actions " + option.UnderlyingShare.Name + " (Cours " + spot + "€ )\n";
+            res += "Montant dans le sans risque : " + partSansRisque + "€\n";
+            res += "Valeur totale du portefeuille = " + this.getPrixPortefeuille(spot) + "€\n";
+            res += "##########FIN PORTEFEUILLE##########";
             return res;
         }
-        */
     }
 }

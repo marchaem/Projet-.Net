@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PricingLibrary.Utilities.MarketDataFeed;
-using WpfApplication2.Parametres;
+using WpfApplication2.Entree;
 
 namespace WpfApplication2.Data
 {
