@@ -69,22 +69,35 @@ namespace WpfApplication2
                 date=date.AddDays(donnes.pas);
             }*/
 
-            List<String> sousjacents = new List<string>() { "accor", "bnp" };
-            entree = new Entrees(Entrees.typeOption.Basket
+            List<String> sousjacents = new List<string>() { "EDF FP" };
+            List<DataFeed> list = new List<DataFeed>();
+            Share share = new Share("EDF FR", "EDF FP");
+            VanillaCall vanille = new VanillaCall("vanille",share, new DateTime(2013, 1, 10),5);
+            OptionVanille option = new OptionVanille(vanille);
+            entree = new Entrees(Entrees.typeOption.Vanille
                 , 5, new DateTime(2009, 1, 1)
                 , sousjacents
-                , new DateTime(2012, 1, 1)
-                , new DateTime(2009, 1, 1)
-                , new DateTime(2012, 1, 1)
-                , 50
+                , new DateTime(2013, 1, 10)
+                , new DateTime(2013, 1, 2)
+                , new DateTime(2013, 1, 10)
+                , 1
                 , Entrees.typeDonnees.Simulees
                 , "optionTest"
                 , new List<double>() { 0.7, 0.3 });
+            DataSimu dataSimu = new DataSimu(option);
+            dataSimu.getData(entree);
+            DataHisto histo = new DataHisto();
+            list = histo.getData(entree);
+            double[,] mat=dataSimu.getAssetreturns(entree);
+            double[,] matrixAsset = DataHisto.computeCov(mat);
+            Console.WriteLine("la vol vaut " + Math.Sqrt(matrixAsset[0,0]));
 
-            Simulation sim = new Simulation(entree);
+            Console.WriteLine(matrixAsset.ToString());
+
+            /*Simulation sim = new Simulation(entree);
             sim.Lancer();
             option = sim.PrixOption;
-            portefeuille = sim.valeurPf;
+            portefeuille = sim.valeurPf;*/
 
 
         }
