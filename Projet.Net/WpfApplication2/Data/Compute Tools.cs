@@ -28,20 +28,83 @@ namespace WpfApplication2.Data
         ref int info
             );
 
-        static public double[,] getAssetValues(Entrees input)
+        static public double[,] getAssetValues(List<DataFeed> donnees, Entrees input)
         {
-            DataHisto histo = new DataHisto();
+            List<string> tabactions = input.listActions;
+            int nbaction = donnees[0].PriceList.Count;
+            int nbDate = donnees.Count;
+            double[,] Assetreturns = new double[nbDate, nbaction];
+            for (int i = 0; i<nbDate; i++)
+            {
+                for (int j=0; j<nbaction; j++)
+                {
+
+                    Assetreturns[i, j] = (double)donnees[i].PriceList[tabactions[j]];
+                }
+            }
+            return Assetreturns;
+        }
+
+        static public double[,] getLog(double[,] assets)
+        {
+            Console.WriteLine("get log : " );
+            int dataSize = assets.GetLength(0);
+            int nbValues = assets.GetLength(1);
+            double[,] logMatrix = new double[dataSize, nbValues];
+            int info = 0;
+            int horizon = 3;
+            int res;
+            res = WREmodelingLogReturns(ref dataSize, ref nbValues, assets, ref horizon, logMatrix, ref info);
+            /*if (res != 0)
+            {
+                Console.WriteLine("CODE ERREUR " + res);
+                Console.WriteLine("CODE INFO " + info);
+                if (res < 0)
+                    throw new Exception("ERROR: WREmodelingCov encountred a problem. See info parameter for more details");
+                else
+                    throw new Exception("WARNING: WREmodelingCov encountred a problem. See info parameter for more details");
+            }*/
+            Console.WriteLine("Nb de ligne retour = " + logMatrix.GetLength(0));
+            Console.WriteLine("Nb de col retour = " + logMatrix.GetLength(1));
+            return logMatrix;
+        }
+
+        public static double[,] getCov(double[,] returns)
+        {
+            int dataSize = returns.GetLength(0);
+            int nbAssets = returns.GetLength(1);
+            double[,] covMatrix = new double[nbAssets, nbAssets];
+            int info = 0;
+            int res;
+            res = WREmodelingCov(ref dataSize, ref nbAssets, returns, covMatrix, ref info);
+            if (res != 0)
+            {
+                if (res < 0)
+                    throw new Exception("ERROR: WREmodelingCov encountred a problem. See info parameter for more details");
+                else
+                    throw new Exception("WARNING: WREmodelingCov encountred a problem. See info parameter for more details");
+            }
+            return covMatrix;
+        }
+
+
+
+       /* static public double[,] getAssetValues(Entrees input)
+        {
+            DataSimu histo = new DataSimu();
             List<DataFeed> data = histo.getData(input);
             int nbAction = input.listActions.Count;
             Console.WriteLine("il y a " + nbAction.ToString() + " Actions dans input.listActions");
 
-            int nbdate = DayCount.CountBusinessDays(input.debutSimulation, input.maturite) / input.pas;
+            int nbdate = DayCount.CountBusinessDays(input.debutSimulation, input.maturite);
+            Console.WriteLine("il y a " + nbdate.ToString() + " Dates dans data");
             int reste = ((input.maturite - input.debutSimulation).Days) % input.pas;
             int result = (reste == 0) ? 0 : 1;
             nbdate += result;
             double[,] Assetreturns = new double[nbdate, nbAction];
             int indexDebut = data.FindIndex(el => el.Date == input.debutSimulation);
             int indexFin = data.FindIndex(el => el.Date == input.maturite);
+            Console.WriteLine("Index de début : " + indexDebut + " index de fin : " + indexFin);
             double res = 0.0;
             for (int j = 0; j < nbAction; j++)
             {
@@ -56,7 +119,7 @@ namespace WpfApplication2.Data
 
             }
             return Assetreturns;
-        }
+        }*/
 
         public static double[,] computeCov(double[,] returns)
         {

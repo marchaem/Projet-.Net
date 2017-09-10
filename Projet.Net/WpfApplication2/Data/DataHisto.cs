@@ -8,15 +8,16 @@ using WpfApplication2.Entree;
 using PricingLibrary.Utilities;
 using PricingLibrary.FinancialProducts;
 using System.Runtime.InteropServices;
+using WpfApplication2.Options;
 
 namespace WpfApplication2.Data
 {
     public class DataHisto : AbstractData
     {
-       
 
         public override List<DataFeed> getData(Entrees input)
         {
+            Console.WriteLine("getData debut");
             List<DataFeed> DataFieldCal = new List<DataFeed>();
             DataHistoriqueDataContext asdc = new DataHistoriqueDataContext();
             List<string> reqId = asdc.HistoricalShareValues.Select(el => el.id).ToList();
@@ -48,21 +49,22 @@ namespace WpfApplication2.Data
             return DataFieldCal;
         }
 
-        public double[,] matriceCovariance(Entrees input)
+       /* public double[,] matriceCovariance(Entrees input)
         {
             double[,] assetValues = Compute_Tools.getAssetValues(input);
             double[,] assetReturns = Compute_Tools.getAssetReturns(assetValues);
             double[,] covMatrix = Compute_Tools.computeCov(assetReturns);
             return covMatrix;
+        }*/
+
+        public override double[] vol(Options.Option option, DateTime date)
+        {
+            throw new NotImplementedException();
         }
 
-       
-
-        
-        
-
-        
-
-        
+        public override double[,] cov(Options.Option option, DateTime date)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -13,5 +13,7 @@ namespace WpfApplication2.Data
     {
         public Options.Option option;
         abstract public List<DataFeed> getData(Entrees input);
+        abstract public double[] vol(Options.Option option, DateTime date);
+        abstract public double[,] cov(Options.Option option, DateTime date);
     }
 }

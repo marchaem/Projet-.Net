@@ -11,6 +11,7 @@ using PricingLibrary.Utilities.MarketDataFeed;
 using PricingLibrary.Utilities;
 using LiveCharts;
 using WpfApplication2.Options;
+using WpfApplication2.Data;
 
 namespace WpfApplication2.Simu
 {
@@ -35,10 +36,10 @@ namespace WpfApplication2.Simu
                 PrixAction.Add(new ChartValues<double> { }); 
             }
             this.historiquePf = new List<Portefeuille>();
-            this.option = this.CreerOption(this.param);
+            this.option = CreerOption(this.param);
         }
 
-        public Options.Option CreerOption(Entrees param)
+        public static Options.Option CreerOption(Entrees param)
         {
             if (param.typeoption == Entrees.typeOption.Basket)
             {
@@ -70,14 +71,6 @@ namespace WpfApplication2.Simu
             }
         }
 
-        public List<DataFeed> getDonneesSimulees(PricingLibrary.FinancialProducts.Option option)
-        {
-            var dataFeedCalc = new List<DataFeed>();
-            IDataFeedProvider data = new SimulatedDataFeedProvider();
-            dataFeedCalc = data.GetDataFeed(option, param.dateDebut);
-            return dataFeedCalc;
-        }
-
         public double[] getSpotIndex(int i, List<DataFeed> dataFeedCalc)
         {
             decimal[] res;
@@ -89,7 +82,8 @@ namespace WpfApplication2.Simu
         public void Lancer()
         {
             this.jourActuel = 0;
-            List<DataFeed> donnees = this.getDonneesSimulees(option.option);
+            DataSimu data = new DataSimu();
+            List<DataFeed> donnees = data.getData(param);
 
             Portefeuille premierpf = this.InitialiserPf(option, donnees);   
 
