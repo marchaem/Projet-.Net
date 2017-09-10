@@ -86,6 +86,7 @@ namespace WpfApplication2
 
         private void Button_Start(object sender, RoutedEventArgs e)
         {
+            //MAIN A JOUR
             //Console.WriteLine(strikeUI.Text);
             //Console.WriteLine(mat.Text);
             DateTime debut = Convert.ToDateTime(debutUI.Text);
