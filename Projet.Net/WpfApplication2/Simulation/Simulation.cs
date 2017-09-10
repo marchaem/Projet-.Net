@@ -19,7 +19,7 @@ namespace WpfApplication2.Simu
         private Entrees param;
         public ChartValues<double> valeurPf { get; set; }
         public ChartValues<double> PrixOption { get; set; }
-        public ChartValues<double> PrixAction { get; set; }
+        public List<ChartValues<double>> PrixAction { get; set; }
         public List<Portefeuille> historiquePf { get; set; }
         public int jourActuel {get; set;}
         public Options.Option option { get; set; }
@@ -29,7 +29,11 @@ namespace WpfApplication2.Simu
             this.param = param;
             this.valeurPf = new ChartValues<double> { };
             this.PrixOption = new ChartValues<double> { };
-            this.PrixAction = new ChartValues<double> { };
+            this.PrixAction = new List<ChartValues<double>> { };
+            for (int i=0; i<param.listActions.Count(); i++)
+            {
+                PrixAction.Add(new ChartValues<double> { }); 
+            }
             this.historiquePf = new List<Portefeuille>();
             this.option = this.CreerOption(this.param);
         }
@@ -161,7 +165,10 @@ namespace WpfApplication2.Simu
         {
             this.valeurPf.Add(historiquePf[historiquePf.Count - 1].getPrixPortefeuille(this.getSpotIndex(jourActuel, donnees),this.jourActuel));
             this.PrixOption.Add(option.CalculerPrix(this.jourActuel, donnees, param.dateDebut, this.getSpotIndex(jourActuel, donnees), this.FakeEstimatorCov(option), this.FakeEstimatorVol(option)));
-            this.PrixAction.Add(this.getSpotIndex(this.jourActuel,donnees)[0]);
+            for (int i=0; i<option.option.UnderlyingShareIds.Count(); i++)
+            {
+                this.PrixAction[i].Add(this.getSpotIndex(this.jourActuel, donnees)[i]);
+            }
         }
 
     }
