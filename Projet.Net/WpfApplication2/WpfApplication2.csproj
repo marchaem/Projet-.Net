@@ -126,11 +126,13 @@
       <DependentUpon>ajoutVanille.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\Compute_Tools.cs" />
+    <Compile Include="Data\typeDonnees.cs" />
     <Compile Include="Options\Option.cs" />
     <Compile Include="Options\OptionBasket.cs" />
     <Compile Include="Options\OptionVanille.cs" />
     <Compile Include="Simulation\Simulation.cs" />
     <Compile Include="ViewModel\actionViewModel.cs" />
+    <Compile Include="ViewModel\DataViewModel.cs" />
     <Page Include="ajoutBasket.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -105,7 +105,7 @@ namespace WpfApplication2
                 , debut
                 , debut
                 , freq
-                , Entrees.typeDonnees.Simulees
+                , new typeDonnees()
                 , "optionTest"
                 , new List<double>() {1});
             Simulation sim = new Simulation(entree);

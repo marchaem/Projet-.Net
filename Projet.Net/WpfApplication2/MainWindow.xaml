@@ -43,11 +43,11 @@
         <TextBox x:Name="freqUI" HorizontalAlignment="Left" Height="23" Margin="6,117,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.ColumnSpan="2"/>
         <Button x:Name="buttonAjouterVanille" Content="Ajouter Vanille" HorizontalAlignment="Left" Margin="29,23,0,0" VerticalAlignment="Top" Width="75" Click="vanille_Click" Grid.ColumnSpan="2"/>
         <Button x:Name="buttonAjouterBasket" Content="Ajouter Basket" Grid.Column="1" HorizontalAlignment="Left" Margin="51,23,0,0" VerticalAlignment="Top" Width="75" Click="basket_Click" Grid.ColumnSpan="2"/>
-        <ComboBox x:Name="comboBoxOptionTest" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="25,152,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="comboBox_SelectionChanged" Grid.Column="1">
+        <ComboBox x:Name="comboBoxOptionTest" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="25,152,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="comboBox_SelectionChanged" Grid.Column="1" ItemsSource="{Binding ListeAction}" SelectedItem="{Binding Action}">
             <Label x:Name="label" Content=""/>
         </ComboBox>
         <Label x:Name="optionTest" Content="option à tester" HorizontalAlignment="Left" Margin="10,148,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <ComboBox x:Name="comboBoxTypeDonnées" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="25,210,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        <ComboBox x:Name="comboBoxTypeDonnées" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="25,210,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1" ItemsSource="{Binding Data}" SelectedItem="{Binding SelectedData}" IsSynchronizedWithCurrentItem ="True" />
         <Label x:Name="label4" Content="type de données" Margin="0,210,52,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
         <Button x:Name="retirerOption" Content="Retirer option" Grid.Column="3" HorizontalAlignment="Left" Margin="0,23,0,0" VerticalAlignment="Top" Width="75" Click="retirer_Click"/>
         <!--<Canvas Name="canGraph" Background="White"
