@@ -28,7 +28,7 @@ namespace WpfApplication2
         static DateTime debutEstimation = new DateTime(2009, 1, 1);
         private ChartValues<double> option;
         private ChartValues<double> portefeuille;
-        private List<ChartValues<double>> action;
+        private ChartValues<double> action;
         private Entrees entree;
         public string maturity { get; set; }
 
@@ -84,21 +84,15 @@ namespace WpfApplication2
         }
 
 
-        private void Button_Start(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //Console.WriteLine(strikeUI.Text);
-            //Console.WriteLine(mat.Text);
-            DateTime debut = Convert.ToDateTime(debutUI.Text);
-            DateTime maturite = Convert.ToDateTime(mat.Text);
-            double strike = Convert.ToDouble(strikeUI.Text);
-            int freq = Convert.ToInt32(freqUI.Text);
             List<String> sousjacents = new List<string>() {"accor"};
-            this.entree = new Entrees(Entrees.typeOption.Basket
-                , strike, debut
+            Entrees entree = new Entrees(Entrees.typeOption.Vanille
+                , 9, new DateTime(2009, 1, 1)
                 , sousjacents
-                , maturite
-                , debut
-                , freq
+                , new DateTime(2010, 1, 1)
+                , new DateTime(2009, 1, 1)
+                , 25
                 , Entrees.typeDonnees.Simulees
                 , "optionTest"
                 , new List<double>() {1});
@@ -111,13 +105,8 @@ namespace WpfApplication2
             RoutedEventArgs temp = new RoutedEventArgs();
             object temp2 = new object();
             //Window_Loaded(temp2, temp);
-            //Console.WriteLine("la maturity est de"+ maturity);
+            Console.WriteLine("la maturity est de"+ maturity);
             PointShapeLineExample();
-        }
-
-        private void Button_Reset(object sender, RoutedEventArgs e)
-        {
-            SeriesCollection.Clear();
         }
 
         public void PointShapeLineExample()
@@ -136,20 +125,19 @@ namespace WpfApplication2
                     Values = portefeuille,
                     PointGeometry = null
                 },
+                /*new LineSeries
+                {
+                    Title = "sous-jacent",
+                    Values = action,
+                }*/
             };
 
-            for (int i=0; i<entree.listActions.Count; i++)
-            {
-                SeriesCollection.Add(new LineSeries { Title = entree.listActions[i], Values = action[i] });
-            }
-            
-
-            /*var Values = new ChartValues<double> { 6, 7, 3, 4, 6 };
+            var Values = new ChartValues<double> { 6, 7, 3, 4, 6 };
             Values.Add(10);
-            Console.WriteLine(Values[5] + " c est ca les valeurs");*/
+            Console.WriteLine(Values[5] + " c est ca les valeurs");
 
-            /*Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May" };
-            YFormatter = value => value.ToString("C");*/
+            Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May" };
+            YFormatter = value => value.ToString("C");
 
             
 
