@@ -148,7 +148,15 @@ namespace WpfApplication2
         public string[] Labels { get; set; }
         public Func<double, string> YFormatter { get; set; }
 
-        
+        private void CartesianChart_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 
     /*internal class MainWindowViewModel : BindableBase

@@ -28,13 +28,14 @@ namespace WpfApplication2.Data
         ref int info
             );
 
+
+        //returns the matrix with the asset's values (spots)
         static public double[,] getAssetValues(Entrees input)
         {
             DataHisto histo = new DataHisto();
             List<DataFeed> data = histo.getData(input);
             int nbAction = input.listActions.Count;
             Console.WriteLine("il y a " + nbAction.ToString() + " Actions dans input.listActions");
-
             int nbdate = DayCount.CountBusinessDays(input.debutSimulation, input.maturite) / input.pas;
             int reste = ((input.maturite - input.debutSimulation).Days) % input.pas;
             int result = (reste == 0) ? 0 : 1;
@@ -58,6 +59,8 @@ namespace WpfApplication2.Data
             return Assetreturns;
         }
 
+
+        //compute the covariance matrix
         public static double[,] computeCov(double[,] returns)
         {
             int dataSize = returns.GetLength(0);
@@ -76,6 +79,8 @@ namespace WpfApplication2.Data
             return covMatrix;
         }
 
+
+        //compute the matrix with the Assets returns
         public static double[,] getAssetReturns(double[,] returns)
         {
             int dataSize = returns.GetLength(0);
@@ -95,12 +100,14 @@ namespace WpfApplication2.Data
             return assetReturns;
         }
 
+
+        //returns the array with all the volatilities
         public static double[] tabVolatilite(double[,] covMatrix)
         {
             double[] tab = new double[covMatrix.GetLength(0)];
             for (int i = 0; i < covMatrix.GetLength(0); i++)
             {
-                tab[i] = covMatrix[i, i];
+                tab[i] = covMatrix[i, i]*Math.Sqrt(365);
             }
             return tab;
         }
@@ -108,11 +115,12 @@ namespace WpfApplication2.Data
         public static void dispMatrix(double[,] myCovMatrix)
         {
             int n = myCovMatrix.GetLength(0);
+            int m = myCovMatrix.GetLength(1);
 
             Console.WriteLine("Covariance matrix:");
             for (int i = 0; i < n; i++)
             {
-                for (int j = 0; j < n; j++)
+                for (int j = 0; j < m; j++)
                 {
                     Console.Write(myCovMatrix[i, j] + "\t");
                 }

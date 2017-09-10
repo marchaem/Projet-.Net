@@ -53,6 +53,7 @@ namespace WpfApplication2.Data
             double[,] assetValues = Compute_Tools.getAssetValues(input);
             double[,] assetReturns = Compute_Tools.getAssetReturns(assetValues);
             double[,] covMatrix = Compute_Tools.computeCov(assetReturns);
+            Compute_Tools.dispMatrix(covMatrix);
             return covMatrix;
         }
 

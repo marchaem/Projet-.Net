@@ -9,6 +9,10 @@
         Title="MainWindow" Height="350" Width="525" >
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="458*"/>
+            <ColumnDefinition Width="59*"/>
+        </Grid.ColumnDefinitions>
         <ListBox ItemsSource="{Binding ComponentInfoList}" Margin="10,56,0,0" HorizontalAlignment="Left" Width="171" Height="103" VerticalAlignment="Top">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -19,8 +23,8 @@
         </ListBox>
 
 
-        <StackPanel Margin="10,10,327,235">
-            <TextBlock Text=" quelle est le strike:" HorizontalAlignment="Left" Width="149" Margin="21,0,0,0" />
+        <StackPanel Margin="10,10,267.702,235">
+            <TextBlock Text=" quel est le strike:" HorizontalAlignment="Left" Width="149" Margin="21,0,0,0" />
             <TextBox x:Name="strike" HorizontalAlignment="Left" Width="180"  />
         </StackPanel>
 
@@ -31,15 +35,15 @@
 
 
 
-        <StackPanel Margin="10,233,318,10">
+        <StackPanel Margin="10,233,258.702,10">
             <TextBlock Text="choix du type d'option " HorizontalAlignment="Left" Width="152" Margin="32,0,0,0" />
-            <ComboBox Text="Is not open" HorizontalAlignment="Left" Width="169" Margin="10,0,0,0">
+            <ComboBox Text="Is not open" HorizontalAlignment="Left" Width="169" Margin="10,0,0,0" SelectionChanged="ComboBox_SelectionChanged">
                 <!--<ComboBoxItem Name="cbi1">donné historique</ComboBoxItem>-->
-                <ComboBoxItem Name="cbu2">vanila</ComboBoxItem>
+                <ComboBoxItem x:Name="cbu2" Content="vanila"/>
             </ComboBox>
         </StackPanel>
 
-        <StackPanel Margin="10,159,318,87">
+        <StackPanel Margin="10,159,258.702,87">
             <TextBlock Text="choix du type de simulation " HorizontalAlignment="Left" Width="170" Margin="14,0,0,0" />
             <ComboBox Text="Is not open" Margin="10,0,0,0" HorizontalAlignment="Left" Width="169">
                 <!--<ComboBoxItem Name="cbi1">donné historique</ComboBoxItem>-->
@@ -47,11 +51,11 @@
             </ComboBox>
         </StackPanel>
 
-        <StackPanel Margin="293,85,0,211" HorizontalAlignment="Left" Width="180">
-            <Button Content="start" Click="Button_Click" Margin="10,0,0,0" HorizontalAlignment="Left" Width="160"/>
+        <StackPanel Margin="293,85,0,211" HorizontalAlignment="Left" Width="180" Grid.ColumnSpan="2">
+            <Button Content="start" Click="Button_Click" Margin="10,0"/>
         </StackPanel>
 
-        <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Right" Margin="204,114,10,10" >
+        <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Right" Margin="204,114,10,10" Loaded="CartesianChart_Loaded" Grid.ColumnSpan="2" >
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Sales" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
             </lvc:CartesianChart.AxisY>
