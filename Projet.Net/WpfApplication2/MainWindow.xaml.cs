@@ -100,7 +100,7 @@ namespace WpfApplication2
             sim.Lancer();
             option = sim.PrixOption;
             portefeuille = sim.valeurPf;
-            action = sim.PrixAction;
+          //  action = sim.PrixAction;
             
             RoutedEventArgs temp = new RoutedEventArgs();
             object temp2 = new object();
