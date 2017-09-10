@@ -60,7 +60,7 @@ namespace dataMining
 
                 foreach (string nom in q3)
                 {
-                    Console.WriteLine("Nom: {0}", nom);
+                    Console.WriteLine("Nom: {0} ", nom);
                 }
                 Console.ReadLine();
             }

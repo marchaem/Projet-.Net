@@ -1,10 +1,6 @@
 ﻿using System;
-using PricingLibrary.FinancialProducts;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using WpfApplication2.Data;
 namespace WpfApplication2.Entree
 {
     public class Entrees
@@ -17,7 +13,6 @@ namespace WpfApplication2.Entree
         public DateTime maturite { get; set; }
         public DateTime debutSimulation { get; set; }
         public int pas { get; set; }
-        public enum typeDonnees { Historique, Simulees }
         public typeDonnees typedonnees {get; set;}
         public string nomOption { get; set; }
         public List<double> listePoids { get; set; }

@@ -23,13 +23,17 @@ namespace WpfApplication2
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
     /// </summary>
+    /// 
+ 
     public partial class MainWindow : Window
     {
+
+        public List<Options.Option> listOption { get; set; }
         static DateTime debutEstimation = new DateTime(2009, 1, 1);
         private ChartValues<double> option;
         private ChartValues<double> portefeuille;
         private List<ChartValues<double>> action;
-        private Entrees entree;
+        public Entrees entree;
         public string maturity { get; set; }
 
         public ICommand ClickCommand { get; private set; }
@@ -90,17 +94,18 @@ namespace WpfApplication2
             //Console.WriteLine(strikeUI.Text);
             //Console.WriteLine(mat.Text);
             DateTime debut = Convert.ToDateTime(debutUI.Text);
-            DateTime maturite = Convert.ToDateTime(mat.Text);
-            double strike = Convert.ToDouble(strikeUI.Text);
+            DateTime mat = new DateTime();
+          //  DateTime maturite = Convert.ToDateTime(mat.Text);
             int freq = Convert.ToInt32(freqUI.Text);
+            double strike = 0.0;
             List<String> sousjacents = new List<string>() {"accor"};
             this.entree = new Entrees(Entrees.typeOption.Basket
                 , strike, debut
                 , sousjacents
-                , maturite
+                , debut
                 , debut
                 , freq
-                , Entrees.typeDonnees.Simulees
+                , new typeDonnees()
                 , "optionTest"
                 , new List<double>() {1});
             Simulation sim = new Simulation(entree);
@@ -114,6 +119,7 @@ namespace WpfApplication2
             //Window_Loaded(temp2, temp);
             //Console.WriteLine("la maturity est de"+ maturity);
             PointShapeLineExample();
+            
         }
 
         private void Button_Reset(object sender, RoutedEventArgs e)
@@ -161,7 +167,29 @@ namespace WpfApplication2
         public string[] Labels { get; set; }
         public Func<double, string> YFormatter { get; set; }
 
-        
+        private void vanille_Click(object sender, RoutedEventArgs e)
+        {
+            ajoutVanille vanille = new ajoutVanille();
+            vanille.ShowDialog();
+        }
+
+        private void basket_Click(object sender, RoutedEventArgs e)
+        {
+            ajoutBasket basket = new ajoutBasket();
+            basket.ShowDialog();
+        }
+
+        private void retirer_Click(object sender, RoutedEventArgs e )
+        {
+
+        }
+
+       
+
+        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 
     /*internal class MainWindowViewModel : BindableBase
