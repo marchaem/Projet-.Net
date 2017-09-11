@@ -44,6 +44,21 @@ namespace WpfApplication2
 
         public MainWindow()
         {
+            List<String> sousjacents = new List<string>() { "EDF FP", "BNP FP" };
+            var entree = new Entrees(Entrees.typeOption.Basket
+                , 5, new DateTime(2009, 1, 1)
+                , sousjacents
+                , new DateTime(2010, 1, 1)
+                , new DateTime(2009, 1, 1)
+                , 100
+                , 0
+                , "optionTest"
+                , new List<double>() { 0.7, 0.3 });
+
+            entree.generatJson();
+
+            var entree2 = new Entrees("hey");
+            Console.WriteLine(entree2.dateDebut);
 
             /*Share share1 = new Share("EDF FP", "EDF FP");
             Share share2 = new Share("BNP FP", "BNP FP");
@@ -94,11 +109,11 @@ namespace WpfApplication2
             //Console.WriteLine(strikeUI.Text);
             //Console.WriteLine(mat.Text);
             //DateTime debut = Convert.ToDateTime(debutUI.Text);
-            DateTime mat = new DateTime();
+            //DateTime mat = new DateTime();
           //  DateTime maturite = Convert.ToDateTime(mat.Text);
             //int freq = Convert.ToInt32(freqUI.Text);
-            double strike = 0.0;
-            List<String> sousjacents = new List<string>() {"accor","bnp"};
+            //double strike = 0.0;
+            //List<String> sousjacents = new List<string>() {"accor","bnp"};
             /*this.entree = new Entrees(Entrees.typeOption.Basket
                 , 9, new DateTime(2010, 1,1)
                 , sousjacents
@@ -108,18 +123,18 @@ namespace WpfApplication2
                 , Data.typeDonnees.typedonnees.Simulees
                 , "optionTest"
                 , new List<double>() {0.5,0.5});*/
-            this.entree = new Entrees(@"D:\ProjetDotNet\test.txt");
-            Simulation sim = new Simulation(entree);
-            sim.Lancer();
-            option = sim.PrixOption;
-            portefeuille = sim.valeurPf;
-            action = sim.PrixAction;
+            //this.entree = new Entrees(@"D:\ProjetDotNet\test.txt");
+            //Simulation sim = new Simulation(entree);
+            //sim.Lancer();
+            //option = sim.PrixOption;
+            //portefeuille = sim.valeurPf;
+            //action = sim.PrixAction;
             
-            RoutedEventArgs temp = new RoutedEventArgs();
-            object temp2 = new object();
+            //RoutedEventArgs temp = new RoutedEventArgs();
+            //object temp2 = new object();
             //Window_Loaded(temp2, temp);
             //Console.WriteLine("la maturity est de"+ maturity);
-            PointShapeLineExample();
+            //PointShapeLineExample();
             
         }
 
@@ -154,9 +169,9 @@ namespace WpfApplication2
 
             /*var Values = new ChartValues<double> { 6, 7, 3, 4, 6 };
             Values.Add(10);
-            Console.WriteLine(Values[5] + " c est ca les valeurs");*/
+            Console.WriteLine(Values[5] + " c est ca les valeurs");
 
-            /*Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May" };
+            Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May" };
             YFormatter = value => value.ToString("C");*/
 
             

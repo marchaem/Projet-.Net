@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using WpfApplication2.Data;
 using System.Linq;
+using Newtonsoft.Json;
+using System.IO;
+
 namespace WpfApplication2.Entree
 {
     public class Entrees
@@ -17,6 +20,8 @@ namespace WpfApplication2.Entree
         public typeDonnees.typedonnees typedonnees {get; set;}
         public string nomOption { get; set; }
         public List<double> listePoids { get; set; }
+
+        public Entrees(){}
 
         public Entrees(typeOption type, double strike, DateTime dateDebut,List<String> liste, DateTime maturite, DateTime debutSimulation, int pas, typeDonnees.typedonnees typeDonnees, string nomOption, List<double> poids)
         {
@@ -59,7 +64,20 @@ namespace WpfApplication2.Entree
 
         public Entrees(string file)
         {
-            string[] lines = System.IO.File.ReadAllLines(file);
+            var acopier = decodeJson();
+            this.typeoption = acopier.typeoption;
+            this.strike = acopier.strike;
+            this.dateDebut = acopier.dateDebut;
+            this.listActions = acopier.listActions;
+            this.maturite = acopier.maturite;
+            this.debutSimulation = acopier.debutSimulation;
+            this.pas =  acopier.pas;
+            this.typedonnees = acopier.typedonnees;
+            this.nomOption = acopier.nomOption;
+            this.listePoids = acopier.listePoids;
+
+
+            /*string[] lines = System.IO.File.ReadAllLines(file);
             if (lines[0] == "basket")
             {
                 this.typeoption = typeOption.Basket;
@@ -90,8 +108,21 @@ namespace WpfApplication2.Entree
                 throw new Exception("Impossible de parser le type de donnees");
             }
             this.nomOption = lines[8];
-            this.listePoids = new List<double>(lines[9].Split(';').Select(double.Parse).ToList());
+            this.listePoids = new List<double>(lines[9].Split(';').Select(double.Parse).ToList());*/
 
+        }
+        private readonly static JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            Formatting = Formatting.Indented,
+            TypeNameHandling = TypeNameHandling.Auto,
+            MissingMemberHandling = MissingMemberHandling.Error
+        };
+        public void generatJson () {
+            File.WriteAllText(@"serialized.json", JsonConvert.SerializeObject(this, settings));
+        }
+        public Entrees decodeJson()
+        {
+            return JsonConvert.DeserializeObject<Entrees>(File.ReadAllText(@"serialized.json"), settings);
         }
     }
 }

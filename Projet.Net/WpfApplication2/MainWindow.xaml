@@ -10,6 +10,16 @@
         Title="MainWindow" Height="475.49" Width="863.236" >
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="78*"/>
+            <ColumnDefinition Width="69*"/>
+            <ColumnDefinition Width="86*"/>
+            <ColumnDefinition Width="97*"/>
+            <ColumnDefinition Width="183*"/>
+            <ColumnDefinition Width="9*"/>
+            <ColumnDefinition Width="333*"/>
+        </Grid.ColumnDefinitions>
+        
         <ListBox ItemsSource="{Binding ComponentInfoList}" Margin="10,56,336,161">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -26,15 +36,7 @@
         </WrapPanel>
         </StackPanel>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="78*"/>
-            <ColumnDefinition Width="69*"/>
-            <ColumnDefinition Width="86*"/>
-            <ColumnDefinition Width="97*"/>
-            <ColumnDefinition Width="183*"/>
-            <ColumnDefinition Width="9*"/>
-            <ColumnDefinition Width="333*"/>
-        </Grid.ColumnDefinitions>
+        
 
         <StackPanel Margin="255,19,0,226" HorizontalAlignment="Left" Width="184">
             <TextBlock Text="quelle est la maturité" HorizontalAlignment="Left" Width="141" Margin="33,0,0,0" />
