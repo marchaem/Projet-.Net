@@ -17,7 +17,6 @@ using System.Collections.ObjectModel;
 using LiveCharts;
 using LiveCharts.Wpf;
 using System.Windows.Controls;
-using System.Linq;
 
 namespace WpfApplication2
 {
@@ -46,58 +45,70 @@ namespace WpfApplication2
         public MainWindow()
         {
 
+            /*Share share1 = new Share("EDF FP", "EDF FP");
+            Share share2 = new Share("BNP FP", "BNP FP");
+            List<String> sousjacents = new List<string>() { "EDF FP", "BNP FP" };
+            Share[] listBasket = new Share[] { share1, share2 };
+            List<DataFeed> list = new List<DataFeed>();
+
+            BasketOption bask = new BasketOption("basket", listBasket, new double[] { 0.5, 0.5 }, new DateTime(2013, 1, 10), 5.0);
+            OptionBasket basket = new OptionBasket(bask);
+            //    OptionVanille option = new OptionVanille(vanille);*/
+            /*entree = new Entrees(Entrees.typeOption.Basket
+                , 5, new DateTime(2009, 1, 1)
+                , sousjacents
+                , new DateTime(2010, 1, 1)
+                , new DateTime(2009, 1, 1)
+                , 100
+                , Entrees.typeDonnees.Simulees
+                , "optionTest"
+                , new List<double>() { 0.7, 0.3 });
+            DataHisto dataHisto = new DataHisto();
+            dataHisto.getData(entree);
+
+            list = dataHisto.getData(entree);
+            double[,] valuesHisto = Compute_Tools.getAssetValues(entree);
+            Compute_Tools.dispMatrix(valuesHisto);
+            DataSimu dataSimu = new DataSimu(basket);
+            dataSimu.getData(entree);
+            double[,] valuesSimu = dataSimu.getAssetValues(entree);
+            Compute_Tools.dispMatrix(valuesSimu);
+            double[,] mat = dataSimu.getAssetReturns(valuesSimu);
+            Compute_Tools.dispMatrix(mat);
+            double[,] matrixAsset = DataSimu.computeCov(mat);
+            Compute_Tools.dispMatrix(matrixAsset);*/
+            //   Console.WriteLine("la vol vaut " + Math.Sqrt(matrixAsset[0,0]));*/
+
+            //   Console.WriteLine(matrixAsset.ToString());*/
+
+            /*Simulation sim = new Simulation(entree);
+            sim.Lancer();
+            option = sim.PrixOption;
+            portefeuille = sim.valeurPf;*/
         }
 
 
         private void Button_Start(object sender, RoutedEventArgs e)
         {
-            DateTime mat = DateTime.Parse(MaturiteUI.Text);
-            double strike = Convert.ToDouble(StrikeUI.Text);
-            int pas = Convert.ToInt32(freqUI.Text);
-            DateTime debut = DateTime.Parse(debutUI.Text);
-            List<String> listeActions = new List<string>();
-            listeActions = ActionUI.Text.Split(';').ToList();
-            List<double> listePoids = new List<double>() {  };
-            listePoids = PoidsUI.Text.Split(';').Select(double.Parse).ToList();
-            Entree.Entrees.typeOption typeOption;
-            if (typeOpionUI.Text == "Vanille")
-            {
-               typeOption = Entrees.typeOption.Vanille;
-            }
-            else if (typeOpionUI.Text == "Basket")
-            {
-                typeOption = Entrees.typeOption.Basket;
-            }
-            else
-            {
-                throw new Exception("Type option invalide");
-            }
-
-            typeDonnees.typedonnees typedon;
-
-            if (TypeDonneesUI.Text == "Historique")
-            {
-                typedon = typeDonnees.typedonnees.Historique;
-            } else if (TypeDonneesUI.Text == "Simulees")
-            {
-                typedon = typeDonnees.typedonnees.Simulees;
-            }
-            else
-            {
-                throw new Exception("Type donnees invalide");
-            }
-
-
-            this.entree = new Entrees(typeOption
-                , strike, debut
-                , listeActions
-                , mat
-                , debut
-                , pas
-                , typedon
+            //MAIN A JOUR
+            //Console.WriteLine(strikeUI.Text);
+            //Console.WriteLine(mat.Text);
+            //DateTime debut = Convert.ToDateTime(debutUI.Text);
+            DateTime mat = new DateTime();
+          //  DateTime maturite = Convert.ToDateTime(mat.Text);
+            //int freq = Convert.ToInt32(freqUI.Text);
+            double strike = 0.0;
+            List<String> sousjacents = new List<string>() {"accor","bnp"};
+            /*this.entree = new Entrees(Entrees.typeOption.Basket
+                , 9, new DateTime(2010, 1,1)
+                , sousjacents
+                , new DateTime(2011, 1,1)
+                , new DateTime(2010, 1, 1)
+                , 100
+                , Data.typeDonnees.typedonnees.Simulees
                 , "optionTest"
-                , listePoids);
-            this.entree = new Entrees(FichierUI.Text);
+                , new List<double>() {0.5,0.5});*/
+            this.entree = new Entrees(@"D:\ProjetDotNet\test.txt");
             Simulation sim = new Simulation(entree);
             sim.Lancer();
             option = sim.PrixOption;
@@ -106,23 +117,10 @@ namespace WpfApplication2
             
             RoutedEventArgs temp = new RoutedEventArgs();
             object temp2 = new object();
+            //Window_Loaded(temp2, temp);
+            //Console.WriteLine("la maturity est de"+ maturity);
             PointShapeLineExample();
             
-        }
-
-        private void Button_file(object sender, RoutedEventArgs e)
-        {
-            this.entree = new Entrees(FichierUI.Text);
-            Simulation sim = new Simulation(entree);
-            double[] res = sim.Lancer();
-            option = sim.PrixOption;
-            portefeuille = sim.valeurPf;
-            action = sim.PrixAction;
-            RoutedEventArgs temp = new RoutedEventArgs();
-            object temp2 = new object();
-            PointShapeLineExample();
-            ErrorUI.Text = Convert.ToString(res[1]);
-            PayoffUI.Text = Convert.ToString(res[0]);
         }
 
         private void Button_Reset(object sender, RoutedEventArgs e)
@@ -152,6 +150,16 @@ namespace WpfApplication2
             {
                 SeriesCollection.Add(new LineSeries { Title = entree.listActions[i], Values = action[i] });
             }
+            
+
+            /*var Values = new ChartValues<double> { 6, 7, 3, 4, 6 };
+            Values.Add(10);
+            Console.WriteLine(Values[5] + " c est ca les valeurs");*/
+
+            /*Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May" };
+            YFormatter = value => value.ToString("C");*/
+
+            
 
             DataContext = this;
         }
@@ -184,4 +192,37 @@ namespace WpfApplication2
 
         }
     }
- }
+
+    /*internal class MainWindowViewModel : BindableBase
+    {
+        public ObservableCollection<actionSelection> actionList { get; private set; }
+
+        public ICommand ClickCommand { get; private set; }
+
+        public MainWindowViewModel()
+        {
+            actionList = new ObservableCollection<actionSelection>()
+            {
+                new actionSelection() {Name = "Axa", IsSelected = false},
+                new actionSelection() {Name = "Accor", IsSelected = false},
+                new actionSelection() {Name = "Bnp", IsSelected = false},
+                new actionSelection() {Name = "Vivendi", IsSelected = false},
+                new actionSelection() {Name = "Dexia", IsSelected = false},
+                new actionSelection() {Name = "Carrefour", IsSelected = false}
+            };
+
+            ClickCommand = new DelegateCommand(ExtractComponents);
+
+        }*/
+
+        /*private void ExtractComponents()
+        {
+            foreach (var comp in actionList)
+            {
+                if (comp.IsSelected)
+                {
+                    Console.WriteLine(comp.Name);
+                }
+            }
+        }*/
+    }

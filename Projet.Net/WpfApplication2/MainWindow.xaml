@@ -10,10 +10,6 @@
         Title="MainWindow" Height="475.49" Width="863.236" >
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="304*"/>
-            <RowDefinition Height="141*"/>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="78*"/>
             <ColumnDefinition Width="69*"/>
@@ -23,7 +19,7 @@
             <ColumnDefinition Width="9*"/>
             <ColumnDefinition Width="333*"/>
         </Grid.ColumnDefinitions>
-        <ListBox ItemsSource="{Binding ComponentInfoList}" Margin="10,56,68,20.046">
+        <ListBox ItemsSource="{Binding ComponentInfoList}" Margin="10,56,336,161">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <CheckBox Content="{Binding Name}"
@@ -32,15 +28,22 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <StackPanel Margin="38,59,40,25.046">
+        <StackPanel Margin="38,59,367,166">
             <TextBox Name="txtValue" />
             <WrapPanel Margin="0,10">
                 <TextBlock Text="{Binding Path=Text, ElementName=txtValue}" />
-            </WrapPanel>
+        </WrapPanel>
         </StackPanel>
 
 
-        <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Right" Margin="57,126,10,-2" Grid.Column="2" Grid.ColumnSpan="5" Grid.RowSpan="2" >
+
+        <StackPanel Margin="255,19,0,226" HorizontalAlignment="Left" Width="184">
+            <TextBlock Text="quelle est la maturité" HorizontalAlignment="Left" Width="141" Margin="33,0,0,0" />
+            <TextBox x:Name="date" Text="{Binding Path=Maturity, Mode=TwoWay}"/>
+        </StackPanel>
+
+
+        <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Right" Margin="57,126,10,-2" Grid.Column="2" Grid.ColumnSpan="5" >
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Sales" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
             </lvc:CartesianChart.AxisY>
@@ -50,31 +53,22 @@
         </lvc:CartesianChart>
 
 
-        <TextBox x:Name="debutUI" HorizontalAlignment="Left" Height="23" Margin="6,76,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="debutUI" HorizontalAlignment="Left" Height="23" Margin="6,82,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.ColumnSpan="2"/>
         <Label x:Name="label2" Content="Debut" HorizontalAlignment="Left" Margin="29,77,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label3" Content="Label" HorizontalAlignment="Left" Margin="169,-22,0,0" VerticalAlignment="Top" Grid.Column="4" Grid.ColumnSpan="3"/>
         <Button x:Name="buttonStart" Click ="Button_Start" Content="Start" HorizontalAlignment="Left" Margin="60,77,0,0" VerticalAlignment="Top" Width="75" Grid.Column="4"/>
         <Button x:Name="buttonReset" Click ="Button_Reset" Content="Reset" HorizontalAlignment="Left" Margin="169,77,0,0" VerticalAlignment="Top" Width="75" Grid.Column="4" Grid.ColumnSpan="3"/>
         <Label x:Name="label2_Copy" Content="Freq" HorizontalAlignment="Left" Margin="34,114,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="freqUI" HorizontalAlignment="Left" Height="23" Margin="6,117,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="MaturiteUI" HorizontalAlignment="Left" Height="23" Margin="6,158,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="StrikeUI" HorizontalAlignment="Left" Height="23" Margin="6,196,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.ColumnSpan="2"/>
-        <Label x:Name="Maturite" Content="Maturité" HorizontalAlignment="Left" Margin="15,158,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label2_Copy2" Content="Strike" HorizontalAlignment="Left" Margin="27,193,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.924,0.613"/>
-        <Label x:Name="label2_Copy1" Content="Actions" HorizontalAlignment="Left" Margin="21,224,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.924,0.613"/>
-        <TextBox x:Name="ActionUI" HorizontalAlignment="Left" Height="23" Margin="6,224,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.ColumnSpan="2"/>
-        <Label x:Name="label2_Copy3" Content="Poids" HorizontalAlignment="Left" Margin="23,258,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.924,0.613"/>
-        <TextBox x:Name="PoidsUI" HorizontalAlignment="Left" Height="23" Margin="6,261,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.ColumnSpan="2"/>
-        <Label x:Name="label2_Copy4" Content="TypeDonnees" HorizontalAlignment="Left" Margin="10,44,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.924,0.613" Grid.Row="1" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="TypeDonneesUI" HorizontalAlignment="Left" Height="23" Margin="35,44,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
-        <Label x:Name="label2_Copy5" Content="TypeOption" HorizontalAlignment="Left" Margin="15,78,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.924,0.613" Grid.Row="1" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="typeOpionUI" HorizontalAlignment="Left" Height="23" Margin="35,78,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
-        <TextBox x:Name="FichierUI" HorizontalAlignment="Left" Height="23" Margin="169,26,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="321" Grid.Column="4" RenderTransformOrigin="0.549,0.093" Grid.ColumnSpan="3"/>
-        <Button x:Name="buttonStart_Copy" Click ="Button_file" Content="Ouvrir" HorizontalAlignment="Left" Margin="60,27,0,0" VerticalAlignment="Top" Width="75" Grid.Column="4" RenderTransformOrigin="1.571,-1.313"/>
-        <TextBox x:Name="PayoffUI" HorizontalAlignment="Left" Height="23" Margin="63,28,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="61" Grid.ColumnSpan="2"/>
-        <Label x:Name="label2_Copy6" Content="Payoff" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label2_Copy7" Content="Tracking error" HorizontalAlignment="Left" Margin="0,25,0,0" VerticalAlignment="Top" Grid.Column="2"/>
-        <TextBox x:Name="ErrorUI" HorizontalAlignment="Left" Height="23" Margin="0,27,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="74" Grid.Column="3"/>
+        <Button x:Name="buttonAjouterVanille" Content="Ajouter Vanille" HorizontalAlignment="Left" Margin="29,23,0,0" VerticalAlignment="Top" Width="75" Click="vanille_Click" Grid.ColumnSpan="2"/>
+        <Button x:Name="buttonAjouterBasket" Content="Ajouter Basket" Grid.Column="1" HorizontalAlignment="Left" Margin="51,23,0,0" VerticalAlignment="Top" Width="75" Click="basket_Click" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="comboBoxOptionTest" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="25,152,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="comboBox_SelectionChanged" Grid.Column="1" ItemsSource="{Binding ListeAction}" SelectedItem="{Binding Action}">
+            <Label x:Name="label" Content=""/>
+        </ComboBox>
+        <Label x:Name="optionTest" Content="option à tester" HorizontalAlignment="Left" Margin="10,148,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="comboBoxTypeDonnées" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="25,210,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1" ItemsSource="{Binding Data}" SelectedItem="{Binding SelectedData}" IsSynchronizedWithCurrentItem ="True" />
+        <Label x:Name="label4" Content="type de données" Margin="0,210,52,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Button x:Name="retirerOption" Content="Retirer option" Grid.Column="3" HorizontalAlignment="Left" Margin="0,23,0,0" VerticalAlignment="Top" Width="75" Click="retirer_Click"/>
         <!--<Canvas Name="canGraph" Background="White"
       Width="300" Height="200"
       VerticalAlignment="Center" HorizontalAlignment="Center" Margin="214,120,3,0"/>-->
