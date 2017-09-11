@@ -12,8 +12,18 @@ namespace WpfApplication2.Data
     public abstract class AbstractData
     {
         public Options.Option option;
-        abstract public List<DataFeed> getData(Entrees input);
-        abstract public double[] vol(Options.Option option, DateTime date);
-        abstract public double[,] cov(Options.Option option, DateTime date);
+        public List<DataFeed> donnees;
+        public List<DateTime> listeDate;
+        abstract public List<DataFeed> genereData(DateTime debut);
+        abstract public double[] vol(int date);
+        abstract public double[,] cov(int date);
+        abstract public double[,] corr(int date);
+        public double[] getSpotIndex(int i)
+        {
+            decimal[] res;
+            res = this.donnees[i].PriceList.Values.ToList().ToArray();
+            double[] newres = Array.ConvertAll(res, item => (double)item);
+            return newres;
+        }
     }
 }

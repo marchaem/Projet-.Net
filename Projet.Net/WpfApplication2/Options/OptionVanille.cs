@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfApplication2.Data;
 
 namespace WpfApplication2.Options
 {
@@ -15,21 +16,18 @@ namespace WpfApplication2.Options
         {
         }
 
-        public override double[] CalculerDeltas(int jour, DateTime dateDebut, double[] vol, double[,] cov, double[] spot)
+        public override double[] CalculerDeltas(int jour, AbstractData donnees, double[] vol, double[,] corr, double[] spot)
         {
             Pricer pricer = new Pricer();
-            DateTime dateAvancee = dateDebut;
-            dateAvancee = dateAvancee.AddDays(jour);
+            DateTime  dateAvancee = donnees.listeDate[jour];
             double[] deltas = pricer.PriceCall((VanillaCall)this.option, dateAvancee, 365, spot[0], vol[0]).Deltas;
             return deltas;
         }
 
-        public override double CalculerPrix(int jour, List<DataFeed> donees, DateTime dateDebut, double[] spot, double[,] cov, double[] vol)
+        public override double CalculerPrix(int jour, AbstractData donnees, double[] spot, double[,] corr, double[] vol)
         {
             Pricer pricer = new Pricer();
-            //double volatility = 0.4; 
-            DateTime dateAvancee = dateDebut;
-            dateAvancee = dateAvancee.AddDays(jour);
+            DateTime dateAvancee = donnees.listeDate[jour];
             double prix = pricer.PriceCall( (VanillaCall) this.option, dateAvancee, 365, spot[0], vol[0]).Price;
             return prix;
         }
