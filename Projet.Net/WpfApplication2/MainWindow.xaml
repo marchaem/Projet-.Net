@@ -9,7 +9,7 @@
         Title="MainWindow" Height="350" Width="525" >
 
     <Grid>
-        <ListBox ItemsSource="{Binding ComponentInfoList}" Margin="10,56,0,0" HorizontalAlignment="Left" Width="171" Height="103" VerticalAlignment="Top">
+        <ListBox ItemsSource="{Binding ComponentInfoList}" Margin="10,56,336,161">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <CheckBox Content="{Binding Name}"
@@ -18,6 +18,12 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
+        <StackPanel Margin="38,59,367,166">
+            <TextBox Name="txtValue" />
+            <WrapPanel Margin="0,10">
+                <TextBlock Text="{Binding Path=Text, ElementName=txtValue}" />
+        </WrapPanel>
+        </StackPanel>
 
         <StackPanel Margin="10,10,327,235">
             <TextBlock Text=" quelle est le strike:" HorizontalAlignment="Left" Width="149" Margin="21,0,0,0" />
@@ -26,7 +32,7 @@
 
         <StackPanel Margin="255,19,0,226" HorizontalAlignment="Left" Width="184">
             <TextBlock Text="quelle est la maturité" HorizontalAlignment="Left" Width="141" Margin="33,0,0,0" />
-            <TextBox x:Name="date"  Text="{Binding Path=maturity}"/>
+            <TextBox x:Name="date" Text="{Binding Path=Maturity, Mode=TwoWay}"/>
         </StackPanel>
 
 

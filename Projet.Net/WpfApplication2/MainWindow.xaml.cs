@@ -33,7 +33,7 @@ namespace WpfApplication2
         private ChartValues<double> option;
         private ChartValues<double> portefeuille;
         private Entrees entree;
-        public string maturity { get; set; }
+        public string Maturity {get; set;}
 
         public ICommand ClickCommand { get; private set; }
 
@@ -71,7 +71,7 @@ namespace WpfApplication2
             RoutedEventArgs temp = new RoutedEventArgs();
             object temp2 = new object();
             //Window_Loaded(temp2, temp);
-            Console.WriteLine("la maturity est de"+ maturity);
+            Console.WriteLine("la maturity est de"+ Maturity);
             PointShapeLineExample();
 
         }
@@ -94,21 +94,16 @@ namespace WpfApplication2
             };
 
             var Values = new ChartValues<double> { 6, 7, 3, 4, 6 };
-            Values.Add(10);
-            Console.WriteLine(Values[5] + " c est ca les valeurs");
 
             Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May" };
             YFormatter = value => value.ToString("C");
-
             
-
             DataContext = this;
         }
 
         public SeriesCollection SeriesCollection { get; set; }
         public string[] Labels { get; set; }
         public Func<double, string> YFormatter { get; set; }
-
         
     }
 
