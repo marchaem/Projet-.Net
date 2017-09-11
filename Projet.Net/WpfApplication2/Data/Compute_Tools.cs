@@ -54,7 +54,7 @@ namespace WpfApplication2.Data
                     Assetreturns[i, j] = (double)data[indexDebut + i * input.pas].PriceList[input.listActions[j]];
 
                 }
-                Assetreturns[nbdate - 1, j] = res = (double)data[indexFin].PriceList[input.listActions[j]];
+                Assetreturns[nbdate - 1, j] = (double)data[indexFin].PriceList[input.listActions[j]];
 
             }
             return Assetreturns;
