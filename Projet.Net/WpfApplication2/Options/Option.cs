@@ -10,6 +10,7 @@ namespace WpfApplication2.Options
 {
     public abstract class Option
     {
+
         public PricingLibrary.FinancialProducts.Option option {get; set;}
 
         public Option(PricingLibrary.FinancialProducts.Option option)

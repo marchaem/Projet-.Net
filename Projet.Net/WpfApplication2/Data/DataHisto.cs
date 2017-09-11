@@ -87,7 +87,7 @@ namespace WpfApplication2.Data
        public override double[,] cov(int date)
         {
             double[,] assetValues = this.getAssets();
-            double[,] assetReturns = this.getAssetReturns(assetValues, date);
+            double[,] assetReturns = this.computeLog(assetValues, date);
             double[,] covMatrix = this.computeCov(assetReturns);
             
             for (int i = 0; i< this.option.GetNbSousJacents(); i++)
@@ -103,7 +103,7 @@ namespace WpfApplication2.Data
         public override double[,] corr(int date)
         {
             double[,] assetValues = this.getAssets();
-            double[,] assetReturns = this.getAssetReturns(assetValues, date);
+            double[,] assetReturns = this.computeLog(assetValues, date);
             double[,] corrMatrix = this.computeCorr(assetReturns);
             return corrMatrix;
         }
@@ -155,7 +155,7 @@ namespace WpfApplication2.Data
         }
 
 
-        public double[,] getAssetReturns(double[,] returns, int date)
+        public double[,] computeLog(double[,] returns, int date)
         {
             int dataSize = returns.GetLength(0);
             int nbValues = returns.GetLength(1);

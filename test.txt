@@ -1,10 +1,10 @@
 basket
 8
 01/01/2010
-accor,bnp
+EDF FP,BNP FP
 01/01/2011
 01/01/2010
 100
-simulees
+historique
 optionTest
 0,5;0,5

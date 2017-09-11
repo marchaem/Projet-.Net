@@ -68,6 +68,7 @@ namespace WpfApplication2.Data
 
         public override double[,] corr(int date)
         {
+            /*Fonction qui sers uniquement à implementer la classe abstraite*/
             double[,] cov = new double[option.GetNbSousJacents(), option.GetNbSousJacents()];
             for (int i = 0; i < option.GetNbSousJacents(); i++)
             {
