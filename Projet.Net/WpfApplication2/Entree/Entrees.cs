@@ -64,7 +64,7 @@ namespace WpfApplication2.Entree
 
         public Entrees(string file)
         {
-            var acopier = decodeJson();
+            /*var acopier = decodeJson();
             this.typeoption = acopier.typeoption;
             this.strike = acopier.strike;
             this.dateDebut = acopier.dateDebut;
@@ -77,7 +77,7 @@ namespace WpfApplication2.Entree
             this.listePoids = acopier.listePoids;
 
 
-            /*string[] lines = System.IO.File.ReadAllLines(file);
+            string[] lines = System.IO.File.ReadAllLines(file);
             if (lines[0] == "basket")
             {
                 this.typeoption = typeOption.Basket;
