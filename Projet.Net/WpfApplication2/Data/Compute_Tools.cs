@@ -58,7 +58,7 @@ namespace WpfApplication2.Data
 
             }
             return Assetreturns;
-        }*/
+        }
 
 
         //compute the covariance matrix

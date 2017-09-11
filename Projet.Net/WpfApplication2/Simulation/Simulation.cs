@@ -35,10 +35,10 @@ namespace WpfApplication2.Simu
                 PrixAction.Add(new ChartValues<double> { }); 
             }
             this.historiquePf = new List<Portefeuille>();
-            this.option = this.CreerOption(this.param);
+            this.option = CreerOption(this.param);
         }
 
-        public Options.Option CreerOption(Entrees param)
+        public static Options.Option CreerOption(Entrees param)
         {
             if (param.typeoption == Entrees.typeOption.Basket)
             {

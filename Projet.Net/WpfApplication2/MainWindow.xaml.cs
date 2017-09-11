@@ -93,21 +93,22 @@ namespace WpfApplication2
             //MAIN A JOUR
             //Console.WriteLine(strikeUI.Text);
             //Console.WriteLine(mat.Text);
-            DateTime debut = Convert.ToDateTime(debutUI.Text);
+            //DateTime debut = Convert.ToDateTime(debutUI.Text);
             DateTime mat = new DateTime();
           //  DateTime maturite = Convert.ToDateTime(mat.Text);
-            int freq = Convert.ToInt32(freqUI.Text);
+            //int freq = Convert.ToInt32(freqUI.Text);
             double strike = 0.0;
-            List<String> sousjacents = new List<string>() {"accor"};
-            this.entree = new Entrees(Entrees.typeOption.Basket
-                , strike, debut
+            List<String> sousjacents = new List<string>() {"accor","bnp"};
+            /*this.entree = new Entrees(Entrees.typeOption.Basket
+                , 9, new DateTime(2010, 1,1)
                 , sousjacents
-                , debut
-                , debut
-                , freq
-                , new typeDonnees()
+                , new DateTime(2011, 1,1)
+                , new DateTime(2010, 1, 1)
+                , 100
+                , Data.typeDonnees.typedonnees.Simulees
                 , "optionTest"
-                , new List<double>() {1});
+                , new List<double>() {0.5,0.5});*/
+            this.entree = new Entrees(@"D:\ProjetDotNet\test.txt");
             Simulation sim = new Simulation(entree);
             sim.Lancer();
             option = sim.PrixOption;

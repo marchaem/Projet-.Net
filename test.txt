@@ -1,0 +1,10 @@
+basket
+8
+01/01/2010
+accor,bnp
+01/01/2011
+01/01/2010
+100
+simulees
+optionTest
+0,5;0,5

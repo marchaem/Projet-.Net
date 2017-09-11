@@ -42,6 +42,7 @@ namespace WpfApplication2.Portfolio
             {
                 montantAction += deltas[i] * spot[i];
             }
+            this.date = date;
             tauxSansRisque = prixOption - montantAction;
         }
 
