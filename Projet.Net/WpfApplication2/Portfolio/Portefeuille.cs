@@ -4,6 +4,8 @@ using System.Text;
 using System.Runtime.InteropServices;
 using PricingLibrary.FinancialProducts;
 using System.Linq;
+using PricingLibrary.Utilities.MarketDataFeed;
+using PricingLibrary.Utilities;
 
 namespace WpfApplication2.Portfolio
 {
@@ -12,8 +14,9 @@ namespace WpfApplication2.Portfolio
         Options.Option option;
         List<double> nbActions;
         double tauxSansRisque;
+        int date;
 
-        public Portefeuille(double[] spot, double[] deltas, Portefeuille pfPrec, double r, Options.Option option)
+        public Portefeuille(double[] spot, double[] deltas, Portefeuille pfPrec, double r, Options.Option option, int date)
         {
             // Constructeur qui crée un portefeuille rebalancé
             this.nbActions = deltas.ToList();
@@ -26,7 +29,7 @@ namespace WpfApplication2.Portfolio
             }
         }
 
-        public Portefeuille(double prixOption, double[] deltas, double[] spot, Options.Option option)
+        public Portefeuille(double prixOption, double[] deltas, double[] spot, Options.Option option, int date)
         {
             this.option = option;
             this.nbActions = new List<double>(deltas);
@@ -39,6 +42,7 @@ namespace WpfApplication2.Portfolio
             {
                 montantAction += deltas[i] * spot[i];
             }
+            this.date = date;
             tauxSansRisque = prixOption - montantAction;
         }
 
@@ -61,7 +65,7 @@ namespace WpfApplication2.Portfolio
             return valeur;
         }
 
-        public double getPrixPortefeuille(double[] spot)
+        public double getPrixPortefeuille(double[] spot, int now)
         {
             // Recupere la valeur du portefeuille à l'instant actuel
             var result = 0.0;
@@ -71,11 +75,11 @@ namespace WpfApplication2.Portfolio
                 result += par * spot[i];
                 i++;
             }
-            result += tauxSansRisque;
+            result += tauxSansRisque * RiskFreeRateProvider.GetRiskFreeRateAccruedValue(DayCount.ConvertToDouble(now-date, 365)) ;
             return result;
         }
 
-        public string ToString(double[] spot)
+        public string ToString(double[] spot, int date)
         {
             var res = "";
             res += "##########PORTEFEUILLE##########\n";
@@ -87,7 +91,7 @@ namespace WpfApplication2.Portfolio
                 i++;
             }
             res += "Montant dans le sans risque : " + tauxSansRisque + "€\n";
-            res += "Valeur totale du portefeuille = " + this.getPrixPortefeuille(spot) + "€\n";
+            res += "Valeur totale du portefeuille = " + this.getPrixPortefeuille(spot,date) + "€\n";
             res += "##########FIN PORTEFEUILLE##########";
             return res;
 
