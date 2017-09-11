@@ -6,6 +6,7 @@ using PricingLibrary.FinancialProducts;
 using System.Linq;
 using PricingLibrary.Utilities.MarketDataFeed;
 using PricingLibrary.Utilities;
+using WpfApplication2.Data;
 
 namespace WpfApplication2.Portfolio
 {
@@ -27,6 +28,7 @@ namespace WpfApplication2.Portfolio
             {
                 this.tauxSansRisque -= deltas[i] * spot[i];
             }
+            this.date = date;
         }
 
         public Portefeuille(double prixOption, double[] deltas, double[] spot, Options.Option option, int date)
@@ -65,7 +67,7 @@ namespace WpfApplication2.Portfolio
             return valeur;
         }
 
-        public double getPrixPortefeuille(double[] spot, int now)
+        public double getPrixPortefeuille(double[] spot, int now, AbstractData donnees)
         {
             // Recupere la valeur du portefeuille à l'instant actuel
             var result = 0.0;
@@ -75,11 +77,12 @@ namespace WpfApplication2.Portfolio
                 result += par * spot[i];
                 i++;
             }
-            result += tauxSansRisque * RiskFreeRateProvider.GetRiskFreeRateAccruedValue(DayCount.ConvertToDouble(now-date, 365)) ;
+            int span = (donnees.listeDate[now] - donnees.listeDate[date]).Days; ;
+            result += tauxSansRisque * RiskFreeRateProvider.GetRiskFreeRateAccruedValue(DayCount.ConvertToDouble(span, 365)) ;
             return result;
         }
 
-        public string ToString(double[] spot, int date)
+        public string ToString(double[] spot, int date, AbstractData donnees)
         {
             var res = "";
             res += "##########PORTEFEUILLE##########\n";
@@ -91,7 +94,7 @@ namespace WpfApplication2.Portfolio
                 i++;
             }
             res += "Montant dans le sans risque : " + tauxSansRisque + "€\n";
-            res += "Valeur totale du portefeuille = " + this.getPrixPortefeuille(spot,date) + "€\n";
+            res += "Valeur totale du portefeuille = " + this.getPrixPortefeuille(spot,date,donnees) + "€\n";
             res += "##########FIN PORTEFEUILLE##########";
             return res;
 

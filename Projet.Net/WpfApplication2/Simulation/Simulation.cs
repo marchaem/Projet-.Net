@@ -11,6 +11,7 @@ using PricingLibrary.Utilities.MarketDataFeed;
 using PricingLibrary.Utilities;
 using LiveCharts;
 using WpfApplication2.Options;
+using WpfApplication2.Data;
 
 namespace WpfApplication2.Simu
 {
@@ -36,6 +37,70 @@ namespace WpfApplication2.Simu
             }
             this.historiquePf = new List<Portefeuille>();
             this.option = CreerOption(this.param);
+        }
+
+        public double[] Lancer()
+        {
+            AbstractData donnees = CreerDonnees(this.param, this.option);
+
+            Portefeuille premierpf = this.InitialiserPf(option, donnees);
+
+            for (this.jourActuel = 0; this.jourActuel < donnees.donnees.Count; this.jourActuel++)
+            {
+                if (this.jourActuel % param.pas == 0 && this.jourActuel!=0)
+                {
+                    this.RebalancerPf(donnees, option);
+                }
+                this.ArchiveValeur(donnees, option);
+            }
+
+            /*Renvoi du payoff et de la tracking error de la simulation*/
+            double[] res = new double[2] { option.CalculerPayoff(donnees.donnees) , this.getTrackingError()};
+            return res;
+        }
+
+
+        public Portefeuille InitialiserPf(Options.Option option, AbstractData donnees)
+        {
+            double[,] corr = donnees.corr(this.jourActuel);
+            double[] vol = donnees.vol(this.jourActuel);
+            double prix = option.CalculerPrix(0, donnees, donnees.getSpotIndex(0), corr, vol);
+            double[] deltas = option.CalculerDeltas(0, donnees, vol, corr, donnees.getSpotIndex(0));
+            Portefeuille premierpf = new Portefeuille(prix, deltas, donnees.getSpotIndex(0), option,0);
+            historiquePf.Add(premierpf);
+            return premierpf;
+        }
+
+        public Portefeuille RebalancerPf(AbstractData donnees, Options.Option option)
+        {
+            double[,] corr = donnees.corr(this.jourActuel);
+            double[] vol = donnees.vol(this.jourActuel);
+            double[] spot = donnees.getSpotIndex(this.jourActuel);
+            int span = (donnees.listeDate[this.jourActuel] - donnees.listeDate[this.jourActuel-param.pas]).Days;
+            double tauxSansRisque = RiskFreeRateProvider.GetRiskFreeRateAccruedValue(DayCount.ConvertToDouble(span, 365));
+            Portefeuille pfRebalancee = new Portefeuille(spot
+                , option.CalculerDeltas(this.jourActuel, donnees, vol, corr, spot)
+                , historiquePf[historiquePf.Count - 1]
+                , tauxSansRisque
+                , option
+                , this.jourActuel);
+            historiquePf.Add(pfRebalancee);
+            return pfRebalancee;
+        }
+
+        public void ArchiveValeur(AbstractData donnees, Options.Option option)
+        {
+            this.valeurPf.Add(historiquePf[historiquePf.Count - 1].getPrixPortefeuille(donnees.getSpotIndex(this.jourActuel)
+                ,this.jourActuel,donnees));
+            this.PrixOption.Add(option.CalculerPrix(this.jourActuel
+                , donnees
+                , donnees.getSpotIndex(this.jourActuel)
+                , donnees.corr(jourActuel)
+                , donnees.vol(jourActuel)));
+            for (int i=0; i<option.option.UnderlyingShareIds.Count(); i++)
+            {
+                this.PrixAction[i].Add(donnees.getSpotIndex(this.jourActuel)[i]);
+            }
         }
 
         public static Options.Option CreerOption(Entrees param)
@@ -70,106 +135,39 @@ namespace WpfApplication2.Simu
             }
         }
 
-        public List<DataFeed> getDonneesSimulees(PricingLibrary.FinancialProducts.Option option)
+        public static AbstractData CreerDonnees(Entrees param, Options.Option option)
         {
-            var dataFeedCalc = new List<DataFeed>();
-            IDataFeedProvider data = new SimulatedDataFeedProvider();
-            dataFeedCalc = data.GetDataFeed(option, param.dateDebut);
-            return dataFeedCalc;
-        }
-
-        public double[] getSpotIndex(int i, List<DataFeed> dataFeedCalc)
-        {
-            decimal[] res;
-            res = dataFeedCalc[i].PriceList.Values.ToList().ToArray();
-            double[] newres = Array.ConvertAll(res, item => (double)item);
-            return newres;
-        }
-
-        public void Lancer()
-        {
-            this.jourActuel = 0;
-            List<DataFeed> donnees = this.getDonneesSimulees(option.option);
-
-            Portefeuille premierpf = this.InitialiserPf(option, donnees);   
-
-            for (this.jourActuel = 0; this.jourActuel < (param.maturite - param.dateDebut).Days; this.jourActuel++)
+            if (param.typedonnees == Data.typeDonnees.typedonnees.Simulees)
             {
-                if (this.jourActuel % param.pas == 0)
-                {
-                    this.RebalancerPf(param.pas, donnees, option);
-                }
-                this.ArchiveValeur(donnees, option);
+                DataSimu data = new DataSimu(option);
+                data.genereData(param.dateDebut);
+                return data;
+            }
+            else if (param.typedonnees == Data.typeDonnees.typedonnees.Historique)
+            {
+                DataHisto data = new DataHisto(option);
+                data.genereData(param.dateDebut);
+                return data;
+            }
+            else
+            {
+                throw new Exception("Type de données invalide !");
             }
         }
 
-        public Portefeuille InitialiserPf(Options.Option option, List<DataFeed> donnees)
+        public double getTrackingError()
         {
-            double[,] cov = this.FakeEstimatorCov(option);
-            double[] vol = this.FakeEstimatorVol(option);
-            double prix = option.CalculerPrix(0, donnees, param.dateDebut, this.getSpotIndex(0, donnees), cov, vol);
-            double[] deltas = option.CalculerDeltas(0, param.dateDebut, vol, cov, this.getSpotIndex(0, donnees));
-            Portefeuille premierpf = new Portefeuille(prix, deltas, this.getSpotIndex(0, donnees), option,0);
-            historiquePf.Add(premierpf);
-            return premierpf;
-        }
-
-        public Portefeuille RebalancerPf(int frequence, List<DataFeed> donnees, Options.Option option)
-        {
-            double[,] cov = this.FakeEstimatorCov(option);
-            double[] vol = this.FakeEstimatorVol(option);
-            double[] spot = this.getSpotIndex(this.jourActuel, donnees);
-            double tauxSansRisque = RiskFreeRateProvider.GetRiskFreeRateAccruedValue(DayCount.ConvertToDouble(frequence, 365));
-            Portefeuille pfRebalancee = new Portefeuille(spot
-                , option.CalculerDeltas(this.jourActuel, param.dateDebut, vol, cov, spot)
-                , historiquePf[historiquePf.Count - 1]
-                , tauxSansRisque
-                , option
-                , this.jourActuel);
-            historiquePf.Add(pfRebalancee);
-            return pfRebalancee;
-        }
-
-        public double[] FakeEstimatorVol(Options.Option option)
-        {
-            double[] vol = new double[option.GetNbSousJacents()];
-            for (int i = 0; i < option.GetNbSousJacents(); i++)
+            /*Retourne la tracking error à la fin de la simulation*/
+            if (this.jourActuel == 0)
             {
-                vol[i] = 0.4;
+                throw new Exception("La simulation en est au jour 0 ! La simulation doit être terminée pour calculer la tracking error");
             }
-            return vol;
-        }
-
-        public double[,] FakeEstimatorCov(Options.Option option)
-        {
-            
-            double[,] cov = new double[option.GetNbSousJacents(), option.GetNbSousJacents()];
-            for (int i = 0; i < option.GetNbSousJacents(); i++)
+            else
             {
-                for (int j = 0; j < option.GetNbSousJacents(); j++)
-                {
-                    if (i == j)
-                    {
-                        cov[i, j] = 0.4;
-                    }
-                    else
-                    {
-                        cov[i, j] = 0.1;
-                    }
-                }
-            }
-            return cov;
-        }
-
-        public void ArchiveValeur(List<DataFeed> donnees, Options.Option option)
-        {
-            this.valeurPf.Add(historiquePf[historiquePf.Count - 1].getPrixPortefeuille(this.getSpotIndex(jourActuel, donnees),this.jourActuel));
-            this.PrixOption.Add(option.CalculerPrix(this.jourActuel, donnees, param.dateDebut, this.getSpotIndex(jourActuel, donnees), this.FakeEstimatorCov(option), this.FakeEstimatorVol(option)));
-            for (int i=0; i<option.option.UnderlyingShareIds.Count(); i++)
-            {
-                this.PrixAction[i].Add(this.getSpotIndex(this.jourActuel, donnees)[i]);
+                return PrixOption[PrixOption.Count - 1] - valeurPf[valeurPf.Count - 1];
             }
         }
+
 
     }
 }

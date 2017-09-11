@@ -13,10 +13,6 @@ C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\L
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\LiveCharts.xml
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\LiveCharts.Wpf.pdb
 C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\LiveCharts.Wpf.xml
-C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\Microsoft.Practices.Prism.Mvvm.dll
-C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\Microsoft.Practices.Prism.SharedInterfaces.dll
-C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\Microsoft.Practices.Prism.Mvvm.xml
-C:\Users\ensimag\Source\Repos\Projet-.Net\Projet.Net\TestLibrary\bin\x64\Debug\Microsoft.Practices.Prism.SharedInterfaces.xml
 D:\ProjetDotNet\Projet.Net\TestLibrary\bin\x64\Debug\TestLibrary.dll
 D:\ProjetDotNet\Projet.Net\TestLibrary\bin\x64\Debug\TestLibrary.pdb
 D:\ProjetDotNet\Projet.Net\TestLibrary\bin\x64\Debug\LiveCharts.dll
