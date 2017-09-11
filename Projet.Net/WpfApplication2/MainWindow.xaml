@@ -10,7 +10,21 @@
         Title="MainWindow" Height="475.49" Width="863.236" >
 
     <Grid>
+        <ListBox ItemsSource="{Binding ComponentInfoList}" Margin="10,56,336,161">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <CheckBox Content="{Binding Name}"
+                  IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
+        <StackPanel Margin="38,59,367,166">
+            <TextBox Name="txtValue" />
+            <WrapPanel Margin="0,10">
+                <TextBlock Text="{Binding Path=Text, ElementName=txtValue}" />
+        </WrapPanel>
+        </StackPanel>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="78*"/>
@@ -22,6 +36,10 @@
             <ColumnDefinition Width="333*"/>
         </Grid.ColumnDefinitions>
 
+        <StackPanel Margin="255,19,0,226" HorizontalAlignment="Left" Width="184">
+            <TextBlock Text="quelle est la maturité" HorizontalAlignment="Left" Width="141" Margin="33,0,0,0" />
+            <TextBox x:Name="date" Text="{Binding Path=Maturity, Mode=TwoWay}"/>
+        </StackPanel>
 
 
         <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Right" Margin="57,126,10,-2" Grid.Column="2" Grid.ColumnSpan="5" >
